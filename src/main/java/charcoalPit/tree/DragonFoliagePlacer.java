@@ -3,49 +3,57 @@ package charcoalPit.tree;
 import charcoalPit.core.ModFeatures;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.gen.IWorldGenerationReader;
-import net.minecraft.world.gen.feature.BaseTreeFeatureConfig;
-import net.minecraft.world.gen.feature.FeatureSpread;
-import net.minecraft.world.gen.foliageplacer.FoliagePlacer;
-import net.minecraft.world.gen.foliageplacer.FoliagePlacerType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.world.level.LevelSimulatedReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 
 import java.util.Random;
-import java.util.Set;
+import java.util.function.BiConsumer;
 
 public class DragonFoliagePlacer extends FoliagePlacer {
 	
 	public static final Codec<DragonFoliagePlacer> CODEC= RecordCodecBuilder.create((arg1)->{
-		return func_242830_b(arg1).apply(arg1,DragonFoliagePlacer::new);
+		return foliagePlacerParts(arg1).apply(arg1,DragonFoliagePlacer::new);
 	});
 	
-	public DragonFoliagePlacer(FeatureSpread p_i241999_1_, FeatureSpread p_i241999_2_) {
+	public DragonFoliagePlacer(IntProvider p_i241999_1_, IntProvider p_i241999_2_) {
 		super(p_i241999_1_, p_i241999_2_);
 	}
 	
 	@Override
-	protected FoliagePlacerType<?> func_230371_a_() {
+	protected FoliagePlacerType<?> type() {
 		return ModFeatures.DRAGON_PLACER;
 	}
 	
 	@Override
-	protected void func_230372_a_(IWorldGenerationReader p_230372_1_, Random p_230372_2_, BaseTreeFeatureConfig p_230372_3_, int p_230372_4_, Foliage p_230372_5_, int p_230372_6_, int p_230372_7_, Set<BlockPos> p_230372_8_, int p_230372_9_, MutableBoundingBox p_230372_10_) {
-		for(int i = p_230372_9_; i >= p_230372_9_ - p_230372_6_; --i) {
-			this.func_236753_a_(p_230372_1_, p_230372_2_, p_230372_3_, p_230372_5_.func_236763_a_(), 1, p_230372_8_, i, p_230372_5_.func_236765_c_(), p_230372_10_);
+	protected void createFoliage(LevelSimulatedReader pLevel, BiConsumer<BlockPos, BlockState> pBlockSetter, Random pRandom, TreeConfiguration pConfig,
+								 int pMaxFreeTreeHeight, FoliageAttachment pAttachment, int pFoliageHeight, int pFoliageRadius, int pOffset) {
+		for(int i=pOffset;i>=pOffset-pFoliageHeight;--i){
+			this.placeLeavesRow(pLevel,pBlockSetter,pRandom,pConfig,pAttachment.pos(),1,i,pAttachment.doubleTrunk());
 		}
 	}
 	
 	@Override
-	public int func_230374_a_(Random p_230374_1_, int p_230374_2_, BaseTreeFeatureConfig p_230374_3_) {
+	public int foliageHeight(Random p_230374_1_, int p_230374_2_, TreeConfiguration p_230374_3_) {
 		return 2;
 	}
 	
-	@Override
-	protected boolean func_230373_a_(Random p_230373_1_, int p_230373_2_, int p_230373_3_, int p_230373_4_, int p_230373_5_, boolean p_230373_6_) {
+	protected boolean shouldSkipLocation(Random pRandom, int pLocalX, int pLocalY, int pLocalZ, int pRange, boolean pLarge){
+		if(pLocalY==0){
+			return pLocalX==pRange&&pLocalZ==pRange;
+		}
+		return false;
+	}
+	
+	/*@Override
+	protected boolean shouldSkipLocation(Random p_230373_1_, int p_230373_2_, int p_230373_3_, int p_230373_4_, int p_230373_5_, boolean p_230373_6_) {
 		if(p_230373_3_==0){
 			return p_230373_2_ == p_230373_5_ && p_230373_4_ == p_230373_5_;
 		}
 		return false;
-	}
+	}*/
 }

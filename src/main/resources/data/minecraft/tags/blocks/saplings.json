@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "charcoal_pit:apple_sapling",
+    "charcoal_pit:cherry_sapling",
+    "charcoal_pit:dragon_sapling",
+    "charcoal_pit:olive_sapling",
+    "charcoal_pit:chestnut_sapling",
+    "charcoal_pit:orange_sapling"
+  ]
+}

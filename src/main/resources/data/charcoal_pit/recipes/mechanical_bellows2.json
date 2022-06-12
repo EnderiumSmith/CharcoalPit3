@@ -7,7 +7,7 @@
   ],
   "key": {
     "S": {
-      "item": "minecraft:cobblestone"
+      "item": "minecraft:smooth_stone"
     },
     "I": {
       "tag": "forge:ingots/iron"

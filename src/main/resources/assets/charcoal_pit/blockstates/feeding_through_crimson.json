@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "has_bay=true,rotated=true": {
+      "model": "charcoal_pit:block/feeding_through_crimson"
+    },
+    "has_bay=true,rotated=false": {
+      "model": "charcoal_pit:block/feeding_through_crimson",
+      "y": 90
+    },
+    "has_bay=false,rotated=true": {
+      "model": "charcoal_pit:block/feeding_through_crimson_empty"
+    },
+    "has_bay=false,rotated=false": {
+      "model": "charcoal_pit:block/feeding_through_crimson_empty",
+      "y": 90
+    }
+  }
+}

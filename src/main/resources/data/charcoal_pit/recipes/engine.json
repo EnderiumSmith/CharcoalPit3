@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BBB",
+    "PSP",
+    "PSP"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:piston"
+    },
+    "S": {
+      "tag": "forge:ingots/steel"
+    },
+    "B": {
+      "item": "minecraft:iron_sword"
+    }
+  },
+  "result": {
+    "item": "charcoal_pit:engine"
+  }
+}

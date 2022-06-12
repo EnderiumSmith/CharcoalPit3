@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#B#",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:acacia_slab"
+    },
+    "B": {
+      "item": "minecraft:hay_block"
+    }
+  },
+  "result": {
+    "item": "charcoal_pit:feeding_through_acacia"
+  }
+}

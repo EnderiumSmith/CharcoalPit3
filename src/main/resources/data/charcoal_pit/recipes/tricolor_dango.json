@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GWP",
+    "FFF",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "F": {
+      "tag": "forge:dusts/flour"
+    },
+    "G": {
+      "item": "minecraft:lime_dye"
+    },
+    "W": {
+      "item": "minecraft:white_dye"
+    },
+    "P": {
+      "item": "minecraft:pink_dye"
+    }
+  },
+  "result": {
+    "item": "charcoal_pit:tricolor_dango",
+    "count": 3
+  }
+}

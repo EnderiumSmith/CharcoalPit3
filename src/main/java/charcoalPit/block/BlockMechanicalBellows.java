@@ -1,55 +1,55 @@
 package charcoalPit.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.Random;
 
 public class BlockMechanicalBellows extends BlockBellows {
 	
 	public BlockMechanicalBellows(){
-		super(Material.ROCK);
+		super(Material.STONE);
 	}
 	
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		return ActionResultType.PASS;
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+		return InteractionResult.PASS;
 	}
 	
 	@Override
-	public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-		if(!worldIn.isRemote){
-			boolean flag=worldIn.isBlockPowered(pos);
-			if(flag&&!state.get(PUSH)){
-				worldIn.getPendingBlockTicks().scheduleTick(pos, this, 10);
+	public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+		if(!worldIn.isClientSide){
+			boolean flag=worldIn.hasNeighborSignal(pos);
+			if(flag&&!state.getValue(PUSH)){
+				worldIn.scheduleTick(pos, this, 10);
 			}
 		}
 	}
 	
 	@Override
-	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
-		if(state.get(PUSH)) {
-			if(!worldIn.isBlockPowered(pos)) {
-				worldIn.setBlockState(pos, state.with(PUSH, false));
+	public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand) {
+		if(state.getValue(PUSH)) {
+			if(!worldIn.hasNeighborSignal(pos)) {
+				worldIn.setBlockAndUpdate(pos, state.setValue(PUSH, false));
 			}else{
-				worldIn.getPendingBlockTicks().scheduleTick(pos, this, 1);
+				worldIn.scheduleTick(pos, this, 1);
 			}
 		}else {
-			if(worldIn.isBlockPowered(pos)){
-				worldIn.setBlockState(pos, state.with(PUSH, true));
+			if(worldIn.hasNeighborSignal(pos)){
+				worldIn.setBlockAndUpdate(pos, state.setValue(PUSH, true));
 				blow(worldIn, pos, state);
-				worldIn.getPendingBlockTicks().scheduleTick(pos, this, 20);
-				worldIn.playSound(null, pos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1F, 1F);
+				worldIn.scheduleTick(pos, this, 20);
+				worldIn.playSound(null, pos, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 1F, 1F);
 			}
 		}
 	}

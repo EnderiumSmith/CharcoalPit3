@@ -1,8 +1,8 @@
 {
-  "parent": "charcoal_pit:charcoal_pit/straw",
+  "parent": "charcoal_pit:charcoal_pit/flint",
   "display": {
     "icon": {
-      "item": "charcoal_pit:sandy_brick_item"
+      "item": "charcoal_pit:unfired_sandy_brick"
     },
     "title": {
       "translate": "advancements.charcoal_pit.brick.title"
@@ -10,7 +10,7 @@
     "description": {
       "translate": "advancements.charcoal_pit.brick.description"
     },
-    "frame": "task",
+    "frame": "goal",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false
@@ -21,27 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:brick"
-          }
-        ]
-      }
-    },
-    "item2": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-	  {	
-            "item": "charcoal_pit:sandy_brick_item"
-          }
-        ]
-      }
-    },
-    "item3": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-	  {
-            "item": "minecraft:nether_brick"
+            "items": ["charcoal_pit:sandy_brick_item"]
           }
         ]
       }
@@ -49,7 +29,7 @@
   },
   "requirements": [
     [
-      "item1", "item2", "item3"
+      "item1"
     ]
   ]
 }

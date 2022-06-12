@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "charcoal_pit:corn_flour"
+    },
+    {
+      "item": "charcoal_pit:corn_flour"
+    },
+    {
+      "item": "charcoal_pit:cheese"
+    },
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "minecraft:bowl"
+    }
+  ],
+  "result": {
+    "item": "charcoal_pit:corn_stew",
+    "count":2
+  }
+}

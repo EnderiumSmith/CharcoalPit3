@@ -1,0 +1,45 @@
+{
+  "type": "forge:conditional",
+
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:not",
+  		"value": {
+    		"type": "forge:tag_empty",
+  		"tag": "forge:ingots/hepatizon"
+  		}
+        },
+        {
+          "type": "forge:not",
+  		"value": {
+    		"type": "forge:tag_empty",
+  		"tag": "forge:ingots/silver"
+  		}
+        }
+      ],
+      "recipe": {
+      "type": "charcoal_pit:orekiln",
+  	"ingredients": [
+    	{
+        "item": "minecraft:copper_ingot"
+    	},
+    	{
+        "item": "minecraft:copper_ingot"
+    	},
+    	{
+        "item": "minecraft:gold_ingot"
+    	},
+    	{
+        "tag": "forge:ingots/silver"
+    	}
+  	],
+  	"result": {
+    	"tag": "forge:ingots/hepatizon"
+  	},
+  	"amount": 4
+      	}
+    }
+  ]
+}

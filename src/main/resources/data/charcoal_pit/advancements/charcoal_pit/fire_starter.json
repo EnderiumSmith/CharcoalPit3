@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "charcoal_pit:fire_starter"
+            "items": ["charcoal_pit:fire_starter"]
           }
         ]
       }

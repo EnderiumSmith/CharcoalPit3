@@ -3,8 +3,8 @@ package charcoalPit.fluid;
 import charcoalPit.CharcoalPit;
 import charcoalPit.core.ModBlockRegistry;
 import charcoalPit.core.ModItemRegistry;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -16,6 +16,8 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 import java.util.function.BiFunction;
+
+import net.minecraftforge.fluids.FluidAttributes.Builder;
 
 @EventBusSubscriber(modid=CharcoalPit.MODID, bus=Bus.MOD)
 public class ModFluidRegistry {
@@ -34,6 +36,30 @@ public class ModFluidRegistry {
 			vinegar_flowing=new ResourceLocation("minecraft:block/water_flow");
 	public static ForgeFlowingFluid VinegarStill, VinegarFlowing;
 	public static ForgeFlowingFluid.Properties Vinegar;
+	
+	public static ForgeFlowingFluid CausticLyeStill;
+	public static ForgeFlowingFluid.Properties CausticLye;
+	
+	public static ForgeFlowingFluid OliveOilStill;
+	public static ForgeFlowingFluid.Properties OliveOil;
+	
+	public static ForgeFlowingFluid WalnutOilStill;
+	public static ForgeFlowingFluid.Properties WalnutOil;
+	
+	public static ForgeFlowingFluid SunflowerOilStill;
+	public static ForgeFlowingFluid.Properties SunflowerOil;
+	
+	public static ForgeFlowingFluid BioDieselStill;
+	public static ForgeFlowingFluid.Properties BioDiesel;
+	
+	public static ForgeFlowingFluid EthanolStill;
+	public static ForgeFlowingFluid.Properties Ethanol;
+	
+	public static ForgeFlowingFluid EthoxideStill;
+	public static ForgeFlowingFluid.Properties Ethoxide;
+	
+	public static ForgeFlowingFluid SeedOilStill;
+	public static ForgeFlowingFluid.Properties SeedOil;
 	
 	@SubscribeEvent
 	public static void registerFluids(RegistryEvent.Register<Fluid> event) {
@@ -55,8 +81,41 @@ public class ModFluidRegistry {
 		VinegarFlowing=new ForgeFlowingFluid.Flowing(Vinegar);
 		VinegarStill.setRegistryName("vinegar_still");
 		VinegarFlowing.setRegistryName("vinegar_flowing");
+		
+		CausticLye=new Properties(()->CausticLyeStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing));
+		CausticLyeStill=new ForgeFlowingFluid.Source(CausticLye);
+		CausticLyeStill.setRegistryName("caustic_lye");
+		
+		OliveOil=new Properties(()->OliveOilStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0x6e750e).density(900)).bucket(()->ModItemRegistry.OliveOilBucket);
+		OliveOilStill=new ForgeFlowingFluid.Source(OliveOil);
+		OliveOilStill.setRegistryName("olive_oil");
+		
+		WalnutOil=new Properties(()->WalnutOilStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0xFDAA48).density(900)).bucket(()->ModItemRegistry.WalnutOilBucket);
+		WalnutOilStill=new ForgeFlowingFluid.Source(WalnutOil);
+		WalnutOilStill.setRegistryName("walnut_oil");
+		
+		SunflowerOil=new Properties(()->SunflowerOilStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0xDBB40C).density(900)).bucket(()->ModItemRegistry.SunflowerOilBucket);
+		SunflowerOilStill=new ForgeFlowingFluid.Source(SunflowerOil);
+		SunflowerOilStill.setRegistryName("sunflower_oil");
+		
+		BioDiesel=new Properties(()->BioDieselStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0xf97306).density(900)).bucket(()->ModItemRegistry.BioDieselBucket);
+		BioDieselStill=new ForgeFlowingFluid.Source(BioDiesel);
+		BioDieselStill.setRegistryName("bio_diesel");
+		
+		Ethanol=new Properties(()->EthanolStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0xe6daa6).density(790)).bucket(()->ModItemRegistry.EthanolBucket);
+		EthanolStill=new ForgeFlowingFluid.Source(Ethanol);
+		EthanolStill.setRegistryName("ethanol");
+		
+		Ethoxide=new Properties(()->EthoxideStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0x95d0fc).density(800)).bucket(()->ModItemRegistry.EthoxideBucket);
+		EthoxideStill=new ForgeFlowingFluid.Source(Ethoxide);
+		EthoxideStill.setRegistryName("ethoxide");
+		
+		SeedOil=new Properties(()->SeedOilStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0xc7fdb5).density(900)).bucket(()->ModItemRegistry.SeedOilBucket);
+		SeedOilStill=new ForgeFlowingFluid.Source(SeedOil);
+		SeedOilStill.setRegistryName("seed_oil");
 
-		event.getRegistry().registerAll(CreosoteStill,CreosoteFlowing,AlcoholStill,AlcoholFlowing,VinegarStill,VinegarFlowing);
+		event.getRegistry().registerAll(CreosoteStill,CreosoteFlowing,AlcoholStill,AlcoholFlowing,VinegarStill,VinegarFlowing,CausticLyeStill,OliveOilStill,
+				WalnutOilStill,SunflowerOilStill,BioDieselStill,EthanolStill,EthoxideStill,SeedOilStill);
 	}
 
 	public static class AlcoholProperties extends FluidAttributes{

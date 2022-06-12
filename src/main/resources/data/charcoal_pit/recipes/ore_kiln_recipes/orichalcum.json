@@ -1,0 +1,21 @@
+{
+  "type": "charcoal_pit:orekiln",
+  "ingredients": [
+    {
+        "item": "minecraft:copper_ingot"
+    },
+    {
+        "item": "minecraft:copper_ingot"
+    },
+    {
+        "item": "minecraft:gold_ingot"
+    },
+    {
+        "item": "charcoal_pit:prismarine_dust"
+    }
+  ],
+  "result": {
+    "item": "charcoal_pit:alloy_orichalcum"
+  },
+  "amount": 3
+}

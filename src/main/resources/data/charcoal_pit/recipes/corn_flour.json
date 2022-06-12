@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "charcoal_pit:mortar_pestle"
+    },
+    {
+      "tag": "forge:grain/corn"
+    }
+  ],
+  "result": {
+    "item": "charcoal_pit:corn_flour"
+  }
+}

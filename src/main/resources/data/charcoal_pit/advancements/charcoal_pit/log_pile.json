@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "charcoal_pit:log_pile"
+            "items": ["charcoal_pit:log_pile"]
           }
         ]
       }

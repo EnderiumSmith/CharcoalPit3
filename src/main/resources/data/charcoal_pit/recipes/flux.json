@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "charcoal_pit:mortar_pestle"
+    },
+    {
+      "tag": "charcoal_pit:calcareous_rock"
+    }
+  ],
+  "result": {
+    "item": "charcoal_pit:flux",
+    "count": 4
+  }
+}

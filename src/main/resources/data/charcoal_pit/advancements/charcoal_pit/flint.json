@@ -1,0 +1,35 @@
+{
+  "parent": "charcoal_pit:charcoal_pit/root",
+  "display": {
+    "icon": {
+      "item": "minecraft:flint"
+    },
+    "title": {
+      "translate": "advancements.charcoal_pit.flint.title"
+    },
+    "description": {
+      "translate": "advancements.charcoal_pit.flint.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "item1": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:flint"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "item1"
+    ]
+  ]
+}

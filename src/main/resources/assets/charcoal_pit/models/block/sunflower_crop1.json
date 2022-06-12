@@ -1,0 +1,37 @@
+{
+    "ambientocclusion": false,
+    "textures": {
+        "particle": "block/sunflower_front",
+        "cross": "charcoal_pit:block/sunflower_crop1"
+    },
+    "elements": [
+        {   "from": [ -8, -1, 8 ],
+            "to": [ 24, 31, 8 ],
+            "rotation": {
+                "origin": [ 8, 8, 8 ],
+                "axis": "y",
+                "angle": 45,
+                "rescale": true
+            },
+            "shade": false,
+            "faces": {
+                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#cross" },
+                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#cross" }
+            }
+        },
+        {   "from": [ 8, -1, -8 ],
+            "to": [ 8, 31, 24 ],
+            "rotation": {
+                "origin": [ 8, 8, 8 ],
+                "axis": "y",
+                "angle": 45,
+                "rescale": true
+            },
+            "shade": false,
+            "faces": {
+                "west": { "uv": [ 0, 0, 16, 16 ], "texture": "#cross" },
+                "east": { "uv": [ 0, 0, 16, 16 ], "texture": "#cross" }
+            }
+        }
+    ]
+}

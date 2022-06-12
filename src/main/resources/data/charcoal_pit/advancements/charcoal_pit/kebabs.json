@@ -1,0 +1,36 @@
+{
+  "parent": "charcoal_pit:charcoal_pit/chef",
+  "display": {
+    "icon": {
+      "item": "charcoal_pit:kebabs"
+    },
+    "title": {
+      "translate": "advancements.charcoal_pit.kebabs.title"
+    },
+    "description": {
+      "translate": "advancements.charcoal_pit.kebabs.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "rewards": {
+    "experience": 50
+  },
+  "criteria": {
+    "item1": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:kebabs"]
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "item1"
+    ]
+  ]
+}

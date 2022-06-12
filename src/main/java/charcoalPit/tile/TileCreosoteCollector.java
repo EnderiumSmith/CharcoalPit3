@@ -1,35 +1,33 @@
 package charcoalPit.tile;
 
 import charcoalPit.core.ModTileRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
-public class TileCreosoteCollector extends TileEntity implements ITickableTileEntity{
+public class TileCreosoteCollector extends BlockEntity{
 	
 	public FluidTank creosote;
 	int tick;
-	@CapabilityInject(IFluidHandler.class)
-	public static Capability<IFluidHandler> FLUID=null;
+	static Capability<IFluidHandler> FLUID = CapabilityManager.get(new CapabilityToken<>(){});
 	boolean flag;
 	
-	public TileCreosoteCollector() {
-		super(ModTileRegistry.CreosoteCollector);
+	public TileCreosoteCollector(BlockPos pos,BlockState state) {
+		super(ModTileRegistry.CreosoteCollector,pos,state);
 		tick=0;
 		creosote=new FluidTank(8000);
 	}
 	
-	@Override
 	public void tick() {
 		if(tick<20){
 			tick++;
@@ -37,24 +35,24 @@ public class TileCreosoteCollector extends TileEntity implements ITickableTileEn
 			tick=0;
 			flag=false;
 			//collect creosote
-			if(creosote.getFluidAmount()<creosote.getCapacity()&&this.world.getTileEntity(this.pos.offset(Direction.UP))instanceof TileActivePile){
-				TileActivePile up=(TileActivePile)this.world.getTileEntity(this.pos.offset(Direction.UP));
+			if(creosote.getFluidAmount()<creosote.getCapacity()&&this.level.getBlockEntity(this.worldPosition.relative(Direction.UP))instanceof TileActivePile){
+				TileActivePile up=(TileActivePile)this.level.getBlockEntity(this.worldPosition.relative(Direction.UP));
 				flag=flag||up.creosote.drain(creosote.fill(up.creosote.getFluid(), FluidAction.EXECUTE), FluidAction.EXECUTE).getAmount()>0;
 				for(Direction facing:Direction.Plane.HORIZONTAL){
 					if(creosote.getFluidAmount()<creosote.getCapacity())
-						flag=flag||collectCreosote(this.pos.offset(Direction.UP).offset(facing), facing, 3);
+						flag=flag||collectCreosote(this.worldPosition.relative(Direction.UP).relative(facing), facing, 3);
 				}
 			}
 			//chanel creosote
-			if(this.world.isBlockPowered(this.pos)){
+			if(this.level.hasNeighborSignal(this.worldPosition)){
 				for(Direction facing:Direction.Plane.HORIZONTAL){
 					if(creosote.getFluidAmount()<creosote.getCapacity())
-						flag=flag||chanelCreosote(this.pos.offset(facing), facing, 3);
+						flag=flag||chanelCreosote(this.worldPosition.relative(facing), facing, 3);
 				}
 			}
 			//output creosote
-			if(creosote.getFluidAmount()>0&&this.world.isBlockPowered(this.pos)){
-				TileEntity tile=this.world.getTileEntity(this.pos.offset(Direction.DOWN));
+			if(creosote.getFluidAmount()>0&&this.level.hasNeighborSignal(this.worldPosition)){
+				BlockEntity tile=this.level.getBlockEntity(this.worldPosition.relative(Direction.DOWN));
 				if(tile!=null){
 					tile.getCapability(FLUID, Direction.UP).ifPresent((handler)->{
 						flag=flag||creosote.drain(handler.fill(creosote.getFluid(), FluidAction.EXECUTE), FluidAction.EXECUTE).getAmount()>0;
@@ -62,27 +60,27 @@ public class TileCreosoteCollector extends TileEntity implements ITickableTileEn
 				}
 			}
 			if(flag)
-				markDirty();
+				setChanged();
 		}
 		
 	}
 	public boolean collectCreosote(BlockPos pos, Direction facing, int runs){
 		boolean flag=false;
-		if(this.world.getTileEntity(pos)instanceof TileActivePile){
-			TileActivePile up=(TileActivePile)this.world.getTileEntity(pos);
+		if(this.level.getBlockEntity(pos)instanceof TileActivePile){
+			TileActivePile up=(TileActivePile)this.level.getBlockEntity(pos);
 			flag=up.creosote.drain(creosote.fill(up.creosote.getFluid(), FluidAction.EXECUTE), FluidAction.EXECUTE).getAmount()>0;
 			if(runs>0&&creosote.getFluidAmount()<creosote.getCapacity())
-				flag=flag||collectCreosote(pos.offset(facing), facing, --runs);
+				flag=flag||collectCreosote(pos.relative(facing), facing, --runs);
 		}
 		return flag;
 	}
 	public boolean chanelCreosote(BlockPos pos, Direction facing, int runs){
 		boolean flag=false;
-		if(this.world.getTileEntity(pos)instanceof TileCreosoteCollector){
-			TileCreosoteCollector up=(TileCreosoteCollector)this.world.getTileEntity(pos);
+		if(this.level.getBlockEntity(pos)instanceof TileCreosoteCollector){
+			TileCreosoteCollector up=(TileCreosoteCollector)this.level.getBlockEntity(pos);
 			flag=up.creosote.drain(creosote.fill(up.creosote.getFluid(), FluidAction.EXECUTE), FluidAction.EXECUTE).getAmount()>0;
 			if(runs>0&&creosote.getFluidAmount()<creosote.getCapacity())
-				flag=flag||chanelCreosote(pos.offset(facing), facing, --runs);
+				flag=flag||chanelCreosote(pos.relative(facing), facing, --runs);
 		}
 		return flag;
 	}
@@ -135,21 +133,19 @@ public class TileCreosoteCollector extends TileEntity implements ITickableTileEn
 	}
 	
 	@Override
-	public void remove() {
+	public void setRemoved() {
 		fluid.invalidate();
-		super.remove();
+		super.setRemoved();
 	}
 	
 	@Override
-	public CompoundNBT write(CompoundNBT compound) {
-		super.write(compound);
-		compound.put("creosote", creosote.writeToNBT(new CompoundNBT()));
-		return compound;
+	protected void saveAdditional(CompoundTag compound) {
+		compound.put("creosote", creosote.writeToNBT(new CompoundTag()));
 	}
 	
 	@Override
-	public void read(BlockState state, CompoundNBT nbt) {
-		super.read(state, nbt);
+	public void load(CompoundTag nbt) {
+		super.load(nbt);
 		creosote.readFromNBT(nbt.getCompound("creosote"));
 	}
 

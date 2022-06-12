@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WBW",
+    "SES",
+    "TTT"
+  ],
+  "key": {
+    "W": {
+      "item": "charcoal_pit:wing"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "T": {
+      "item": "charcoal_pit:winglet"
+    },
+    "B": {
+      "item": "charcoal_pit:barrel"
+    },
+    "E": {
+      "item": "charcoal_pit:engine"
+    }
+  },
+  "result": {
+    "item": "charcoal_pit:airplane"
+  }
+}

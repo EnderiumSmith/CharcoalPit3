@@ -1,47 +1,38 @@
 package charcoalPit.tile;
 
-import charcoalPit.block.BlockBloom;
-import charcoalPit.core.Config;
 import charcoalPit.core.ModTileRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Containers;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class TileBloom extends TileEntity implements ITickableTileEntity{
-
-	public int cooldown;
+public class TileBloom extends BlockEntity {
 	
-	public TileBloom() {
-		super(null);
-		cooldown=Config.BloomCooldown.get();
+	public ItemStack items=ItemStack.EMPTY;
+	public int workCount;
+	
+	public TileBloom(BlockPos pWorldPosition, BlockState pBlockState) {
+		super(ModTileRegistry.Bloom, pWorldPosition, pBlockState);
+		workCount=0;
 	}
-
-	@Override
-	public void tick() {
-		if(!world.isRemote) {
-			cooldown--;
-			if(cooldown==0)
-				world.setBlockState(pos, world.getBlockState(pos).with(BlockBloom.HOT, false));
-			if(cooldown%200==0)
-				markDirty();
-		}
-		
+	
+	public void dropInventory(){
+		Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), items);
 	}
 	
 	@Override
-	public void read(BlockState state, CompoundNBT nbt) {
-		super.read(state, nbt);
-		cooldown=nbt.getInt("cooldown");
+	protected void saveAdditional(CompoundTag pTag) {
+		super.saveAdditional(pTag);
+		pTag.put("items",items.serializeNBT());
+		pTag.putInt("work",workCount);
 	}
 	
 	@Override
-	public CompoundNBT write(CompoundNBT compound) {
-		super.write(compound);
-		compound.putInt("cooldown", cooldown);
-		return compound;
+	public void load(CompoundTag pTag) {
+		super.load(pTag);
+		items.deserializeNBT(pTag.getCompound("items"));
+		workCount=pTag.getInt("work");
 	}
-	
-	
-
 }

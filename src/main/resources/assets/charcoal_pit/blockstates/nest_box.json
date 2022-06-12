@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "eggs=0": {
+      "model": "charcoal_pit:block/nest_box_0"
+    },
+    "eggs=1": {
+      "model": "charcoal_pit:block/nest_box_1"
+    },
+    "eggs=2": {
+      "model": "charcoal_pit:block/nest_box_2"
+    },
+    "eggs=3": {
+      "model": "charcoal_pit:block/nest_box_3"
+    },
+    "eggs=4": {
+      "model": "charcoal_pit:block/nest_box_4"
+    }
+  }
+}

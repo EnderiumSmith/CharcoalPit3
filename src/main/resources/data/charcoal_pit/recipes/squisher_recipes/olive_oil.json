@@ -1,0 +1,10 @@
+{
+  "type": "charcoal_pit:squish",
+  "input":{
+  	"item":"charcoal_pit:olives"
+  },
+  "output":{
+  	"fluid":"charcoal_pit:olive_oil",
+  	"amount": 100
+  }
+}

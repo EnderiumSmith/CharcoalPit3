@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "charcoal_pit:block/apple_leaves"
+    },
+    "age=1": {
+      "model": "charcoal_pit:block/apple_leaves"
+    },
+    "age=2": {
+      "model": "charcoal_pit:block/apple_leaves_flower"
+    },
+    "age=3": {
+      "model": "charcoal_pit:block/apple_leaves_flower"
+    },
+    "age=4": {
+      "model": "charcoal_pit:block/apple_leaves_unripe"
+    },
+    "age=5": {
+      "model": "charcoal_pit:block/apple_leaves_unripe"
+    },
+    "age=6": {
+      "model": "charcoal_pit:block/apple_leaves_unripe"
+    },
+    "age=7": {
+      "model": "charcoal_pit:block/apple_leaves_ripe"
+    }
+  }
+}

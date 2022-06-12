@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "charcoal_pit:flour"
+  },
+  "result": "minecraft:bread",
+  "experience": 0.35,
+  "cookingtime": 200
+}

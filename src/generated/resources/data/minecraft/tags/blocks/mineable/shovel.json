@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "charcoal_pit:wood_ash",
+    "charcoal_pit:coal_ash",
+    "charcoal_pit:ash"
+  ]
+}

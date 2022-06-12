@@ -1,19 +1,17 @@
 package charcoalPit.block;
 
 import charcoalPit.core.ModItemRegistry;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CropsBlock;
-import net.minecraft.util.IItemProvider;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.ItemLike;
 
-public class BlockLeeks extends CropsBlock {
+public class BlockLeeks extends CropBlock {
 	
 	public BlockLeeks(Properties builder) {
 		super(builder);
 	}
 	
 	@Override
-	protected IItemProvider getSeedsItem() {
+	protected ItemLike getBaseSeedId() {
 		return ModItemRegistry.Leek;
 	}
 }

@@ -1,0 +1,33 @@
+{
+  "parent": "charcoal_pit:charcoal_pit/foods",
+  "display": {
+    "icon": {
+      "item": "charcoal_pit:serinan_stew"
+    },
+    "title": {
+      "translate": "advancements.charcoal_pit.serina.title"
+    },
+    "description": {
+      "translate": "advancements.charcoal_pit.serina.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "item1": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:serinan_stew"]
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "item1"
+    ]
+  ]
+}

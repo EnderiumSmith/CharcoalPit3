@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "charcoal_pit:block/leeks0"
+    },
+    "age=1": {
+      "model": "charcoal_pit:block/leeks1"
+    },
+    "age=2": {
+      "model": "charcoal_pit:block/leeks1"
+    },
+    "age=3": {
+      "model": "charcoal_pit:block/leeks2"
+    },
+    "age=4": {
+      "model": "charcoal_pit:block/leeks2"
+    },
+    "age=5": {
+      "model": "charcoal_pit:block/leeks3"
+    },
+    "age=6": {
+      "model": "charcoal_pit:block/leeks3"
+    },
+    "age=7": {
+      "model": "charcoal_pit:block/leeks4"
+    }
+  }
+}

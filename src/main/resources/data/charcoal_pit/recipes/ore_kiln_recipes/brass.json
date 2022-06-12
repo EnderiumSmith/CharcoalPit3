@@ -1,53 +1,45 @@
 {
-  "type": "charcoal_pit:orekiln",
-  "ingredients": [
-    [
+  "type": "forge:conditional",
+
+  "recipes": [
+    {
+      "conditions": [
         {
-          "tag": "forge:ores/copper"
+          "type": "forge:not",
+  		"value": {
+    		"type": "forge:tag_empty",
+  		"tag": "forge:ingots/brass"
+  		}
         },
         {
-          "tag": "forge:ingots/copper"
-        },
-        {
-          "tag": "forge:dusts/copper"
+          "type": "forge:not",
+  		"value": {
+    		"type": "forge:tag_empty",
+  		"tag": "forge:ingots/zinc"
+  		}
         }
-    ],
-    [
-        {
-          "tag": "forge:ores/copper"
-        },
-        {
-          "tag": "forge:ingots/copper"
-        },
-        {
-          "tag": "forge:dusts/copper"
-        }
-    ],
-    [
-        {
-          "tag": "forge:ores/copper"
-        },
-        {
-          "tag": "forge:ingots/copper"
-        },
-        {
-          "tag": "forge:dusts/copper"
-        }
-    ],
-    [
-        {
-          "tag": "forge:ores/zinc"
-        },
-        {
-          "tag": "forge:ingots/zinc"
-        },
-        {
-          "tag": "forge:dusts/zinc"
-        }
-    ]
-  ],
-  "result": {
-    "tag": "forge:ingots/brass"
-  },
-  "amount": 4
+      ],
+      "recipe": {
+      "type": "charcoal_pit:orekiln",
+  	"ingredients": [
+    	{
+        "item": "minecraft:copper_ingot"
+    	},
+    	{
+        "item": "minecraft:copper_ingot"
+    	},
+    	{
+        "item": "minecraft:copper_ingot"
+    	},
+    	{
+        "tag": "forge:ingots/zinc"
+    	}
+  	],
+  	"result": {
+    	"tag": "forge:ingots/brass"
+  	},
+  	"amount": 4
+      	}
+    }
+  ]
 }

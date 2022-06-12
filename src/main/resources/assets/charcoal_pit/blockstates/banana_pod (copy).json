@@ -1,0 +1,139 @@
+{
+  "variants": {
+    "age=0,count=1,facing=east": {
+      "model": "charcoal_pit:block/banana1_1",
+      "y": 270
+    },
+    "age=0,count=1,facing=north": {
+      "model": "charcoal_pit:block/banana1_1",
+      "y": 180
+    },
+    "age=0,count=1,facing=south": {
+      "model": "charcoal_pit:block/banana1_1"
+    },
+    "age=0,count=1,facing=west": {
+      "model": "charcoal_pit:block/banana1_1",
+      "y": 90
+    },
+    "age=1,count=1,facing=east": {
+      "model": "charcoal_pit:block/banana1_1",
+      "y": 270
+    },
+    "age=1,count=1,facing=north": {
+      "model": "charcoal_pit:block/banana1_1",
+      "y": 180
+    },
+    "age=1,count=1,facing=south": {
+      "model": "charcoal_pit:block/banana1_1"
+    },
+    "age=1,count=1,facing=west": {
+      "model": "charcoal_pit:block/banana1_1",
+      "y": 90
+    },
+    "age=2,count=1,facing=east": {
+      "model": "charcoal_pit:block/banana1_2",
+      "y": 270
+    },
+    "age=2,count=1,facing=north": {
+      "model": "charcoal_pit:block/banana1_2",
+      "y": 180
+    },
+    "age=2,count=1,facing=south": {
+      "model": "charcoal_pit:block/banana1_2"
+    },
+    "age=2,count=1,facing=west": {
+      "model": "charcoal_pit:block/banana1_2",
+      "y": 90
+    },
+    "age=0,count=2,facing=east": {
+      "model": "charcoal_pit:block/banana2_1",
+      "y": 270
+    },
+    "age=0,count=2,facing=north": {
+      "model": "charcoal_pit:block/banana2_1",
+      "y": 180
+    },
+    "age=0,count=2,facing=south": {
+      "model": "charcoal_pit:block/banana2_1"
+    },
+    "age=0,count=2,facing=west": {
+      "model": "charcoal_pit:block/banana2_1",
+      "y": 90
+    },
+    "age=1,count=2,facing=east": {
+      "model": "charcoal_pit:block/banana2_1",
+      "y": 270
+    },
+    "age=1,count=2,facing=north": {
+      "model": "charcoal_pit:block/banana2_1",
+      "y": 180
+    },
+    "age=1,count=2,facing=south": {
+      "model": "charcoal_pit:block/banana2_1"
+    },
+    "age=1,count=2,facing=west": {
+      "model": "charcoal_pit:block/banana2_1",
+      "y": 90
+    },
+    "age=2,count=2,facing=east": {
+      "model": "charcoal_pit:block/banana2_2",
+      "y": 270
+    },
+    "age=2,count=2,facing=north": {
+      "model": "charcoal_pit:block/banana2_2",
+      "y": 180
+    },
+    "age=2,count=2,facing=south": {
+      "model": "charcoal_pit:block/banana2_2"
+    },
+    "age=2,count=2,facing=west": {
+      "model": "charcoal_pit:block/banana2_2",
+      "y": 90
+    },
+    "age=0,count=3,facing=east": {
+      "model": "charcoal_pit:block/banana3_1",
+      "y": 270
+    },
+    "age=0,count=3,facing=north": {
+      "model": "charcoal_pit:block/banana3_1",
+      "y": 180
+    },
+    "age=0,count=3,facing=south": {
+      "model": "charcoal_pit:block/banana3_1"
+    },
+    "age=0,count=3,facing=west": {
+      "model": "charcoal_pit:block/banana3_1",
+      "y": 90
+    },
+    "age=1,count=3,facing=east": {
+      "model": "charcoal_pit:block/banana3_1",
+      "y": 270
+    },
+    "age=1,count=3,facing=north": {
+      "model": "charcoal_pit:block/banana3_1",
+      "y": 180
+    },
+    "age=1,count=3,facing=south": {
+      "model": "charcoal_pit:block/banana3_1"
+    },
+    "age=1,count=3,facing=west": {
+      "model": "charcoal_pit:block/banana3_1",
+      "y": 90
+    },
+    "age=2,count=3,facing=east": {
+      "model": "charcoal_pit:block/banana3_2",
+      "y": 270
+    },
+    "age=2,count=3,facing=north": {
+      "model": "charcoal_pit:block/banana3_2",
+      "y": 180
+    },
+    "age=2,count=3,facing=south": {
+      "model": "charcoal_pit:block/banana3_2"
+    },
+    "age=2,count=3,facing=west": {
+      "model": "charcoal_pit:block/banana3_2",
+      "y": 90
+    }
+  }
+}

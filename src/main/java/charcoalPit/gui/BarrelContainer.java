@@ -4,15 +4,15 @@ import charcoalPit.core.ModBlockRegistry;
 import charcoalPit.core.ModContainerRegistry;
 import charcoalPit.recipe.BarrelRecipe;
 import charcoalPit.tile.TileBarrel;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
@@ -23,41 +23,41 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 
-public class BarrelContainer extends Container{
+public class BarrelContainer extends AbstractContainerMenu{
 
 	public BlockPos pos;
 	public ItemStackHandler fluid_tag;
 	public FluidStack fluid;
 	public IFluidHandler tank;
-	public IIntArray array;
-	public BarrelContainer(int id, BlockPos pos, PlayerInventory inv) {
+	public ContainerData array;
+	public BarrelContainer(int id, BlockPos pos, Inventory inv) {
 		super(ModContainerRegistry.Barrel, id);
 		this.pos=pos;
-		TileBarrel tile=((TileBarrel)inv.player.world.getTileEntity(pos));
+		TileBarrel tile=((TileBarrel)inv.player.level.getBlockEntity(pos));
 		
 		tank=tile.tank;
 		fluid_tag=new ItemStackHandler();
 		fluid_tag.setStackInSlot(0, new ItemStack(Items.PAPER));
 		fluid=tank.getFluidInTank(0).copy();
-		fluid_tag.getStackInSlot(0).setTagInfo("fluid", fluid.writeToNBT(new CompoundNBT()));
+		fluid_tag.getStackInSlot(0).addTagElement("fluid", fluid.writeToNBT(new CompoundTag()));
 		
 		this.addSlot(new SlotItemHandler(tile.input, 0, 98, 17) {
 			@Override
-			public boolean isItemValid(ItemStack stack) {
+			public boolean mayPlace(ItemStack stack) {
 				return stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent()||
-						BarrelRecipe.isValidItem(stack, tile.getWorld())||stack.getItem()==Items.GLASS_BOTTLE;
+						BarrelRecipe.isValidItem(stack, tile.getLevel())||stack.getItem()==Items.GLASS_BOTTLE;
 			}
 			
 			@Override
-			public void onSlotChanged() {
-				super.onSlotChanged();
-				tile.markDirty();
+			public void setChanged() {
+				super.setChanged();
+				tile.setChanged();
 				tile.valid=false;
 			}
 		});
 		this.addSlot(new SlotItemHandler(tile.output, 0, 98, 53) {
 			@Override
-			public boolean isItemValid(ItemStack stack) {
+			public boolean mayPlace(ItemStack stack) {
 				return false;
 			}
 		});
@@ -74,23 +74,23 @@ public class BarrelContainer extends Container{
 	      
 	      this.addSlot(new SlotItemHandler(fluid_tag, 0, 0, 0) {
 	    	  @Override
-	    	public boolean isItemValid(ItemStack stack) {
+	    	public boolean mayPlace(ItemStack stack) {
 	    		return false;
 	    	}
 	    	  @Override
-	    	public boolean canTakeStack(PlayerEntity playerIn) {
+	    	public boolean mayPickup(Player playerIn) {
 	    		return false;
 	    	}
 	    	  @Override
 	    	  @OnlyIn(Dist.CLIENT)
-	    	public boolean isEnabled() {
+	    	public boolean isActive() {
 	    		return false;
 	    	}
 	      });
-	      array=new IIntArray() {
+	      array=new ContainerData() {
 			
 			@Override
-			public int size() {
+			public int getCount() {
 				return 2;
 			}
 			
@@ -111,43 +111,43 @@ public class BarrelContainer extends Container{
 					return tile.total;
 			}
 		};
-		this.trackIntArray(array);
+		this.addDataSlots(array);
 	}
 	
 	@Override
-	public void detectAndSendChanges() {
+	public void broadcastChanges() {
 		if(!tank.getFluidInTank(0).isFluidStackIdentical(fluid)) {
 			fluid=tank.getFluidInTank(0).copy();
-			fluid_tag.getStackInSlot(0).setTagInfo("fluid", fluid.writeToNBT(new CompoundNBT()));
+			fluid_tag.getStackInSlot(0).addTagElement("fluid", fluid.writeToNBT(new CompoundTag()));
 		}
-		super.detectAndSendChanges();
+		super.broadcastChanges();
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
-		return playerIn.world.getBlockState(pos).getBlock() == ModBlockRegistry.Barrel&&
-				playerIn.getDistanceSq((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D) <= 64.0D;
+	public boolean stillValid(Player playerIn) {
+		return playerIn.level.getBlockState(pos).getBlock() == ModBlockRegistry.Barrel&&
+				playerIn.distanceToSqr((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D) <= 64.0D;
 	}
 	
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
-	      Slot slot = this.inventorySlots.get(index);
-	      if (slot != null && slot.getHasStack()) {
-	         ItemStack itemstack1 = slot.getStack();
+	      Slot slot = this.slots.get(index);
+	      if (slot != null && slot.hasItem()) {
+	         ItemStack itemstack1 = slot.getItem();
 	         itemstack = itemstack1.copy();
 	         if (index < 2) {
-	            if (!this.mergeItemStack(itemstack1, 2, 38, true)) {
+	            if (!this.moveItemStackTo(itemstack1, 2, 37, true)) {
 	               return ItemStack.EMPTY;
 	            }
-	         } else if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
+	         } else if (!this.moveItemStackTo(itemstack1, 0, 2, false)) {
 	            return ItemStack.EMPTY;
 	         }
 
 	         if (itemstack1.isEmpty()) {
-	            slot.putStack(ItemStack.EMPTY);
+	            slot.set(ItemStack.EMPTY);
 	         } else {
-	            slot.onSlotChanged();
+	            slot.setChanged();
 	         }
 
 	         if (itemstack1.getCount() == itemstack.getCount()) {

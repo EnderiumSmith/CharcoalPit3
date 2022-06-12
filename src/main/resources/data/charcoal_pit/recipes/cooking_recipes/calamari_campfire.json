@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "charcoal_pit:calamari"
+  },
+  "result": "charcoal_pit:cooked_calamari",
+  "experience": 0.35,
+  "cookingtime": 600
+}

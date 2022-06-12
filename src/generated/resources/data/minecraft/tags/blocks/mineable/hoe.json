@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "charcoal_pit:thatch",
+    "charcoal_pit:apple_leaves",
+    "charcoal_pit:cherry_leaves",
+    "charcoal_pit:dragon_leaves",
+    "charcoal_pit:chestnut_leaves",
+    "charcoal_pit:orange_leaves",
+    "charcoal_pit:olive_leaves"
+  ]
+}

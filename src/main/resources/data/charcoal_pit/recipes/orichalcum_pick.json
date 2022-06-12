@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    " I ",
+    " I "
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:ingots/orichalcum"
+    },
+    "I": {
+      "item": "minecraft:prismarine_shard"
+    }
+  },
+  "result": {
+    "item": "charcoal_pit:orichalcum_pick"
+  }
+}

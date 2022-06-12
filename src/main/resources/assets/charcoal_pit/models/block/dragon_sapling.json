@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "charcoal_pit:block/dragon_fruit_sapling"
+  }
+}

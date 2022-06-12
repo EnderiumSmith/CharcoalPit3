@@ -1,0 +1,9 @@
+{
+  "type": "charcoal_pit:alloy",
+  "ingredient": {
+    "item": "charcoal_pit:clay_pot"
+  },
+  "result": "charcoal_pit:ceramic_pot",
+  "experience": 0.35,
+  "cookingtime": 200
+}

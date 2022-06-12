@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "charcoal_pit:log_pile",
+    "charcoal_pit:active_log_pile",
+    "charcoal_pit:bellows",
+    "charcoal_pit:barrel",
+    "charcoal_pit:banana_pod",
+    "charcoal_pit:coconut_pod",
+    "charcoal_pit:nest_box",
+    "charcoal_pit:feeding_through",
+    "charcoal_pit:feeding_through_acacia",
+    "charcoal_pit:feeding_through_birch",
+    "charcoal_pit:feeding_through_dark",
+    "charcoal_pit:feeding_through_crimson",
+    "charcoal_pit:feeding_through_jungle",
+    "charcoal_pit:feeding_through_warped",
+    "charcoal_pit:feeding_through_spruce"
+  ]
+}

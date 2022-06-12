@@ -1,0 +1,20 @@
+{
+  "type": "charcoal_pit:barrel",
+  "item_in":{
+  	"item":"charcoal_pit:ethoxide_bottle"
+  },
+  "in_amount": 2,
+  "fluid_in":{
+  	"tag":"forge:seed_oil",
+  	"amount": 4000
+  },
+  "fluid_out":{
+  	"fluid":"charcoal_pit:bio_diesel",
+  	"amount": 4000
+  },
+  "item_out":{
+  	"item":"charcoal_pit:glycerine"
+  },
+  "out_amount": 5,
+  "time": 24000
+}

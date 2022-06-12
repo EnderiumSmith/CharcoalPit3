@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "charcoal_pit:alloy_pig_iron"
+  },
+  "result": "charcoal_pit:alloy_steel",
+  "experience": 0.35,
+  "cookingtime": 200
+}

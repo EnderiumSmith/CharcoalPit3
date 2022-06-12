@@ -1,104 +1,127 @@
 package charcoalPit.block;
 
 
-import net.minecraft.block.*;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
+import charcoalPit.core.MethodHelper;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
 import java.util.Random;
 
-public class BlockBananaPod extends HorizontalBlock implements IGrowable {
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.BlockState;
+
+import javax.annotation.Nullable;
+
+public class BlockBananaPod extends HorizontalDirectionalBlock implements BonemealableBlock {
 	
-	public static final IntegerProperty AGE= BlockStateProperties.AGE_0_2;
-	public static final IntegerProperty COUNT=IntegerProperty.create("count",1,3);
+	public static final IntegerProperty AGE= BlockStateProperties.AGE_2;
+	//public static final IntegerProperty COUNT=IntegerProperty.create("count",1,3);
 	
-	public static VoxelShape North1=Block.makeCuboidShape(6.0D, 0.0D, 1.0D, 10.0D, 12.0D, 5.0D);
-	public static VoxelShape South1=Block.makeCuboidShape(6.0D, 0.0D, 11.0D, 10.0D, 12.0D, 15.0D);
-	public static VoxelShape East1=Block.makeCuboidShape(11.0D, 0.0D, 6.0D, 15.0D, 12.0D, 10.0D);
-	public static VoxelShape West1=Block.makeCuboidShape(1.0D, 0.0D, 6.0D, 5.0D, 12.0D, 10.0D);
+	public static VoxelShape North1=Block.box(6.0D, 0.0D, 1.0D, 10.0D, 12.0D, 5.0D);
+	public static VoxelShape South1=Block.box(6.0D, 0.0D, 11.0D, 10.0D, 12.0D, 15.0D);
+	public static VoxelShape East1=Block.box(11.0D, 0.0D, 6.0D, 15.0D, 12.0D, 10.0D);
+	public static VoxelShape West1=Block.box(1.0D, 0.0D, 6.0D, 5.0D, 12.0D, 10.0D);
 	
-	public static VoxelShape North2=VoxelShapes.combine(North1.withOffset(3D/16D,0D,0D),North1.withOffset(-3D/16D,0D,0D), IBooleanFunction.OR);
-	public static VoxelShape South2=VoxelShapes.combine(South1.withOffset(3D/16D,0D,0D),South1.withOffset(-3D/16D,0D,0D), IBooleanFunction.OR);
-	public static VoxelShape East2=VoxelShapes.combine(East1.withOffset(0D,0D,3D/16D),East1.withOffset(0D,0D,-3D/16D), IBooleanFunction.OR);
-	public static VoxelShape West2=VoxelShapes.combine(West1.withOffset(0D,0D,3D/16D),West1.withOffset(0D,0D,-3D/16D), IBooleanFunction.OR);
+	public static VoxelShape North2=Shapes.joinUnoptimized(North1.move(3D/16D,0D,0D),North1.move(-3D/16D,0D,0D), BooleanOp.OR);
+	public static VoxelShape South2=Shapes.joinUnoptimized(South1.move(3D/16D,0D,0D),South1.move(-3D/16D,0D,0D), BooleanOp.OR);
+	public static VoxelShape East2=Shapes.joinUnoptimized(East1.move(0D,0D,3D/16D),East1.move(0D,0D,-3D/16D), BooleanOp.OR);
+	public static VoxelShape West2=Shapes.joinUnoptimized(West1.move(0D,0D,3D/16D),West1.move(0D,0D,-3D/16D), BooleanOp.OR);
 	
-	public static VoxelShape North3=VoxelShapes.combine(North1,VoxelShapes.combine(North1.withOffset(5D/16D,0D,0D),North1.withOffset(-5D/16D,0D,0D),IBooleanFunction.OR),IBooleanFunction.OR);
-	public static VoxelShape South3=VoxelShapes.combine(South1,VoxelShapes.combine(South1.withOffset(5D/16D,0D,0D),South1.withOffset(-5D/16D,0D,0D),IBooleanFunction.OR),IBooleanFunction.OR);
-	public static VoxelShape East3=VoxelShapes.combine(East1,VoxelShapes.combine(East1.withOffset(0D,0D,5D/16D),East1.withOffset(0D,0D,-5D/16D),IBooleanFunction.OR),IBooleanFunction.OR);
-	public static VoxelShape West3=VoxelShapes.combine(West1,VoxelShapes.combine(West1.withOffset(0D,0D,5D/16D),West1.withOffset(0D,0D,-5D/16D),IBooleanFunction.OR),IBooleanFunction.OR);
+	public static VoxelShape North3=Shapes.joinUnoptimized(North1,Shapes.joinUnoptimized(North1.move(5D/16D,0D,0D),North1.move(-5D/16D,0D,0D),BooleanOp.OR),BooleanOp.OR);
+	public static VoxelShape South3=Shapes.joinUnoptimized(South1,Shapes.joinUnoptimized(South1.move(5D/16D,0D,0D),South1.move(-5D/16D,0D,0D),BooleanOp.OR),BooleanOp.OR);
+	public static VoxelShape East3=Shapes.joinUnoptimized(East1,Shapes.joinUnoptimized(East1.move(0D,0D,5D/16D),East1.move(0D,0D,-5D/16D),BooleanOp.OR),BooleanOp.OR);
+	public static VoxelShape West3=Shapes.joinUnoptimized(West1,Shapes.joinUnoptimized(West1.move(0D,0D,5D/16D),West1.move(0D,0D,-5D/16D),BooleanOp.OR),BooleanOp.OR);
 	
 	public BlockBananaPod(Properties p){
 		super(p);
 	}
 	
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(HORIZONTAL_FACING,AGE,COUNT);
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+		builder.add(FACING,AGE);
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
-		return state.get(AGE)<2;
+	public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
+		return state.getValue(AGE)<2;
 	}
 	
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
-		return false;
-	}
-	
-	@Override
-	public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) {
-		worldIn.setBlockState(pos,state.with(AGE,state.get(AGE)+1),2);
-	}
-	
-	@Override
-	public boolean ticksRandomly(BlockState state) {
+	public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) {
 		return true;
 	}
 	
 	@Override
-	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-		if (random.nextFloat()<0.375F) {
-			int i = state.get(AGE);
-			if (i < 2 && net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, worldIn.rand.nextInt(5) == 0)) {
-				worldIn.setBlockState(pos, state.with(AGE, i + 1), 2);
-				net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
+	public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) {
+		worldIn.setBlock(pos,state.setValue(AGE,state.getValue(AGE)+1),2);
+	}
+	
+	@Nullable
+	public BlockState getStateForPlacement(BlockPlaceContext pContext) {
+		BlockState blockstate = this.defaultBlockState();
+		LevelReader levelreader = pContext.getLevel();
+		BlockPos blockpos = pContext.getClickedPos();
+		
+		for(Direction direction : pContext.getNearestLookingDirections()) {
+			if (direction.getAxis().isHorizontal()) {
+				blockstate = blockstate.setValue(FACING, direction);
+				if (blockstate.canSurvive(levelreader, blockpos)) {
+					return blockstate;
+				}
 			}
-			if(i==2){
-				worldIn.destroyBlock(pos,true);
+		}
+		
+		return null;
+	}
+	
+	@Override
+	public boolean isRandomlyTicking(BlockState state) {
+		return true;
+	}
+	
+	@Override
+	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+		if (random.nextFloat()<0.166F) {
+			int i = state.getValue(AGE);
+			if (i < 2 && net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, worldIn.random.nextInt(5) == 0)) {
+				worldIn.setBlock(pos, state.setValue(AGE, i + 1), 2);
+				net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
 			}
 		}
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-		Block block = worldIn.getBlockState(pos.offset(state.get(HORIZONTAL_FACING))).getBlock();
-		return block.isIn(BlockTags.JUNGLE_LOGS);
+	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
+		return MethodHelper.isBlockInTag(worldIn.getBlockState(pos.relative(state.getValue(FACING))),BlockTags.JUNGLE_LOGS);
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-		return facing == stateIn.get(HORIZONTAL_FACING) && !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState() : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
+		return facing == stateIn.getValue(FACING) && !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		switch (state.get(COUNT)){
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+		/*switch (state.getValue(COUNT)){
 			case 1:{
-				switch (state.get(HORIZONTAL_FACING)){
+				switch (state.getValue(FACING)){
 					case NORTH:return North1;
 					case SOUTH:return South1;
 					case EAST:return  East1;
@@ -106,7 +129,7 @@ public class BlockBananaPod extends HorizontalBlock implements IGrowable {
 				}
 			}
 			case 2:{
-				switch (state.get(HORIZONTAL_FACING)){
+				switch (state.getValue(FACING)){
 					case NORTH:return North2;
 					case SOUTH:return South2;
 					case EAST:return  East2;
@@ -114,14 +137,20 @@ public class BlockBananaPod extends HorizontalBlock implements IGrowable {
 				}
 			}
 			case 3:{
-				switch (state.get(HORIZONTAL_FACING)){
+				switch (state.getValue(FACING)){
 					case NORTH:return North3;
 					case SOUTH:return South3;
 					case EAST:return  East3;
 					default:return West3;
 				}
 			}
+		}*/
+		switch (state.getValue(FACING)){
+			case NORTH:return North3;
+			case SOUTH:return South3;
+			case EAST:return  East3;
+			default:return West3;
 		}
-		return VoxelShapes.empty();
+		//return Shapes.empty();
 	}
 }

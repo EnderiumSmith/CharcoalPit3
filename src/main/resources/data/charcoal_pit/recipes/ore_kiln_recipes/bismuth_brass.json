@@ -1,0 +1,52 @@
+{
+  "type": "forge:conditional",
+
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:not",
+  		"value": {
+    		"type": "forge:tag_empty",
+  		"tag": "forge:ingots/bismuth_brass"
+  		}
+        },
+        {
+          "type": "forge:not",
+  		"value": {
+    		"type": "forge:tag_empty",
+  		"tag": "forge:ingots/zinc"
+  		}
+        },
+        {
+          "type": "forge:not",
+  		"value": {
+    		"type": "forge:tag_empty",
+  		"tag": "forge:ingots/bismuth"
+  		}
+        }
+      ],
+      "recipe": {
+      "type": "charcoal_pit:orekiln",
+  	"ingredients": [
+    	{
+        "item": "minecraft:copper_ingot"
+    	},
+    	{
+        "item": "minecraft:copper_ingot"
+    	},
+    	{
+        "tag": "forge:ingots/bismuth"
+    	},
+    	{
+        "tag": "forge:ingots/zinc"
+    	}
+  	],
+  	"result": {
+    	"tag": "forge:ingots/bismuth_brass"
+  	},
+  	"amount": 4
+      	}
+    }
+  ]
+}

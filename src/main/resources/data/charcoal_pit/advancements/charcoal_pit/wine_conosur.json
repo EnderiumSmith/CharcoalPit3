@@ -147,7 +147,7 @@
         "items": [
           {
             "item": "charcoal_pit:alcohol_bottle",
-      		"nbt":"{CustomPotionColor:10855682,Potion:\"charcoal_pit:spider_spirit\"}"
+      		"nbt":"{CustomPotionColor:16624200,Potion:\"charcoal_pit:glowberry_wine\"}"
           }
         ]
       }

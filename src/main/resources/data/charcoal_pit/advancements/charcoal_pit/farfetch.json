@@ -1,0 +1,33 @@
+{
+  "parent": "charcoal_pit:charcoal_pit/leek",
+  "display": {
+    "icon": {
+      "item": "charcoal_pit:farfetch_stew"
+    },
+    "title": {
+      "translate": "advancements.charcoal_pit.farfetch.title"
+    },
+    "description": {
+      "translate": "advancements.charcoal_pit.farfetch.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "item1": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:farfetch_stew"]
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "item1"
+    ]
+  ]
+}

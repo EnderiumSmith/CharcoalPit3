@@ -3,31 +3,32 @@ package charcoalPit.item;
 import java.util.List;
 
 import charcoalPit.core.ModItemRegistry;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.Nullable;
 
 public class ItemAeternalis extends Item{
 
 	public ItemAeternalis() {
-		super(new Properties().group(ModItemRegistry.CHARCOAL_PIT).rarity(Rarity.EPIC));
+		super(new Properties().tab(ModItemRegistry.CHARCOAL_PIT).rarity(Rarity.EPIC));
 	}
 	
 	@Override
-	public boolean hasEffect(ItemStack stack) {
+	public boolean isFoil(ItemStack stack) {
 		return true;
 	}
 	
 	@Override
-	public int getBurnTime(ItemStack itemStack) {
+	public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
 		return 200;
 	}
 	
@@ -43,8 +44,8 @@ public class ItemAeternalis extends Item{
 	
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE+"An ancient relic that poseses the power to burn eternal"));
+	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+		tooltip.add(new TextComponent(ChatFormatting.LIGHT_PURPLE+"An ancient relic that poseses the power to burn eternal"));
 	}
 
 }

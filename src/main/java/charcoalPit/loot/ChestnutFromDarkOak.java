@@ -2,13 +2,13 @@ package charcoalPit.loot;
 
 import charcoalPit.core.ModItemRegistry;
 import com.google.gson.JsonObject;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 
@@ -16,14 +16,14 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ChestnutFromDarkOak extends LootModifier {
-	protected ChestnutFromDarkOak(ILootCondition[] conditionsIn) {
+	protected ChestnutFromDarkOak(LootItemCondition[] conditionsIn) {
 		super(conditionsIn);
 	}
 	
 	@Nonnull
 	@Override
 	protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-		if(context.has(LootParameters.BLOCK_STATE)&&context.get(LootParameters.BLOCK_STATE).getBlock()== Blocks.DARK_OAK_LEAVES) {
+		if(context.hasParam(LootContextParams.BLOCK_STATE)&&context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock()== Blocks.DARK_OAK_LEAVES) {
 			for (int i = 0; i < generatedLoot.size(); i++) {
 				if (generatedLoot.get(i).getItem() == Items.APPLE) {
 					generatedLoot.remove(i);
@@ -38,7 +38,7 @@ public class ChestnutFromDarkOak extends LootModifier {
 	public static class Serializer extends GlobalLootModifierSerializer<ChestnutFromDarkOak>{
 		
 		@Override
-		public ChestnutFromDarkOak read(ResourceLocation location, JsonObject object, ILootCondition[] ailootcondition) {
+		public ChestnutFromDarkOak read(ResourceLocation location, JsonObject object, LootItemCondition[] ailootcondition) {
 			return new ChestnutFromDarkOak(ailootcondition);
 		}
 		

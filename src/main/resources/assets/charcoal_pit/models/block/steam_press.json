@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "charcoal_pit:block/steel_block",
+    "bottom": "charcoal_pit:block/bloomeryy_bottom",
+    "front": "charcoal_pit:block/steam_press_front",
+    "side": "charcoal_pit:block/steam_press_side"
+  }
+}

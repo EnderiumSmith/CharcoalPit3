@@ -1,0 +1,8 @@
+{
+    "parent": "charcoal_pit:block/fruit_leaves",
+    "textures": {
+    	"particle": "minecraft:block/acacia_leaves",
+        "side": "minecraft:block/acacia_leaves",
+        "overlay": "charcoal_pit:block/cherry_unripe"
+    }
+}

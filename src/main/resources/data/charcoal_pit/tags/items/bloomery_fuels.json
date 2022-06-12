@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:coal",
+    "minecraft:coal_block",
+    "minecraft:charcoal",
+    "charcoal_pit:charcoal_block",
+    "#charcoal_pit:blast_furnace_fuels"
+  ]
+}

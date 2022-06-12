@@ -1,0 +1,35 @@
+{
+  "parent": "charcoal_pit:charcoal_pit/root",
+  "display": {
+    "icon": {
+      "item": "charcoal_pit:croissant"
+    },
+    "title": {
+      "translate": "advancements.charcoal_pit.foods.title"
+    },
+    "description": {
+      "translate": "advancements.charcoal_pit.foods.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "item1": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:stick"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "item1"
+    ]
+  ]
+}

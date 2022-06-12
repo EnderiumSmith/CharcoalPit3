@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "charcoal_pit:block/distillery_top",
+    "bottom": "charcoal_pit:block/bloomeryy_bottom",
+    "front": "charcoal_pit:block/distillery_front_on",
+    "side": "charcoal_pit:block/distillery_side"
+  }
+}

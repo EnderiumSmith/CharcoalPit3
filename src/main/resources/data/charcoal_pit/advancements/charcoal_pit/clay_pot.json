@@ -1,5 +1,5 @@
 {
-  "parent": "charcoal_pit:charcoal_pit/straw",
+  "parent": "charcoal_pit:charcoal_pit/flint",
   "display": {
     "icon": {
       "item": "charcoal_pit:clay_pot"
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "charcoal_pit:clay_pot"
+            "items": ["charcoal_pit:clay_pot"]
           }
         ]
       }

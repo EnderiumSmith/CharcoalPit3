@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "charcoal_pit:alloy_pig_iron"
+  },
+  "result": "minecraft:iron_ingot",
+  "experience": 0.35,
+  "cookingtime": 200
+}

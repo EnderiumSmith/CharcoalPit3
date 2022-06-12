@@ -1,0 +1,60 @@
+{
+    "pools": [
+        {
+            "name": "main",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "charcoal_pit:apple_sapling",
+                    "weight": 2
+                },
+                {
+                    "type": "item",
+                    "name": "charcoal_pit:cherry_sapling",
+                    "weight": 2
+                },
+                {
+                    "type": "item",
+                    "name": "charcoal_pit:dragon_sapling",
+                    "weight": 2
+                },
+                {
+                    "type": "item",
+                    "name": "charcoal_pit:chestnut_sapling",
+                    "weight": 2,
+                    "functions": [
+            		{
+              		"function": "minecraft:set_count",
+              		"count": 4
+              		}
+              		]
+                },
+                {
+                    "type": "item",
+                    "name": "charcoal_pit:olive_sapling",
+                    "weight": 2
+                },
+                {
+                    "type": "item",
+                    "name": "charcoal_pit:orange_sapling",
+                    "weight": 2
+                },
+                {
+                    "type": "item",
+                    "name": "charcoal_pit:banana",
+                    "weight": 2
+                },
+                {
+                    "type": "item",
+                    "name": "charcoal_pit:coconut",
+                    "weight": 2
+                },
+                {
+                    "type": "empty",
+                    "weight": 40
+                }
+            ]
+        }
+    ]
+}

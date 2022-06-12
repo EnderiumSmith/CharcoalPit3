@@ -4,40 +4,39 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import charcoalPit.core.ModItemRegistry;
-import net.minecraft.block.AbstractFireBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CampfireBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceContext.BlockMode;
-import net.minecraft.util.math.RayTraceContext.FluidMode;
-import net.minecraft.util.math.RayTraceResult.Type;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.BaseFireBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.ClipContext.Block;
+import net.minecraft.world.level.ClipContext.Fluid;
+import net.minecraft.world.phys.HitResult.Type;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 
 public class ItemFireStarter extends Item{
 
 	public ItemFireStarter() {
-		super(new Properties().group(ModItemRegistry.CHARCOAL_PIT));
+		super(new Properties().tab(ModItemRegistry.CHARCOAL_PIT));
 	}
 	
 	@Override
@@ -46,73 +45,73 @@ public class ItemFireStarter extends Item{
 	}
 	
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
-		return UseAction.BOW;
+	public UseAnim getUseAnimation(ItemStack stack) {
+		return UseAnim.BOW;
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		Vector3d eyePos=new Vector3d(playerIn.getPosX(), playerIn.getPosYEye(), playerIn.getPosZ());
-		Vector3d rangedLookRot=playerIn.getLookVec().scale(playerIn.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue());
-		Vector3d lookVec=eyePos.add(rangedLookRot);
-		BlockRayTraceResult trace=worldIn.rayTraceBlocks(new RayTraceContext(eyePos, lookVec, BlockMode.OUTLINE, FluidMode.NONE, playerIn));
-		ItemStack stack= playerIn.getHeldItem(handIn);
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+		Vec3 eyePos=new Vec3(playerIn.getX(), playerIn.getEyeY(), playerIn.getZ());
+		Vec3 rangedLookRot=playerIn.getLookAngle().scale(playerIn.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue());
+		Vec3 lookVec=eyePos.add(rangedLookRot);
+		BlockHitResult trace=worldIn.clip(new ClipContext(eyePos, lookVec, Block.OUTLINE, Fluid.NONE, playerIn));
+		ItemStack stack= playerIn.getItemInHand(handIn);
 		if(trace.getType()==Type.BLOCK) {
-			EntityRayTraceResult trace2=ItemFireStarter.rayTraceEntities(worldIn, null, eyePos, trace.getHitVec(), new AxisAlignedBB(eyePos, trace.getHitVec()), null);
+			EntityHitResult trace2=ItemFireStarter.rayTraceEntities(worldIn, null, eyePos, trace.getLocation(), new AABB(eyePos, trace.getLocation()), x->true);
 			if(trace2==null) {
-				playerIn.setActiveHand(handIn);
-				return new ActionResult<ItemStack>(ActionResultType.SUCCESS, stack);
+				playerIn.startUsingItem(handIn);
+				return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
 			}else {
-				return new ActionResult<ItemStack>(ActionResultType.FAIL, stack);
+				return new InteractionResultHolder<ItemStack>(InteractionResult.FAIL, stack);
 			}
 		}else {
-			return new ActionResult<ItemStack>(ActionResultType.FAIL, stack);
+			return new InteractionResultHolder<ItemStack>(InteractionResult.FAIL, stack);
 		}
 	}
 	
 	@Override
 	public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
-		Vector3d eyePos=new Vector3d(player.getPosX(), player.getPosYEye(), player.getPosZ());
-		Vector3d rangedLookRot=player.getLookVec().scale(player.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue());
-		Vector3d lookVec=eyePos.add(rangedLookRot);
-		BlockRayTraceResult trace=player.world.rayTraceBlocks(new RayTraceContext(eyePos, lookVec, BlockMode.OUTLINE, FluidMode.NONE, player));
-		EntityRayTraceResult trace2=ItemFireStarter.rayTraceEntities(player.world, null, eyePos, trace.getHitVec(), new AxisAlignedBB(eyePos, trace.getHitVec()), null);
-		if(!player.world.isRemote) {
+		Vec3 eyePos=new Vec3(player.getX(), player.getEyeY(), player.getZ());
+		Vec3 rangedLookRot=player.getLookAngle().scale(player.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue());
+		Vec3 lookVec=eyePos.add(rangedLookRot);
+		BlockHitResult trace=player.level.clip(new ClipContext(eyePos, lookVec, Block.OUTLINE, Fluid.NONE, player));
+		EntityHitResult trace2=ItemFireStarter.rayTraceEntities(player.level, null, eyePos, trace.getLocation(), new AABB(eyePos, trace.getLocation()), x->true);
+		if(!player.level.isClientSide) {
 			if(trace.getType()==Type.BLOCK&&trace2==null) {
 				if(count==1) {
-					BlockPos hit=new BlockPos(trace.getPos().offset(trace.getFace()));
-					if(CampfireBlock.canBeLit(player.world.getBlockState(trace.getPos()))){
-						player.world.playSound(null, trace.getPos(), SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1F, Item.random.nextFloat()*0.4F+0.8F);
-						player.world.setBlockState(trace.getPos(), player.world.getBlockState(trace.getPos()).with(BlockStateProperties.LIT, Boolean.valueOf(true)), 11);
+					BlockPos hit=new BlockPos(trace.getBlockPos().relative(trace.getDirection()));
+					if(CampfireBlock.canLight(player.level.getBlockState(trace.getBlockPos()))){
+						player.level.playSound(null, trace.getBlockPos(), SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1F, player.level.getRandom().nextFloat()*0.4F+0.8F);
+						player.level.setBlock(trace.getBlockPos(), player.level.getBlockState(trace.getBlockPos()).setValue(BlockStateProperties.LIT, Boolean.valueOf(true)), 11);
 						stack.shrink(1);
-					}else if(AbstractFireBlock.canLightBlock(player.world, hit, Direction.UP)) {
-						BlockState blockstate1 = AbstractFireBlock.getFireForPlacement(player.world, hit);
-						player.world.setBlockState(hit, blockstate1);
-						player.world.playSound(null, hit, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1F, Item.random.nextFloat()*0.4F+0.8F);
+					}else if(BaseFireBlock.canBePlacedAt(player.level, hit, Direction.UP)) {
+						BlockState blockstate1 = BaseFireBlock.getState(player.level, hit);
+						player.level.setBlockAndUpdate(hit, blockstate1);
+						player.level.playSound(null, hit, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1F, player.level.getRandom().nextFloat()*0.4F+0.8F);
 						stack.shrink(1);
 					}else {
-						player.stopActiveHand();
+						player.releaseUsingItem();
 					}
 				}
 			}else {
-				player.stopActiveHand();
+				player.releaseUsingItem();
 			}
 		}else {
 			if(trace.getType()==Type.BLOCK&&trace2==null) {
-				player.world.addParticle(ParticleTypes.SMOKE, trace.getHitVec().x, trace.getHitVec().y, trace.getHitVec().z, 0, 0, 0);
+				player.level.addParticle(ParticleTypes.SMOKE, trace.getLocation().x, trace.getLocation().y, trace.getLocation().z, 0, 0, 0);
 			}
 		}
 	}
 	
-	public static EntityRayTraceResult rayTraceEntities(World worldIn, Entity projectile, Vector3d startVec, Vector3d endVec, AxisAlignedBB boundingBox, Predicate<Entity> filter) {
+	public static EntityHitResult rayTraceEntities(Level worldIn, Entity projectile, Vec3 startVec, Vec3 endVec, AABB boundingBox, Predicate<Entity> filter) {
 	      double d0 = Double.MAX_VALUE;
 	      Entity entity = null;
 
-	      for(Entity entity1 : worldIn.getEntitiesInAABBexcluding(projectile, boundingBox, filter)) {
-	         AxisAlignedBB axisalignedbb = entity1.getBoundingBox();
-	         Optional<Vector3d> optional = axisalignedbb.rayTrace(startVec, endVec);
+	      for(Entity entity1 : worldIn.getEntities(projectile, boundingBox, filter)) {
+	         AABB axisalignedbb = entity1.getBoundingBox();
+	         Optional<Vec3> optional = axisalignedbb.clip(startVec, endVec);
 	         if (optional.isPresent()) {
-	            double d1 = startVec.squareDistanceTo(optional.get());
+	            double d1 = startVec.distanceToSqr(optional.get());
 	            if (d1 < d0) {
 	               entity = entity1;
 	               d0 = d1;
@@ -120,7 +119,7 @@ public class ItemFireStarter extends Item{
 	         }
 	      }
 
-	      return entity == null ? null : new EntityRayTraceResult(entity);
+	      return entity == null ? null : new EntityHitResult(entity);
 	   }
 	
 }

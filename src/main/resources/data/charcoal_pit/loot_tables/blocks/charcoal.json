@@ -6,14 +6,14 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 50,
-	  "quality": 10,
+          "weight": 80,
+	  "quality": 5,
           "name": "minecraft:charcoal"
         },
         {
           "type": "minecraft:item",
-          "weight": 50,
-	  "quality": -10,
+          "weight": 20,
+	  "quality": -5,
           "name": "charcoal_pit:ash"
         }
       ]

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:coal_coke",
+    "minecraft:blaze_rod",
+    "charcoal_pit:aeternalis_fuel",
+    "charcoal_pit:coke_block"
+  ]
+}

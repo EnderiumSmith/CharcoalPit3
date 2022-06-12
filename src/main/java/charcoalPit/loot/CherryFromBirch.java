@@ -1,14 +1,14 @@
 package charcoalPit.loot;
 
 import com.google.gson.JsonObject;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -20,7 +20,7 @@ public class CherryFromBirch extends LootModifier {
 	
 	public Item item;
 	
-	public CherryFromBirch(ILootCondition[] conditionsIn, Item item){
+	public CherryFromBirch(LootItemCondition[] conditionsIn, Item item){
 		super(conditionsIn);
 		this.item=item;
 	}
@@ -28,7 +28,7 @@ public class CherryFromBirch extends LootModifier {
 	@Nonnull
 	@Override
 	protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-		if(context.has(LootParameters.BLOCK_STATE)&&context.get(LootParameters.BLOCK_STATE).getBlock()== Blocks.BIRCH_LEAVES)
+		if(context.hasParam(LootContextParams.BLOCK_STATE)&&context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock()== Blocks.BIRCH_LEAVES)
 			generatedLoot.add(new ItemStack(item));
 		return generatedLoot;
 	}
@@ -36,8 +36,8 @@ public class CherryFromBirch extends LootModifier {
 	public static class Serializer extends GlobalLootModifierSerializer<CherryFromBirch>{
 		
 		@Override
-		public CherryFromBirch read(ResourceLocation location, JsonObject object, ILootCondition[] ailootcondition) {
-			Item straw= ForgeRegistries.ITEMS.getValue(new ResourceLocation(JSONUtils.getString(object, "item")));
+		public CherryFromBirch read(ResourceLocation location, JsonObject object, LootItemCondition[] ailootcondition) {
+			Item straw= ForgeRegistries.ITEMS.getValue(new ResourceLocation(GsonHelper.getAsString(object, "item")));
 			return new CherryFromBirch(ailootcondition,straw);
 		}
 		

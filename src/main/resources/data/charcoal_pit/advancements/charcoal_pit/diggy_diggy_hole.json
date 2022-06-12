@@ -22,8 +22,8 @@
       "conditions": {
         "items": [
           {
-            "item": "charcoal_pit:alcohol_bottle",
-            "nbt":"{CustomPotionColor:16347910,Potion:\"charcoal_pit:honey_dewois\"}"
+          	"items":["charcoal_pit:alcohol_bottle"],
+          	"nbt":"{CustomPotionColor:16347910,Potion:\"charcoal_pit:honey_dewois\"}"
           }
         ]
       }

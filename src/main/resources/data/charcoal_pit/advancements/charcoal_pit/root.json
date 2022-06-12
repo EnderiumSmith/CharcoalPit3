@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:stick"
+            "items": ["minecraft:stick"]
           }
         ]
       }

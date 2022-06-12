@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "has_bay=true,rotated=true": {
+      "model": "charcoal_pit:block/feeding_through_jungle"
+    },
+    "has_bay=true,rotated=false": {
+      "model": "charcoal_pit:block/feeding_through_jungle",
+      "y": 90
+    },
+    "has_bay=false,rotated=true": {
+      "model": "charcoal_pit:block/feeding_through_jungle_empty"
+    },
+    "has_bay=false,rotated=false": {
+      "model": "charcoal_pit:block/feeding_through_jungle_empty",
+      "y": 90
+    }
+  }
+}

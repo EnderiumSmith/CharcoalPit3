@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 @EventBusSubscriber(modid=CharcoalPit.MODID, bus=Bus.MOD)
 public class ModLootModifiers {
 	
-	@SubscribeEvent
 	public static void registerLootModifiers(RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
 		event.getRegistry().registerAll(new StrawFromGrass.Serializer().setRegistryName("straw_from_grass"),
 				new KernalsFromGrass.Serializer().setRegistryName("kernels_from_grass"),

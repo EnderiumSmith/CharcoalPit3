@@ -22,7 +22,7 @@
       "conditions": {
         "items": [
           {
-            "item": "charcoal_pit:alcohol_bottle"
+            "items": ["charcoal_pit:alcohol_bottle"]
           }
         ]
       }

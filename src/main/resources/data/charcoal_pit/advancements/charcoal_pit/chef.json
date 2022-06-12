@@ -1,0 +1,245 @@
+{
+  "parent": "charcoal_pit:charcoal_pit/farfetch",
+  "display": {
+    "icon": {
+      "item": "charcoal_pit:cooked_egg"
+    },
+    "title": {
+      "translate": "advancements.charcoal_pit.chef.title"
+    },
+    "description": {
+      "translate": "advancements.charcoal_pit.chef.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 200
+  },
+  "criteria": {
+    "item1": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:cherry"]
+        }
+      }
+    },
+    "item2": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:chestnut"]
+        }
+      }
+    },
+    "item3": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:dragon_fruit"]
+        }
+      }
+    },
+    "item4": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:banana"]
+        }
+      }
+    },
+    "item5": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:coconut"]
+        }
+      }
+    },
+    "item6": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:cheese"]
+        }
+      }
+    },
+    "item7": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:leek"]
+        }
+      }
+    },
+    "item8": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:farfetch_stew"]
+        }
+      }
+    },
+    "item9": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:orange"]
+        }
+      }
+    },
+    "item10": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:cooked_calamari"]
+        }
+      }
+    },
+    "item11": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:cooked_egg"]
+        }
+      }
+    },
+    "item12": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:pickled_olives"]
+        }
+      }
+    },
+    "item13": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:sunflower_seeds"]
+        }
+      }
+    },
+    "item14": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:chocolate"]
+        }
+      }
+    },
+    "item15": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:sushi"]
+        }
+      }
+    },
+    "item16": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:croissant"]
+        }
+      }
+    },
+    "item17": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:fugu"]
+        }
+      }
+    },
+    "item18": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:tricolor_dango"]
+        }
+      }
+    },
+    "item19": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:kebabs"]
+        }
+      }
+    },
+    "item20": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": ["charcoal_pit:serinan_stew"]
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "item1"
+    ],
+    [
+      "item2"
+    ],
+    [
+      "item3"
+    ],
+    [
+      "item4"
+    ],
+    [
+      "item5"
+    ],
+    [
+      "item6"
+    ],
+    [
+      "item7"
+    ],
+    [
+      "item8"
+    ],
+    [
+      "item9"
+    ],
+    [
+      "item10"
+    ],
+    [
+      "item11"
+    ],
+    [
+      "item12"
+    ],
+    [
+      "item13"
+    ],
+    [
+      "item14"
+    ],
+    [
+      "item15"
+    ],
+    [
+      "item16"
+    ],
+    [
+      "item17"
+    ],
+    [
+      "item18"
+    ],
+    [
+      "item19"
+    ],
+    [
+      "item20"
+    ]
+  ]
+}

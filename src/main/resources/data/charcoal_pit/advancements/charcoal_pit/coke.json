@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "charcoal_pit:coke"
+            "items": ["charcoal_pit:coke"]
           }
         ]
       }

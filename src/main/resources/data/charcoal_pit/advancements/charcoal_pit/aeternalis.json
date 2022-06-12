@@ -24,7 +24,7 @@
       "conditions": {
         "items": [
           {
-            "item": "charcoal_pit:aeternalis_fuel"
+            "items": ["charcoal_pit:aeternalis_fuel"]
           }
         ]
       }

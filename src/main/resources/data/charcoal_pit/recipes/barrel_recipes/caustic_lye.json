@@ -1,0 +1,16 @@
+{
+  "type": "charcoal_pit:barrel",
+  "item_in":{
+  	"tag":"forge:dusts/ash"
+  },
+  "fluid_in":{
+  	"fluid":"minecraft:water",
+  	"amount": 100
+  },
+  "fluid_out":{
+  	"fluid":"charcoal_pit:caustic_lye",
+  	"amount": 100
+  },
+  "flags": 1,
+  "time": 40
+}

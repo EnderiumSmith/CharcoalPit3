@@ -1,0 +1,10 @@
+{
+  "type": "charcoal_pit:squish",
+  "input":{
+  	"item":"charcoal_pit:chestnut"
+  },
+  "output":{
+  	"fluid":"charcoal_pit:walnut_oil",
+  	"amount": 50
+  }
+}

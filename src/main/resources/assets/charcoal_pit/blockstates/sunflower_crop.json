@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "charcoal_pit:block/sunflower_crop0"
+    },
+    "age=1": {
+      "model": "charcoal_pit:block/sunflower_crop1"
+    },
+    "age=2": {
+      "model": "charcoal_pit:block/sunflower_crop1"
+    },
+    "age=3": {
+      "model": "charcoal_pit:block/sunflower_crop2"
+    },
+    "age=4": {
+      "model": "charcoal_pit:block/sunflower_crop2"
+    },
+    "age=5": {
+      "model": "charcoal_pit:block/sunflower_crop3"
+    },
+    "age=6": {
+      "model": "charcoal_pit:block/sunflower_crop3"
+    },
+    "age=7": {
+      "model": "charcoal_pit:block/sunflower_crop"
+    }
+  }
+}

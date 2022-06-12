@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:calcite",
+    "minecraft:dripstone_block",
+    {
+    "id":"quark:limestone",
+    "required":false
+    },
+    {
+    "id":"astralsorcery:marble_raw",
+    "required":false
+    },
+    {
+    "id":"#forge:stone/marble",
+    "required":false
+    },
+    {
+    "id":"#forge:stone/dolomite",
+    "required":false
+    },
+    {
+    "id":"#forge:stone/limestone",
+    "required":false
+    },
+    {
+    "id":"#forge:stone/chalk",
+    "required":false
+    }
+  ]
+}

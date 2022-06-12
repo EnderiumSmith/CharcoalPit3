@@ -1,0 +1,23 @@
+{
+    "parent": "charcoal_pit:block/orange_leaves",
+    "overrides": [
+        {
+            "predicate": {
+                "charcoal_pit:stage": 0.25
+            },
+            "model": "charcoal_pit:block/orange_leaves_flower"
+        },
+        {
+            "predicate": {
+                "charcoal_pit:stage": 0.5
+            },
+            "model": "charcoal_pit:block/orange_leaves_unripe"
+        },
+        {
+            "predicate": {
+                "charcoal_pit:stage": 1
+            },
+            "model": "charcoal_pit:block/orange_leaves_ripe"
+        }
+    ]
+}

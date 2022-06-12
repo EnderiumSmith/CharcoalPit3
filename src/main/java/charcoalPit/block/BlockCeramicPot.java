@@ -5,161 +5,150 @@ import java.util.List;
 
 import charcoalPit.core.MethodHelper;
 import charcoalPit.gui.CeramicPotContainer;
+import charcoalPit.tile.TileBarrel;
 import charcoalPit.tile.TileCeramicPot;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.LootContext.Builder;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.LootContext.Builder;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class BlockCeramicPot extends Block{
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraftforge.network.NetworkHooks;
+
+public class BlockCeramicPot extends Block implements EntityBlock {
 	
-	public static final VoxelShape POT=VoxelShapes.create(2D/16D, 0D, 2D/16D, 14D/16D, 1D, 14D/16D);
+	public static final VoxelShape POT=Shapes.box(2D/16D, 0D, 2D/16D, 14D/16D, 1D, 14D/16D);
 
 	public BlockCeramicPot(MaterialColor color) {
-		super(Properties.create(Material.SHULKER, color).hardnessAndResistance(1.25F,4.2F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE));
+		super(Properties.of(Material.SHULKER_SHELL, color).strength(1.25F,4.2F).sound(SoundType.STONE));
 	}
 	
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
-			Hand handIn, BlockRayTraceResult hit) {
-		if(!worldIn.isRemote) {
-			NetworkHooks.openGui((ServerPlayerEntity)player, new INamedContainerProvider() {
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player,
+			InteractionHand handIn, BlockHitResult hit) {
+		if(!worldIn.isClientSide) {
+			NetworkHooks.openGui((ServerPlayer)player, new MenuProvider() {
 				
 				@Override
-				public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
+				public AbstractContainerMenu createMenu(int p_createMenu_1_, Inventory p_createMenu_2_, Player p_createMenu_3_) {
 					return new CeramicPotContainer(p_createMenu_1_, pos, p_createMenu_2_);
 				}
 				
 				@Override
-				public ITextComponent getDisplayName() {
-					return new TranslationTextComponent("screen.charcoal_pit.ceramic_pot");
+				public Component getDisplayName() {
+					return new TranslatableComponent("screen.charcoal_pit.ceramic_pot");
 				}
 			}, pos);;
 		}
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
-	
-	/*@Override
-	public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
-		TileCeramicPot tile=((TileCeramicPot)worldIn.getTileEntity(pos));
-		ItemStack stack=new ItemStack(this);
-		stack.setTagInfo("inventory", tile.inventory.serializeNBT());
-		ItemEntity itementity = new ItemEntity(worldIn, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, stack);
-        itementity.setDefaultPickupDelay();
-        worldIn.addEntity(itementity);
-		super.onBlockHarvested(worldIn, pos, state, player);
-	}*/
 	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, Builder builder) {
-		TileCeramicPot tile=((TileCeramicPot)builder.get(LootParameters.BLOCK_ENTITY));
+		TileCeramicPot tile=((TileCeramicPot)builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY));
 		ItemStack stack=new ItemStack(this);
-		stack.setTagInfo("inventory", tile.inventory.serializeNBT());
+		stack.addTagElement("inventory", tile.inventory.serializeNBT());
 		return Arrays.asList(stack);
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
 		if(stack.hasTag()&&stack.getTag().contains("inventory")) {
-			((TileCeramicPot)worldIn.getTileEntity(pos)).inventory.deserializeNBT(stack.getTag().getCompound("inventory"));
+			((TileCeramicPot)worldIn.getBlockEntity(pos)).inventory.deserializeNBT(stack.getTag().getCompound("inventory"));
 		}
-		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+		super.setPlacedBy(worldIn, pos, state, placer, stack);
 	}
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-		worldIn.updateComparatorOutputLevel(pos, state.getBlock());
-		super.onReplaced(state, worldIn, pos, newState, isMoving);
+	public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+		worldIn.updateNeighbourForOutputSignal(pos, state.getBlock());
+		super.onRemove(state, worldIn, pos, newState, isMoving);
 	}
 	
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip,
-			ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip,
+			TooltipFlag flagIn) {
 		if(stack.hasTag()&&stack.getTag().contains("inventory")) {
-			CompoundNBT compoundnbt = stack.getTag().getCompound("inventory");
+			CompoundTag compoundnbt = stack.getTag().getCompound("inventory");
 		    ItemStackHandler items=new ItemStackHandler(9);
 		    items.deserializeNBT(compoundnbt);
 		    for(int k=0;k<9;k++) {
 		    	ItemStack itemstack=items.getStackInSlot(k);
 		    	if(!itemstack.isEmpty()) {
-		    		IFormattableTextComponent iformattabletextcomponent = itemstack.getDisplayName().copyRaw();
-	                iformattabletextcomponent.appendString(" x").appendString(String.valueOf(itemstack.getCount()));
+		    		MutableComponent iformattabletextcomponent = itemstack.getHoverName().plainCopy();
+	                iformattabletextcomponent.append(" x").append(String.valueOf(itemstack.getCount()));
 	                tooltip.add(iformattabletextcomponent);
 		    	}
 		    }
 	    }
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 	
 	@Override
-	public PushReaction getPushReaction(BlockState state) {
+	public PushReaction getPistonPushReaction(BlockState state) {
 		return PushReaction.DESTROY;
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
 		return POT;
 	}
 	
 	@Override
-	public boolean hasComparatorInputOverride(BlockState state) {
+	public boolean hasAnalogOutputSignal(BlockState state) {
 		return true;
 	}
 	
 	@Override
-	public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
-		return MethodHelper.calcRedstoneFromInventory(((TileCeramicPot)worldIn.getTileEntity(pos)).inventory);
+	public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) {
+		return MethodHelper.calcRedstoneFromInventory(((TileCeramicPot)worldIn.getBlockEntity(pos)).inventory);
 	}
 	
 	@Override
-	public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
-		TileCeramicPot tile=((TileCeramicPot)worldIn.getTileEntity(pos));
+	public ItemStack getCloneItemStack(BlockGetter worldIn, BlockPos pos, BlockState state) {
+		TileCeramicPot tile=((TileCeramicPot)worldIn.getBlockEntity(pos));
 		ItemStack stack=new ItemStack(this);
-		stack.setTagInfo("inventory", tile.inventory.serializeNBT());
+		stack.addTagElement("inventory", tile.inventory.serializeNBT());
 		return stack;
 	}
 	
 	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
-	
-	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new TileCeramicPot();
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new TileCeramicPot(pos,state);
 	}
 
 }

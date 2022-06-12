@@ -1,0 +1,6 @@
+{
+  "parent": "charcoal_pit:block/big_crop",
+  "textures": {
+    "crop": "charcoal_pit:block/corn0"
+  }
+}

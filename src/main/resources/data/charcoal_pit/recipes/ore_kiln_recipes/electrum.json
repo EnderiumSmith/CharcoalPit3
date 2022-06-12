@@ -1,31 +1,39 @@
 {
-  "type": "charcoal_pit:orekiln",
-  "ingredients": [
-    [
+  "type": "forge:conditional",
+
+  "recipes": [
+    {
+      "conditions": [
         {
-          "tag": "forge:ores/gold"
+          "type": "forge:not",
+  		"value": {
+    		"type": "forge:tag_empty",
+  		"tag": "forge:ingots/electrum"
+  		}
         },
         {
-          "tag": "forge:ingots/gold"
-        },
-        {
-          "tag": "forge:dusts/gold"
+          "type": "forge:not",
+  		"value": {
+    		"type": "forge:tag_empty",
+  		"tag": "forge:ingots/silver"
+  		}
         }
-    ],
-    [
-        {
-          "tag": "forge:ores/silver"
-        },
-        {
-          "tag": "forge:ingots/silver"
-        },
-        {
-          "tag": "forge:dusts/silver"
-        }
-    ]
-  ],
-  "result": {
-    "tag": "forge:ingots/electrum"
-  },
-  "amount": 2
+      ],
+      "recipe": {
+      "type": "charcoal_pit:orekiln",
+  	"ingredients": [
+    	{
+        "item": "minecraft:gold_ingot"
+    	},
+    	{
+        "tag": "forge:ingots/silver"
+    	}
+  	],
+  	"result": {
+    	"tag": "forge:ingots/electrum"
+  	},
+  	"amount": 2
+      	}
+    }
+  ]
 }

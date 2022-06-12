@@ -39,6 +39,8 @@
           "minecraft:resistance": {},
           "minecraft:slow_falling": {},
           "minecraft:blindness": {},
+          "minecraft:glowing": {},
+          "minecraft:night_vision": {},
           "charcoal_pit:poison_resistance": {},
           "charcoal_pit:wither_resistance": {},
           "charcoal_pit:drunk": {}

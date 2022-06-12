@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "charcoal_pit:corn"
+  },
+  "result": {
+  	"item": "charcoal_pit:popcorn",
+  	"count": 3
+ 	 },
+  "experience": 0.35,
+  "cookingtime": 100
+}

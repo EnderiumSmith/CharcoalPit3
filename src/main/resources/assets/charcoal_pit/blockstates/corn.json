@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "charcoal_pit:block/corn0"
+    },
+    "age=1": {
+      "model": "charcoal_pit:block/corn1"
+    },
+    "age=2": {
+      "model": "charcoal_pit:block/corn1"
+    },
+    "age=3": {
+      "model": "charcoal_pit:block/corn2"
+    },
+    "age=4": {
+      "model": "charcoal_pit:block/corn3"
+    },
+    "age=5": {
+      "model": "charcoal_pit:block/corn4"
+    },
+    "age=6": {
+      "model": "charcoal_pit:block/corn4"
+    },
+    "age=7": {
+      "model": "charcoal_pit:block/corn5"
+    }
+  }
+}

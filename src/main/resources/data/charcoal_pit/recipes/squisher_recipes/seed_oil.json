@@ -1,0 +1,10 @@
+{
+  "type": "charcoal_pit:squish",
+  "input":{
+  	"tag":"forge:seeds"
+  },
+  "output":{
+  	"fluid":"charcoal_pit:seed_oil",
+  	"amount": 10
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:dried_kelp"
+    },
+    {
+      "tag": "charcoal_pit:fish"
+    },
+    {
+      "item": "minecraft:dried_kelp"
+    },
+    {
+      "tag": "forge:dusts/flour"
+    }
+  ],
+  "result": {
+    "item": "charcoal_pit:sushi",
+    "count":2
+  }
+}

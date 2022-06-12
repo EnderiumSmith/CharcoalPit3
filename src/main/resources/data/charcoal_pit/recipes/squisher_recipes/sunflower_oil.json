@@ -1,0 +1,10 @@
+{
+  "type": "charcoal_pit:squish",
+  "input":{
+  	"item":"charcoal_pit:sunflower_seeds"
+  },
+  "output":{
+  	"fluid":"charcoal_pit:sunflower_oil",
+  	"amount": 20
+  }
+}

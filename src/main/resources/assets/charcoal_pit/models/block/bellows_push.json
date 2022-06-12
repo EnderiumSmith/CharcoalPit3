@@ -5,7 +5,7 @@
             "particle": "#bellow_middle",
 	    "bellow_front": "charcoal_pit:block/bellow_front",
 	    "bellow_middle": "charcoal_pit:block/bellow_middle",
-	    "bellow_back": "minecraft:block/oak_planks"
+	    "bellow_back": "minecraft:block/spruce_planks"
         },
 	"elements": [
 		{

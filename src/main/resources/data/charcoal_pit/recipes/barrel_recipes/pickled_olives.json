@@ -1,0 +1,16 @@
+{
+  "type": "charcoal_pit:barrel",
+  "item_in":{
+  	"item":"charcoal_pit:olives"
+  },
+  "fluid_in":{
+  	"fluid":"charcoal_pit:caustic_lye",
+  	"amount": 5
+  },
+  "item_out":{
+  	"item":"charcoal_pit:pickled_olives"
+  },
+  "out_amount":1,
+  "flags": 1,
+  "time": 24000
+}

@@ -1,8 +1,0 @@
-{
-  "type": "charcoal_pit:pottery",
-  "ingredient": {
-    "item": "minecraft:green_terracotta"
-  },
-  "result": "minecraft:green_glazed_terracotta",
-  "experience": 0.35
-}

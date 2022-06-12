@@ -1,10 +1,9 @@
 package charcoalPit.item;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.InteractionResult;
 
 public class ItemSapling extends Item {
 	public final BlockState state;
@@ -13,18 +12,18 @@ public class ItemSapling extends Item {
 		this.state=state;
 	}
 	
-	public ActionResultType onItemUse(ItemUseContext context) {
-		ActionResultType actionresulttype = this.tryPlace(context);
-		return !actionresulttype.isSuccessOrConsume() && this.isFood() ? this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType() : actionresulttype;
+	public InteractionResult useOn(UseOnContext context) {
+		InteractionResult actionresulttype = this.tryPlace(context);
+		return !actionresulttype.consumesAction() && this.isEdible() ? this.use(context.getLevel(), context.getPlayer(), context.getHand()).getResult() : actionresulttype;
 	}
 	
-	public ActionResultType tryPlace(ItemUseContext context){
-		if(state.isValidPosition(context.getWorld(),context.getPos().offset(context.getFace()))){
-			if(context.getWorld().getBlockState(context.getPos().offset(context.getFace())).getMaterial().isReplaceable()){
-				context.getWorld().setBlockState(context.getPos().offset(context.getFace()),state);
-				return ActionResultType.SUCCESS;
+	public InteractionResult tryPlace(UseOnContext context){
+		if(state.canSurvive(context.getLevel(),context.getClickedPos().relative(context.getClickedFace()))){
+			if(context.getLevel().getBlockState(context.getClickedPos().relative(context.getClickedFace())).getMaterial().isReplaceable()){
+				context.getLevel().setBlockAndUpdate(context.getClickedPos().relative(context.getClickedFace()),state);
+				return InteractionResult.SUCCESS;
 			}
 		}
-		return ActionResultType.FAIL;
+		return InteractionResult.FAIL;
 	}
 }

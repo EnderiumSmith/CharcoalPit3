@@ -3,21 +3,21 @@ package charcoalPit.gui;
 import charcoalPit.block.BlockCeramicPot;
 import charcoalPit.core.ModContainerRegistry;
 import charcoalPit.tile.TileCeramicPot;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class CeramicPotContainer extends Container{
+public class CeramicPotContainer extends AbstractContainerMenu{
 
 	public BlockPos pos;
-	public CeramicPotContainer(int id, BlockPos pos, PlayerInventory inv) {
+	public CeramicPotContainer(int id, BlockPos pos, Inventory inv) {
 		super(ModContainerRegistry.CeramicPot, id);
 		this.pos=pos;
-		TileCeramicPot tile=((TileCeramicPot)inv.player.world.getTileEntity(pos));
+		TileCeramicPot tile=((TileCeramicPot)inv.player.level.getBlockEntity(pos));
 		
 		for(int i = 0; i < 3; ++i) {
 	         for(int j = 0; j < 3; ++j) {
@@ -37,30 +37,30 @@ public class CeramicPotContainer extends Container{
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
-		return playerIn.world.getBlockState(pos).getBlock() instanceof BlockCeramicPot&&
-				playerIn.getDistanceSq((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D) <= 64.0D;
+	public boolean stillValid(Player playerIn) {
+		return playerIn.level.getBlockState(pos).getBlock() instanceof BlockCeramicPot&&
+				playerIn.distanceToSqr((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D) <= 64.0D;
 	}
 	
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
-	      Slot slot = this.inventorySlots.get(index);
-	      if (slot != null && slot.getHasStack()) {
-	         ItemStack itemstack1 = slot.getStack();
+	      Slot slot = this.slots.get(index);
+	      if (slot != null && slot.hasItem()) {
+	         ItemStack itemstack1 = slot.getItem();
 	         itemstack = itemstack1.copy();
 	         if (index < 9) {
-	            if (!this.mergeItemStack(itemstack1, 9, 45, true)) {
+	            if (!this.moveItemStackTo(itemstack1, 9, 45, true)) {
 	               return ItemStack.EMPTY;
 	            }
-	         } else if (!this.mergeItemStack(itemstack1, 0, 9, false)) {
+	         } else if (!this.moveItemStackTo(itemstack1, 0, 9, false)) {
 	            return ItemStack.EMPTY;
 	         }
 
 	         if (itemstack1.isEmpty()) {
-	            slot.putStack(ItemStack.EMPTY);
+	            slot.set(ItemStack.EMPTY);
 	         } else {
-	            slot.onSlotChanged();
+	            slot.setChanged();
 	         }
 
 	         if (itemstack1.getCount() == itemstack.getCount()) {

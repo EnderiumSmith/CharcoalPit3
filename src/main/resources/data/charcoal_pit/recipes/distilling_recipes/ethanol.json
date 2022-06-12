@@ -1,0 +1,12 @@
+{
+  "type": "charcoal_pit:distill",
+  "input":{
+  	"fluid":"charcoal_pit:alcohol_still",
+  	"amount": 1000
+  },
+  "output":{
+  	"fluid":"charcoal_pit:ethanol",
+  	"amount": 100
+  },
+  "time": 200
+}

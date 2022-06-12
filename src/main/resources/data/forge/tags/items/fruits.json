@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "charcoal_pit:cherry",
+    "charcoal_pit:olives",
+    "charcoal_pit:orange",
+    "charcoal_pit:dragon_fruit",
+    "charcoal_pit:chestnut",
+    "charcoal_pit:banana",
+    "charcoal_pit:coconut",
+    "minecraft:apple"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/flour"
+    },
+    {
+      "tag": "forge:eggs"
+    },
+    {
+      "item": "charcoal_pit:chocolate"
+    }
+  ],
+  "result": {
+    "item": "charcoal_pit:croissant",
+    "count":2
+  }
+}
