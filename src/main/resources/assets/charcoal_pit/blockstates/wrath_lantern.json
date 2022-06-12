@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "charcoal_pit:block/wrath_lantern"
+    },
+    "hanging=true": {
+      "model": "charcoal_pit:block/wrath_lantern_hanging"
+    }
+  }
+}

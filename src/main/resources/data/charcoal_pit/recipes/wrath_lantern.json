@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GNG",
+    "GSG",
+    "GGG"
+  ],
+  "key": {
+    "S": {
+      "item": "charcoal_pit:nether_shard"
+    },
+    "G": {
+      "item": "minecraft:gold_nugget"
+    },
+    "N": {
+      "item": "minecraft:netherite_scrap"
+    }
+  },
+  "result": {
+    "item": "charcoal_pit:wrath_lantern"
+  }
+}

@@ -139,6 +139,7 @@ public class ModItemRegistry {
 	public static BlockItem BlastFurnace=buildBlockItem(ModBlockRegistry.BlastFurnace);
 	public static BlockItem Distillery=buildBlockItem(ModBlockRegistry.Distillery);
 	public static BlockItem SteamPress=buildBlockItem(ModBlockRegistry.SteamPress);
+	public static BlockItem WrathLantern=buildBlockItem(ModBlockRegistry.WrathLantern);
 	
 	public static ItemAnimalCage AnimalCage=new ItemAnimalCage(new Item.Properties().tab(CHARCOAL_PIT));
 	public static Item LyeBottle=new Item(new Item.Properties().tab(CHARCOAL_PIT).stacksTo(16));
@@ -151,6 +152,7 @@ public class ModItemRegistry {
 	public static ItemEthanolBottle EthanolBottle=new ItemEthanolBottle();
 	public static Item EthoxideBottle=new Item(new Item.Properties().tab(CHARCOAL_PIT).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE));
 	public static Item winglet=buildItem(CHARCOAL_PIT),wing=buildItem(CHARCOAL_PIT),engine=buildItem(CHARCOAL_PIT);
+	public static Item NetherShard=new SimpleFoiledItem(new Item.Properties().tab(CHARCOAL_PIT).rarity(Rarity.UNCOMMON));
 	
 	
 	public static PickaxeItem FlintPick=new PickaxeItem(ModTiers.FLINT,1,-2.8F,new Item.Properties().tab(CHARCOAL_PIT));
@@ -215,7 +217,8 @@ public class ModItemRegistry {
 				OliveSapling.setRegistryName("olive_sapling"),OliveLeaves.setRegistryName("olive_leaves"),OrangeSapling.setRegistryName("orange_sapling"),
 				OrangeLeaves.setRegistryName("orange_leaves"),OilLamp.setRegistryName("oil_lamp"),NestBox.setRegistryName("nest_box"),
 				Bloomeryy.setRegistryName("bloomeryy"),CharcoalBlock.setRegistryName("charcoal_block"),Bloom.setRegistryName("bloom"),
-				BlastFurnace.setRegistryName("blast_furnace"),Distillery.setRegistryName("distillery"),SteamPress.setRegistryName("steam_press"));
+				BlastFurnace.setRegistryName("blast_furnace"),Distillery.setRegistryName("distillery"),SteamPress.setRegistryName("steam_press"),
+				WrathLantern.setRegistryName("wrath_lantern"));
 		event.getRegistry().registerAll(Straw.setRegistryName("straw"), Ash.setRegistryName("ash"), Coke.setRegistryName("coke"), 
 				Aeternalis.setRegistryName("aeternalis_fuel"), Fertilizer.setRegistryName("fertilizer"), FireStarter.setRegistryName("fire_starter"),
 				CreosoteBucket.setRegistryName("creosote_bucket"),ClayPot.setRegistryName("clay_pot"),CrackedPot.setRegistryName("cracked_pot"),
@@ -238,7 +241,8 @@ public class ModItemRegistry {
 				AlloyOrichalcum.setRegistryName("alloy_orichalcum"),PrismarineDust.setRegistryName("prismarine_dust"),
 				EthanolBucket.setRegistryName("ethanol_bucket"),EthanolBottle.setRegistryName("ethanol_bottle"),EthoxideBucket.setRegistryName("ethoxide_bucket"),
 				EthoxideBottle.setRegistryName("ethoxide_bottle"),SeedOilBucket.setRegistryName("seed_oil_bucket"),
-				plane.setRegistryName("airplane"),winglet.setRegistryName("winglet"),wing.setRegistryName("wing"),engine.setRegistryName("engine"));
+				plane.setRegistryName("airplane"),winglet.setRegistryName("winglet"),wing.setRegistryName("wing"),engine.setRegistryName("engine"),
+				NetherShard.setRegistryName("nether_shard"));
 		event.getRegistry().registerAll(CeramicPot.setRegistryName("ceramic_pot"),YellowPot.setRegistryName("yellow_pot"),WhitePot.setRegistryName("white_pot"),
 				RedPot.setRegistryName("red_pot"),PurplePot.setRegistryName("purple_pot"),PinkPot.setRegistryName("pink_pot"),OrangePot.setRegistryName("orange_pot"),
 				MagentaPot.setRegistryName("magenta_pot"),LimePot.setRegistryName("lime_pot"),LightGrayPot.setRegistryName("light_gray_pot"),

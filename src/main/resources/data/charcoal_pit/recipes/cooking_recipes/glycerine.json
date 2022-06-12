@@ -3,7 +3,7 @@
   "ingredient": {
     "item": "charcoal_pit:glycerine"
   },
-  "result": "minecraft:sugar",
+  "result": "minecraft:slime_ball",
   "experience": 0.35,
   "cookingtime": 200
 }

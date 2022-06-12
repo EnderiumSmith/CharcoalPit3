@@ -5,22 +5,28 @@ import charcoalPit.block.BlockCeramicPot;
 import charcoalPit.entity.Airplane;
 import charcoalPit.item.tool.ModTiers;
 import charcoalPit.recipe.SquisherRecipe;
+import charcoalPit.tile.TileWrathLantern;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootTableReference;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -32,10 +38,12 @@ import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;
+import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.EntityLeaveWorldEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.ItemCraftedEvent;
@@ -52,6 +60,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.items.IItemHandler;
+
+import java.util.ArrayList;
 
 @EventBusSubscriber(modid=CharcoalPit.MODID, bus=Bus.FORGE)
 public class PileIgnitr {
@@ -179,6 +189,13 @@ public class PileIgnitr {
 			event.setCost(event.getCost()+i3);
 			stack1.setRepairCost(AnvilMenu.calculateIncreasedRepairCost(stack1.getBaseRepairCost()));
 			event.setOutput(stack1);
+		}else if(event.getLeft().isDamageableItem()&&event.getRight().getItem()==ModItemRegistry.NetherShard){
+			ItemStack stack1=event.getLeft().copy();
+			stack1.setDamageValue(0);
+			event.setMaterialCost(1);
+			event.setCost(event.getCost()+1);
+			stack1.setRepairCost(AnvilMenu.calculateIncreasedRepairCost(stack1.getBaseRepairCost()));
+			event.setOutput(stack1);
 		}
 	}
 	
@@ -194,6 +211,29 @@ public class PileIgnitr {
 			return tool.getTier()== ModTiers.ORICHALCUM;
 		}
 		return false;
+	}
+	
+	@SubscribeEvent
+	public static void WrathLanternKill(LivingDeathEvent event){
+		if(!event.getEntityLiving().level.isClientSide()&&event.getSource().getEntity() instanceof LivingEntity &&!(event.getSource().getEntity() instanceof Player)){
+			//entity exists but not player
+			Level level=event.getEntityLiving().level;
+			BlockPos entityPos=event.getEntityLiving().blockPosition();
+			for(int i=-1;i<2;i+=1){
+				for(int j=-1;j<2;j+=1){
+					LevelChunk chunk=level.getChunkAt(entityPos.offset(i*16,0,j*16));
+					for(var entry:chunk.getBlockEntities().entrySet()){
+						if(entry.getValue() instanceof TileWrathLantern){
+							BlockPos pos=entry.getValue().getBlockPos();
+							if(Math.abs(pos.getX()-entityPos.getX())<=4&&Math.abs(pos.getY()-entityPos.getY())<=4&&Math.abs(pos.getZ()-entityPos.getZ())<=4){
+								event.getEntityLiving().setLastHurtByPlayer(FakePlayerFactory.getMinecraft((ServerLevel) level));
+								return;
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	@SubscribeEvent

@@ -87,6 +87,7 @@
 "block.charcoal_pit.blast_furnace":"Blast Furnace",
 "block.charcoal_pit.distillery":"Distillery",
 "block.charcoal_pit.steam_press":"Steam Press",
+"block.charcoal_pit.wrath_lantern":"Wrath Lantern",
 
 
 "item.charcoal_pit.straw":"Straw",
@@ -217,6 +218,7 @@
 "item.charcoal_pit.winglet":"Winglet",
 "item.charcoal_pit.wing":"Wing",
 "item.charcoal_pit.engine":"Engine",
+"item.charcoal_pit.nether_shard":"Nether Star Fragment",
 
 
 

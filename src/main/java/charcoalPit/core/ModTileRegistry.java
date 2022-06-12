@@ -29,6 +29,7 @@ public class ModTileRegistry {
 	public static BlockEntityType<TileBlastFurnace> BlastFurnace=BlockEntityType.Builder.of(TileBlastFurnace::new,ModBlockRegistry.BlastFurnace).build(null);
 	public static BlockEntityType<TileDistillery> Distillery=BlockEntityType.Builder.of(TileDistillery::new,ModBlockRegistry.Distillery).build(null);
 	public static BlockEntityType<TileSteamPress> SteamPress=BlockEntityType.Builder.of(TileSteamPress::new,ModBlockRegistry.SteamPress).build(null);
+	public static BlockEntityType<TileWrathLantern> WrathLantern=BlockEntityType.Builder.of(TileWrathLantern::new,ModBlockRegistry.WrathLantern).build(null);
 	
 	
 	//@SubscribeEvent
@@ -36,7 +37,8 @@ public class ModTileRegistry {
 		event.getRegistry().registerAll(ActivePile.setRegistryName("active_pile"),CreosoteCollector.setRegistryName("creosote_collector"),
 				CeramicPot.setRegistryName("ceramic_pot"), Barrel.setRegistryName("barrel"),FeedingThrough.setRegistryName("feeding_through"),
 				NestBox.setRegistryName("nest_box"),Bloomeryy.setRegistryName("bloomeryy"),Bloom.setRegistryName("bloom"),
-				BlastFurnace.setRegistryName("blast_furnace"),Distillery.setRegistryName("distillery"),SteamPress.setRegistryName("steam_press"));
+				BlastFurnace.setRegistryName("blast_furnace"),Distillery.setRegistryName("distillery"),SteamPress.setRegistryName("steam_press"),
+				WrathLantern.setRegistryName("wrath_lantern"));
 	}
 	
 }

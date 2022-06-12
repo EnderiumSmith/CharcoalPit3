@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_lantern",
+  "textures": {
+    "lantern": "charcoal_pit:block/wrath_lantern"
+  }
+}

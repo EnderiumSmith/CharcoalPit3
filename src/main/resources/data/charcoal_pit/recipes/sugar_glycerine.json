@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "charcoal_pit:glycerine"
+    }
+  ],
+  "result": {
+    "item": "minecraft:sugar",
+    "count": 3
+  }
+}

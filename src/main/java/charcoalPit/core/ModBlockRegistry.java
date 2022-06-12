@@ -116,6 +116,8 @@ public class ModBlockRegistry {
 	public static BlockDistillery Distillery=new BlockDistillery(Properties.copy(Blocks.COPPER_BLOCK));
 	public static BlockSteamPress SteamPress=new BlockSteamPress(Properties.copy(Blocks.BLAST_FURNACE));
 	
+	public static BlockWrathLantern WrathLantern=new BlockWrathLantern(Properties.copy(Blocks.LANTERN));
+	
 	
 	/*public static DoorBlock BrickDoor=new DoorBlock(AbstractBlock.Properties.from(Blocks.IRON_DOOR)),
 			SandyDoor=new DoorBlock(Properties.from(Blocks.IRON_DOOR)),
@@ -140,7 +142,8 @@ public class ModBlockRegistry {
 				Sunflower.setRegistryName("sunflower_crop"),CoconutPod.setRegistryName("coconut_pod"),OliveSapling.setRegistryName("olive_sapling"),
 				OliveLeaves.setRegistryName("olive_leaves"),OrangeSapling.setRegistryName("orange_sapling"),OrangeLeaves.setRegistryName("orange_leaves"),
 				GenieLight.setRegistryName("genie_light"),NestBox.setRegistryName("nest_box"),Bloomeryy.setRegistryName("bloomeryy"),CharcoalBlock.setRegistryName("charcoal_block"),
-				Bloom.setRegistryName("bloom"),BlastFurnace.setRegistryName("blast_furnace"),Distillery.setRegistryName("distillery"),SteamPress.setRegistryName("steam_press"));
+				Bloom.setRegistryName("bloom"),BlastFurnace.setRegistryName("blast_furnace"),Distillery.setRegistryName("distillery"),SteamPress.setRegistryName("steam_press"),
+				WrathLantern.setRegistryName("wrath_lantern"));
 		event.getRegistry().registerAll(CeramicPot.setRegistryName("ceramic_pot"),YellowPot.setRegistryName("yellow_pot"),WhitePot.setRegistryName("white_pot"),
 				RedPot.setRegistryName("red_pot"),PurplePot.setRegistryName("purple_pot"),PinkPot.setRegistryName("pink_pot"),OrangePot.setRegistryName("orange_pot"),
 				MagentaPot.setRegistryName("magenta_pot"),LimePot.setRegistryName("lime_pot"),LightGrayPot.setRegistryName("light_gray_pot"),
