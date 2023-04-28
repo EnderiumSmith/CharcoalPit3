@@ -4,16 +4,24 @@ import charcoalPit.fluid.ModFluidRegistry;
 import charcoalPit.item.*;
 import charcoalPit.item.tool.ModArmorTiers;
 import charcoalPit.item.tool.ModTiers;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.data.ForgeItemTagsProvider;
 import net.minecraftforge.event.RegistryEvent;
 
 import net.minecraft.world.food.FoodProperties;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 //@EventBusSubscriber(modid=CharcoalPit.MODID, bus=Bus.MOD)
 public class ModItemRegistry {
@@ -45,7 +53,7 @@ public class ModItemRegistry {
 			SandyCollector=buildBlockItem(ModBlockRegistry.SandyCollector,CHARCOAL_PIT),
 			NetherCollector=buildBlockItem(ModBlockRegistry.NetherCollector,CHARCOAL_PIT),
 			EndCollector=buildBlockItem(ModBlockRegistry.EndCollector,CHARCOAL_PIT);
-	public static BlockItem CeramicPot=buildBlockItemP(ModBlockRegistry.CeramicPot),WhitePot=buildBlockItemP(ModBlockRegistry.WhitePot),
+	public static ItemBlockCeramicPot CeramicPot=buildBlockItemP(ModBlockRegistry.CeramicPot),WhitePot=buildBlockItemP(ModBlockRegistry.WhitePot),
 			OrangePot=buildBlockItemP(ModBlockRegistry.OrangePot),MagentaPot=buildBlockItemP(ModBlockRegistry.MagentaPot),
 			LightBluePot=buildBlockItemP(ModBlockRegistry.LightBluePot),YellowPot=buildBlockItemP(ModBlockRegistry.YellowPot),
 			LimePot=buildBlockItemP(ModBlockRegistry.LimePot),PinkPot=buildBlockItemP(ModBlockRegistry.PinkPot),
@@ -54,9 +62,9 @@ public class ModItemRegistry {
 			BluePot=buildBlockItemP(ModBlockRegistry.BluePot),BrownPot=buildBlockItemP(ModBlockRegistry.BrownPot),
 			GreenPot=buildBlockItemP(ModBlockRegistry.GreenPot),RedPot=buildBlockItemP(ModBlockRegistry.RedPot),
 			BlackPot=buildBlockItemP(ModBlockRegistry.BlackPot);
-	public static ItemClayPot ClayPot=new ItemClayPot();
-	//public static Item ClayPot=buildItem(CHARCOAL_PIT);//no alloy
-	public static ItemCrackedPot CrackedPot=new ItemCrackedPot();
+	//public static ItemClayPot ClayPot=new ItemClayPot();
+	public static Item ClayPot=new Item(new Item.Properties().tab(CHARCOAL_PIT).stacksTo(16));//no alloy
+	//public static ItemCrackedPot CrackedPot=new ItemCrackedPot();
 	
 	public static ItemBarrel Barrel=new ItemBarrel(ModBlockRegistry.Barrel,new Item.Properties().tab(CHARCOAL_PIT));
 	
@@ -72,7 +80,7 @@ public class ModItemRegistry {
 	public static ItemKebabs FarfetchStew=new ItemKebabs(new Item.Properties().tab(CHARCOAL_PIT_FOODS).food(new FoodProperties.Builder().nutrition(8).saturationMod(1.6F).meat().build()).craftRemainder(Items.BOWL));
 	public static Item Calamari=new Item(new Item.Properties().tab(CHARCOAL_PIT_FOODS).food(new FoodProperties.Builder().nutrition(1).saturationMod(0.2F).meat().build()));
 	public static Item CookedCalamri=new Item(new Item.Properties().tab(CHARCOAL_PIT_FOODS).food(new FoodProperties.Builder().nutrition(4).saturationMod(1.2F).meat().build()));
-	public static Item CookedEgg=new Item(new Item.Properties().tab(CHARCOAL_PIT_FOODS).food(new FoodProperties.Builder().nutrition(3).saturationMod(1.2F).meat().build()));
+	//public static Item CookedEgg=new Item(new Item.Properties().tab(CHARCOAL_PIT_FOODS).food(new FoodProperties.Builder().nutrition(3).saturationMod(1.2F).meat().build()));
 	public static ItemNameBlockItem Corn=new ItemNameBlockItem(ModBlockRegistry.Corn,new Item.Properties().tab(CHARCOAL_PIT_FOODS).food(new FoodProperties.Builder().nutrition(3).saturationMod(1.2F).build()));
 	public static Item PopCorn=new Item(new Item.Properties().tab(CHARCOAL_PIT_FOODS).food(new FoodProperties.Builder().nutrition(2).saturationMod(0.6F).fast().build()));
 	public static ItemKebabs CornStew=new ItemKebabs(new Item.Properties().tab(CHARCOAL_PIT_FOODS).food(new FoodProperties.Builder().nutrition(7).saturationMod(1.6F).build()).craftRemainder(Items.BOWL));
@@ -105,6 +113,21 @@ public class ModItemRegistry {
 	public static BlockItem ChestnutSapling=new BlockItem(ModBlockRegistry.ChestnutSapling, new Item.Properties().tab(CHARCOAL_PIT));
 	public static BlockItem OliveSapling=new BlockItem(ModBlockRegistry.OliveSapling,new Item.Properties().tab(CHARCOAL_PIT));
 	public static BlockItem OrangeSapling=new BlockItem(ModBlockRegistry.OrangeSapling,new Item.Properties().tab(CHARCOAL_PIT));
+	public static BlockItem EnchantedSapling=new BlockItem(ModBlockRegistry.EnchantedSapling,new Item.Properties().tab(CHARCOAL_PIT).rarity(Rarity.EPIC)){
+		@Override
+		public boolean isFoil(ItemStack pStack) {
+			return true;
+		}
+		
+	};
+	public static BlockItem MapleSapling=new BlockItem(ModBlockRegistry.MapleSapling,new Item.Properties().tab(CHARCOAL_PIT));
+	public static BlockItem JacarandaSapling=new BlockItem(ModBlockRegistry.JacarandaSapling,new Item.Properties().tab(CHARCOAL_PIT));
+	public static BlockItem SakuraSapling=new BlockItem(ModBlockRegistry.SakuraSapling,new Item.Properties().tab(CHARCOAL_PIT));
+	public static BlockItem ForsythiaSapling=new BlockItem(ModBlockRegistry.ForsythiaSapling,new Item.Properties().tab(CHARCOAL_PIT));
+	public static BlockItem RandomSapling=new BlockItem(ModBlockRegistry.RandomSapling,new Item.Properties().tab(CHARCOAL_PIT).rarity(Rarity.UNCOMMON));
+	public static BlockItem CedarSapling=new BlockItem(ModBlockRegistry.CedarSapling,new Item.Properties().tab(CHARCOAL_PIT));
+	public static BlockItem DouglasSapling=new BlockItem(ModBlockRegistry.DouglasSapling,new Item.Properties().tab(CHARCOAL_PIT));
+	public static BlockItem DecorativeSapling=new BlockItem(ModBlockRegistry.DecorativeSapling,new Item.Properties().tab(CHARCOAL_PIT));
 	
 	public static ItemBlockLeaves AppleLeaves=new ItemBlockLeaves(ModBlockRegistry.AppleLeaves,new Item.Properties().tab(CHARCOAL_PIT));
 	public static ItemBlockLeaves CherryLeaves=new ItemBlockLeaves(ModBlockRegistry.CherryLeaves,new Item.Properties().tab(CHARCOAL_PIT));
@@ -112,6 +135,13 @@ public class ModItemRegistry {
 	public static ItemBlockLeaves ChestnutLeaves=new ItemBlockLeaves(ModBlockRegistry.ChestnutLeaves,new Item.Properties().tab(CHARCOAL_PIT));
 	public static ItemBlockLeaves OliveLeaves=new ItemBlockLeaves(ModBlockRegistry.OliveLeaves,new Item.Properties().tab(CHARCOAL_PIT));
 	public static ItemBlockLeaves OrangeLeaves=new ItemBlockLeaves(ModBlockRegistry.OrangeLeaves,new Item.Properties().tab(CHARCOAL_PIT));
+	public static ItemBlockLeaves EnchantedLeaves=new ItemBlockLeaves(ModBlockRegistry.EnchantedLeaves,new Item.Properties().tab(CHARCOAL_PIT));
+	public static ItemBlockFlowerLeaves MapleLeaves=new ItemBlockFlowerLeaves(ModBlockRegistry.MapleLeaves,new Item.Properties().tab(CHARCOAL_PIT));
+	public static ItemBlockFlowerLeaves JacarandaLeaves=new ItemBlockFlowerLeaves(ModBlockRegistry.JacarandaLeaves,new Item.Properties().tab(CHARCOAL_PIT));
+	public static ItemBlockFlowerLeaves SakuraLeaves=new ItemBlockFlowerLeaves(ModBlockRegistry.SakuraLeaves,new Item.Properties().tab(CHARCOAL_PIT));
+	public static ItemBlockFlowerLeaves ForsythiaLeaves=new ItemBlockFlowerLeaves(ModBlockRegistry.ForsythiaLeaves,new Item.Properties().tab(CHARCOAL_PIT));
+	public static BlockItem CedarLeaves=buildBlockItem(ModBlockRegistry.CedarLeaves);
+	public static BlockItem DouglasLeaves=buildBlockItem(ModBlockRegistry.DouglasLeaves);
 	
 	public static ItemOilLamp OilLamp=new ItemOilLamp(ModBlockRegistry.GenieLight,new Item.Properties().tab(CHARCOAL_PIT).stacksTo(1));
 	
@@ -140,27 +170,49 @@ public class ModItemRegistry {
 	public static BlockItem Distillery=buildBlockItem(ModBlockRegistry.Distillery);
 	public static BlockItem SteamPress=buildBlockItem(ModBlockRegistry.SteamPress);
 	public static BlockItem WrathLantern=buildBlockItem(ModBlockRegistry.WrathLantern);
+	public static ItemNameBlockItem XPCrystal=new ItemXPCrystal(ModBlockRegistry.XPCrystal,new Item.Properties().tab(CHARCOAL_PIT).rarity(Rarity.UNCOMMON).stacksTo(1));
+	public static ItemBlockDwarvenCandle DwarvenCandle=new ItemBlockDwarvenCandle(ModBlockRegistry.DwarvenCandle,new Item.Properties().tab(CHARCOAL_PIT));
 	
 	public static ItemAnimalCage AnimalCage=new ItemAnimalCage(new Item.Properties().tab(CHARCOAL_PIT));
-	public static Item LyeBottle=new Item(new Item.Properties().tab(CHARCOAL_PIT).stacksTo(16));
-	public static Item SourAlcoholBottle=new Item(new Item.Properties().tab(CHARCOAL_PIT).stacksTo(16).craftRemainder(LyeBottle));
+	//public static Item LyeBottle=new Item(new Item.Properties().tab(CHARCOAL_PIT).stacksTo(16));
+	//public static Item SourAlcoholBottle=new Item(new Item.Properties().tab(CHARCOAL_PIT).stacksTo(16).craftRemainder(LyeBottle));
 	public static ItemFuel Glycerine=buildItem(CHARCOAL_PIT,1200);
 	public static Item AlloyPigIron=buildItem(CHARCOAL_PIT),AlloySteel=buildItem(CHARCOAL_PIT);
 	public static ItemTuyere Tuyere=new ItemTuyere(new Item.Properties().tab(CHARCOAL_PIT));
 	public static Item Flux=buildItem(CHARCOAL_PIT),PrismarineDust=buildItem(CHARCOAL_PIT);
 	public static Item AlloyOrichalcum=buildItem(CHARCOAL_PIT);
-	public static ItemEthanolBottle EthanolBottle=new ItemEthanolBottle();
+	//public static ItemEthanolBottle EthanolBottle=new ItemEthanolBottle();
 	public static Item EthoxideBottle=new Item(new Item.Properties().tab(CHARCOAL_PIT).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE));
 	public static Item winglet=buildItem(CHARCOAL_PIT),wing=buildItem(CHARCOAL_PIT),engine=buildItem(CHARCOAL_PIT);
-	public static Item NetherShard=new SimpleFoiledItem(new Item.Properties().tab(CHARCOAL_PIT).rarity(Rarity.UNCOMMON));
+	public static Item NetherShard=new SimpleFoiledItem(new Item.Properties().tab(CHARCOAL_PIT).rarity(Rarity.UNCOMMON)){
+		@OnlyIn(Dist.CLIENT)
+		@Override
+		public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+			super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+			pTooltipComponents.add(new TextComponent("Universal Repair Material. Restores 100% of Durability"));
+		}
+	};
+	public static Item MapleSap=new Item(new Item.Properties().tab(CHARCOAL_PIT).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE));
+	public static ItemKebabs MapleSyrup=new ItemKebabs(new Item.Properties().tab(CHARCOAL_PIT_FOODS).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE).food(new FoodProperties.Builder().nutrition(6).saturationMod(1.2F).build())){
+		@Override
+		public UseAnim getUseAnimation(ItemStack pStack) {
+			return UseAnim.DRINK;
+		}
+	};
+	public static Item Pancakes=new Item(new Item.Properties().tab(CHARCOAL_PIT_FOODS).food(new FoodProperties.Builder().nutrition(8).saturationMod(1.6F).build()));
+	public static ItemClayPot alloy_mold=new ItemClayPot();
+	public static ItemCrackedPot finished_alloy_mold=new ItemCrackedPot();
+	public static Item clay_mold=new Item(new Item.Properties().tab(CHARCOAL_PIT).stacksTo(16));
+	public static Item AlloyBronze=buildItem(CHARCOAL_PIT);
+	public static Item TinyGunpowder=buildItem(CHARCOAL_PIT);
+	//public static ItemKebabs TriflavorSkewer=new ItemKebabs(new Item.Properties().tab(CHARCOAL_PIT_FOODS).food(new FoodProperties.Builder().nutrition(10).saturationMod(2.4F).meat().build()).craftRemainder(Items.STICK));
 	
-	
-	public static PickaxeItem FlintPick=new PickaxeItem(ModTiers.FLINT,1,-2.8F,new Item.Properties().tab(CHARCOAL_PIT));
+	/*public static PickaxeItem FlintPick=new PickaxeItem(ModTiers.FLINT,1,-2.8F,new Item.Properties().tab(CHARCOAL_PIT));
 	public static ShovelItem FlintShovel=new ShovelItem(ModTiers.FLINT,1.5F,-3,new Item.Properties().tab(CHARCOAL_PIT));
 	public static AxeItem FlintAxe=new AxeItem(ModTiers.FLINT,7,-3.2F,new Item.Properties().tab(CHARCOAL_PIT));
 	public static HoeItem FlintHoe=new HoeItem(ModTiers.FLINT,-1,-2,new Item.Properties().tab(CHARCOAL_PIT));
 	public static SwordItem FlintSword=new SwordItem(ModTiers.FLINT,3,-2.4F,new Item.Properties().tab(CHARCOAL_PIT));
-	//public static ItemDagger FlintDagger=new ItemDagger(ModTiers.FLINT,2,-2,new Item.Properties().tab(CHARCOAL_PIT));
+	//public static ItemDagger FlintDagger=new ItemDagger(ModTiers.FLINT,2,-2,new Item.Properties().tab(CHARCOAL_PIT));*/
 	
 	public static PickaxeItem CopperPick=new PickaxeItem(ModTiers.COPPER, 1,-2.8F,new Item.Properties().tab(CHARCOAL_PIT));
 	public static ShovelItem CopperShovle=new ShovelItem(ModTiers.COPPER,1.5F,-3,new Item.Properties().tab(CHARCOAL_PIT));
@@ -194,7 +246,23 @@ public class ModItemRegistry {
 	public static ArmorItem OrichalcumLeggings=new ArmorItem(ModArmorTiers.ORICHALCUM,EquipmentSlot.LEGS,new Item.Properties().tab(CHARCOAL_PIT));
 	public static ArmorItem OrichalcumBoots=new ArmorItem(ModArmorTiers.ORICHALCUM,EquipmentSlot.FEET,new Item.Properties().tab(CHARCOAL_PIT));
 	
+	public static PickaxeItem BronzePick=new PickaxeItem(ModTiers.BRONZE, 1,-2.8F,new Item.Properties().tab(CHARCOAL_PIT));
+	public static ShovelItem BronzeShovle=new ShovelItem(ModTiers.BRONZE,1.5F,-3,new Item.Properties().tab(CHARCOAL_PIT));
+	public static AxeItem BronzeAxe=new AxeItem(ModTiers.BRONZE,6F,-3.1F,new Item.Properties().tab(CHARCOAL_PIT));
+	public static HoeItem BronzeHoe=new HoeItem(ModTiers.BRONZE,-2,-1,new Item.Properties().tab(CHARCOAL_PIT));
+	public static SwordItem BronzeSword=new SwordItem(ModTiers.BRONZE,3,-2.4F,new Item.Properties().tab(CHARCOAL_PIT));
+	
+	public static ArmorItem BronzeHelmet=new ArmorItem(ModArmorTiers.BRONZE,EquipmentSlot.HEAD,new Item.Properties().tab(CHARCOAL_PIT));
+	public static ArmorItem BronzeChestplate=new ArmorItem(ModArmorTiers.BRONZE,EquipmentSlot.CHEST,new Item.Properties().tab(CHARCOAL_PIT));
+	public static ArmorItem BronzeLeggings=new ArmorItem(ModArmorTiers.BRONZE,EquipmentSlot.LEGS,new Item.Properties().tab(CHARCOAL_PIT));
+	public static ArmorItem BronzeBoots=new ArmorItem(ModArmorTiers.BRONZE,EquipmentSlot.FEET,new Item.Properties().tab(CHARCOAL_PIT));
+	
 	public static ItemAirplane plane=new ItemAirplane(new Item.Properties().tab(CHARCOAL_PIT).stacksTo(1));
+	
+	public static ItemMusket musket=new ItemMusket(new Item.Properties().tab(CHARCOAL_PIT).stacksTo(1).durability(375));
+	
+	public static ItemTreeTap TreeTap=new ItemTreeTap(new Item.Properties().tab(CHARCOAL_PIT).stacksTo(1).durability(64));
+	public static ItemDynamiteRemote DynamiteRemote=new ItemDynamiteRemote(new Item.Properties().tab(CHARCOAL_PIT).stacksTo(1));
 	
 	/*public static TallBlockItem BrickDoor=new TallBlockItem(ModBlockRegistry.BrickDoor,new Item.Properties().group(CHARCOAL_PIT)),
 			SandyDoor=new TallBlockItem(ModBlockRegistry.SandyDoor,new Item.Properties().group(CHARCOAL_PIT)),
@@ -218,15 +286,21 @@ public class ModItemRegistry {
 				OrangeLeaves.setRegistryName("orange_leaves"),OilLamp.setRegistryName("oil_lamp"),NestBox.setRegistryName("nest_box"),
 				Bloomeryy.setRegistryName("bloomeryy"),CharcoalBlock.setRegistryName("charcoal_block"),Bloom.setRegistryName("bloom"),
 				BlastFurnace.setRegistryName("blast_furnace"),Distillery.setRegistryName("distillery"),SteamPress.setRegistryName("steam_press"),
-				WrathLantern.setRegistryName("wrath_lantern"));
+				WrathLantern.setRegistryName("wrath_lantern"),EnchantedSapling.setRegistryName("enchanted_sapling"),EnchantedLeaves.setRegistryName("enchanted_leaves"),
+				MapleLeaves.setRegistryName("maple_leaves"),MapleSapling.setRegistryName("maple_sapling"),JacarandaLeaves.setRegistryName("jacaranda_leaves"),
+				JacarandaSapling.setRegistryName("jacaranda_sapling"),SakuraSapling.setRegistryName("sakura_sapling"),SakuraLeaves.setRegistryName("sakura_leaves"),
+				ForsythiaLeaves.setRegistryName("forsythia_leaves"),ForsythiaSapling.setRegistryName("forsythia_sapling"),RandomSapling.setRegistryName("random_sapling"),
+				CedarSapling.setRegistryName("cedar_sapling"),CedarLeaves.setRegistryName("cedar_leaves"),DouglasSapling.setRegistryName("douglas_sapling"),
+				DouglasLeaves.setRegistryName("douglas_leaves"),DecorativeSapling.setRegistryName("decorative_sapling"),XPCrystal.setRegistryName("xp_crystal"),
+				DwarvenCandle.setRegistryName("dwarven_candle"));
 		event.getRegistry().registerAll(Straw.setRegistryName("straw"), Ash.setRegistryName("ash"), Coke.setRegistryName("coke"), 
 				Aeternalis.setRegistryName("aeternalis_fuel"), Fertilizer.setRegistryName("fertilizer"), FireStarter.setRegistryName("fire_starter"),
-				CreosoteBucket.setRegistryName("creosote_bucket"),ClayPot.setRegistryName("clay_pot"),CrackedPot.setRegistryName("cracked_pot"),
+				CreosoteBucket.setRegistryName("creosote_bucket"),ClayPot.setRegistryName("clay_pot"),
 				SandyBrickItem.setRegistryName("sandy_brick_item"),UnfireSandyBrick.setRegistryName("unfired_sandy_brick"),NetherBrickItem.setRegistryName("nether_brick_item"),
 				UnfiredBrick.setRegistryName("unfired_brick"),AlcoholBottle.setRegistryName("alcohol_bottle"),VinegarBucket.setRegistryName("vinegar_bucket"),
 				VinegarBottle.setRegistryName("vinegar_bottle"),Cheese.setRegistryName("cheese"),Kebabs.setRegistryName("kebabs"),
 				Leek.setRegistryName("leek"),FarfetchStew.setRegistryName("farfetch_stew"),
-				Calamari.setRegistryName("calamari"),CookedCalamri.setRegistryName("cooked_calamari"),CookedEgg.setRegistryName("cooked_egg"),
+				Calamari.setRegistryName("calamari"),CookedCalamri.setRegistryName("cooked_calamari"),
 				Corn.setRegistryName("corn"),PopCorn.setRegistryName("popcorn"),CornStew.setRegistryName("corn_stew"),
 				Sushi.setRegistryName("sushi"),Fugu.setRegistryName("fugu"),Cherry.setRegistryName("cherry"),DragonFruit.setRegistryName("dragon_fruit"),
 				ChestNut.setRegistryName("chestnut"),Bananana.setRegistryName("banana"),Cococonut.setRegistryName("coconut"),
@@ -235,14 +309,17 @@ public class ModItemRegistry {
 				Olives.setRegistryName("olives"),Pickled_Olives.setRegistryName("pickled_olives"),Orange.setRegistryName("orange"),OliveOilBucket.setRegistryName("olive_oil_bucket"),
 				WalnutOilBucket.setRegistryName("walnut_oil_bucket"),SunflowerOilBucket.setRegistryName("sunflower_oil_bucket"),
 				AnimalCage.setRegistryName("animal_cage"),BioDieselBucket.setRegistryName("bio_diesel_bucket"),
-				LyeBottle.setRegistryName("lye_bottle"),SourAlcoholBottle.setRegistryName("sour_alcohol_bottle"),Glycerine.setRegistryName("glycerine"),
+				Glycerine.setRegistryName("glycerine"),
 				AlloyPigIron.setRegistryName("alloy_pig_iron"),AlloySteel.setRegistryName("alloy_steel"),Tuyere.setRegistryName("tuyere"),
 				Flux.setRegistryName("flux"),SerinanStew.setRegistryName("serinan_stew"),BunnyStew.setRegistryName("bunny_stew"),
 				AlloyOrichalcum.setRegistryName("alloy_orichalcum"),PrismarineDust.setRegistryName("prismarine_dust"),
-				EthanolBucket.setRegistryName("ethanol_bucket"),EthanolBottle.setRegistryName("ethanol_bottle"),EthoxideBucket.setRegistryName("ethoxide_bucket"),
+				EthanolBucket.setRegistryName("ethanol_bucket"),EthoxideBucket.setRegistryName("ethoxide_bucket"),
 				EthoxideBottle.setRegistryName("ethoxide_bottle"),SeedOilBucket.setRegistryName("seed_oil_bucket"),
 				plane.setRegistryName("airplane"),winglet.setRegistryName("winglet"),wing.setRegistryName("wing"),engine.setRegistryName("engine"),
-				NetherShard.setRegistryName("nether_shard"));
+				NetherShard.setRegistryName("nether_shard"),musket.setRegistryName("musket"),TreeTap.setRegistryName("tree_tap"),
+				MapleSap.setRegistryName("maple_sap"),MapleSyrup.setRegistryName("maple_syrup"),Pancakes.setRegistryName("pancakes"),
+				alloy_mold.setRegistryName("alloy_mold"),finished_alloy_mold.setRegistryName("finished_alloy_mold"),clay_mold.setRegistryName("clay_mold"),
+				AlloyBronze.setRegistryName("alloy_bronze"),DynamiteRemote.setRegistryName("dynamite_remote"),TinyGunpowder.setRegistryName("tiny_gunpowder"));
 		event.getRegistry().registerAll(CeramicPot.setRegistryName("ceramic_pot"),YellowPot.setRegistryName("yellow_pot"),WhitePot.setRegistryName("white_pot"),
 				RedPot.setRegistryName("red_pot"),PurplePot.setRegistryName("purple_pot"),PinkPot.setRegistryName("pink_pot"),OrangePot.setRegistryName("orange_pot"),
 				MagentaPot.setRegistryName("magenta_pot"),LimePot.setRegistryName("lime_pot"),LightGrayPot.setRegistryName("light_gray_pot"),
@@ -252,17 +329,19 @@ public class ModItemRegistry {
 				FeedingThroughJungle.setRegistryName("feeding_through_jungle"), FeedingThroughSpruce.setRegistryName("feeding_through_spruce"),
 				FeedingThroughDark.setRegistryName("feeding_through_dark"), FeedingThroughAcacia.setRegistryName("feeding_through_acacia"),
 				FeedingThroughCrimson.setRegistryName("feeding_through_crimson"), FeedingThroughWarped.setRegistryName("feeding_through_warped"));
-		event.getRegistry().registerAll(FlintPick.setRegistryName("flint_pick"),FlintShovel.setRegistryName("flint_shovel"),FlintAxe.setRegistryName("flint_axe"),
-				FlintHoe.setRegistryName("flint_hoe"),FlintSword.setRegistryName("flint_sword"),CopperPick.setRegistryName("copper_pick"),
-				CopperShovle.setRegistryName("copper_shovel"),CopperAxe.setRegistryName("copper_axe"),CopperHoe.setRegistryName("copper_hoe"),
-				CopperSword.setRegistryName("copper_sword"),SteelPick.setRegistryName("steel_pick"),SteelShovle.setRegistryName("steel_shovel"),
+		event.getRegistry().registerAll(CopperPick.setRegistryName("copper_pick"),CopperShovle.setRegistryName("copper_shovel"),
+				CopperAxe.setRegistryName("copper_axe"),CopperHoe.setRegistryName("copper_hoe"),CopperSword.setRegistryName("copper_sword"),
+				SteelPick.setRegistryName("steel_pick"),SteelShovle.setRegistryName("steel_shovel"),
 				SteelAxe.setRegistryName("steel_axe"),SteelHoe.setRegistryName("steel_hoe"),SteelSword.setRegistryName("steel_sword"),
 				SteelHelmet.setRegistryName("steel_helmet"),SteelChestplate.setRegistryName("steel_chestplate"),SteelLeggings.setRegistryName("steel_leggings"),
 				SteelBoots.setRegistryName("steel_boots"),CopperHelmet.setRegistryName("copper_helmet"),CopperChestplate.setRegistryName("copper_chestplate"),
 				CopperLeggings.setRegistryName("copper_leggings"),CopperBoots.setRegistryName("copper_boots"),
 				OrichalcumPick.setRegistryName("orichalcum_pick"),OrichalcumShovel.setRegistryName("orichalcum_shovel"),OrichalcumAxe.setRegistryName("orichalcum_axe"),
 				OrichalcumHelmet.setRegistryName("orichalcum_helmet"),OrichalcumChestplate.setRegistryName("orichalcum_chestplate"),
-				OrichalcumLeggings.setRegistryName("orichalcum_leggings"),OrichalcumBoots.setRegistryName("orichalcum_boots"),OrichalcumHoe.setRegistryName("orichalcum_hoe"));
+				OrichalcumLeggings.setRegistryName("orichalcum_leggings"),OrichalcumBoots.setRegistryName("orichalcum_boots"),OrichalcumHoe.setRegistryName("orichalcum_hoe"),
+				BronzePick.setRegistryName("bronze_pick"),BronzeShovle.setRegistryName("bronze_shovel"),BronzeAxe.setRegistryName("bronze_axe"),BronzeHoe.setRegistryName("bronze_hoe"),
+				BronzeSword.setRegistryName("bronze_sword"),BronzeHelmet.setRegistryName("bronze_helmet"),BronzeChestplate.setRegistryName("bronze_chestplate"),
+				BronzeLeggings.setRegistryName("bronze_leggings"),BronzeBoots.setRegistryName("bronze_boots"));
 		
 		
 		DispenserBlock.registerBehavior(ModItemRegistry.CeramicPot, new DispenserPlacePot());
@@ -282,6 +361,14 @@ public class ModItemRegistry {
 		DispenserBlock.registerBehavior(ModItemRegistry.RedPot, new DispenserPlacePot());
 		DispenserBlock.registerBehavior(ModItemRegistry.WhitePot, new DispenserPlacePot());
 		DispenserBlock.registerBehavior(ModItemRegistry.YellowPot, new DispenserPlacePot());
+		
+		if(Config.DowngradeStone.get()) {
+			((TieredItem) Items.STONE_PICKAXE).tier = ModTiers.FLINT;
+			((TieredItem) Items.STONE_SHOVEL).tier = ModTiers.FLINT;
+			((TieredItem) Items.STONE_AXE).tier = ModTiers.FLINT;
+			((TieredItem) Items.STONE_HOE).tier = ModTiers.FLINT;
+			((TieredItem) Items.STONE_SWORD).tier = ModTiers.FLINT;
+		}
 	}
 	
 	public static BlockItemFuel buildBlockItem(Block block, int time) {
@@ -296,8 +383,8 @@ public class ModItemRegistry {
 		return buildBlockItem(block, CHARCOAL_PIT);
 	}
 	
-	public static BlockItem buildBlockItemP(Block block) {
-		return new BlockItem(block, new Item.Properties().tab(CHARCOAL_PIT).stacksTo(1));
+	public static ItemBlockCeramicPot buildBlockItemP(Block block) {
+		return new ItemBlockCeramicPot(block, new Item.Properties().tab(CHARCOAL_PIT).stacksTo(16));
 	}
 	
 	public static BlockItem buildBlockItem(Block block, CreativeModeTab group) {

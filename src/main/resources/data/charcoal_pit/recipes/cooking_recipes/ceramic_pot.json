@@ -1,5 +1,5 @@
 {
-  "type": "charcoal_pit:alloy",
+  "type": "minecraft:smelting",
   "ingredient": {
     "item": "charcoal_pit:clay_pot"
   },

@@ -11,21 +11,13 @@ import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.event.RegistryEvent;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FallingBlock;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.SaplingBlock;
-import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.StairBlock;
-import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
@@ -76,6 +68,15 @@ public class ModBlockRegistry {
 	public static SaplingBlock ChestnutSapling=new SaplingBlock(new ModFeatures.ChestnutTree(),BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING));
 	public static SaplingBlock OliveSapling=new SaplingBlock(new ModFeatures.OliveTree(),BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING));
 	public static SaplingBlock OrangeSapling=new SaplingBlock(new ModFeatures.OrangeTree(),BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING));
+	public static SaplingBlock EnchantedSapling=new SaplingBlock(new ModFeatures.EnchantedTree(),BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING));
+	public static SaplingBlock MapleSapling=new SaplingBlock(new ModFeatures.MapleTree(),BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING));
+	public static SaplingBlock JacarandaSapling=new SaplingBlock(new ModFeatures.JacarandaTree(),BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING));
+	public static SaplingBlock SakuraSapling=new SaplingBlock(new ModFeatures.SakuraTree(),BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING));
+	public static SaplingBlock ForsythiaSapling=new SaplingBlock(new ModFeatures.ForsythiaTree(),BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING));
+	public static SaplingBlock RandomSapling=new SaplingBlock(new ModFeatures.RandomTree(),BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING));
+	public static SaplingBlock CedarSapling=new SaplingBlock(new ModFeatures.CedarTree(),BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING));
+	public static SaplingBlock DouglasSapling=new SaplingBlock(new ModFeatures.DouglasTree(),BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING));
+	public static SaplingBlock DecorativeSapling=new SaplingBlock(new ModFeatures.RandomDecorativeTree(),BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING));
 	
 	public static BlockFruitLeaves AppleLeaves=new BlockFruitLeaves(Properties.copy(Blocks.OAK_LEAVES), null, 0.166F);
 	public static BlockFruitLeaves CherryLeaves=new BlockFruitLeaves(Properties.copy(Blocks.BIRCH_LEAVES), null, 0.333F);
@@ -83,6 +84,15 @@ public class ModBlockRegistry {
 	public static BlockFruitLeaves ChestnutLeaves=new BlockFruitLeaves(Properties.copy(Blocks.DARK_OAK_LEAVES),null,0.166F);
 	public static BlockFruitLeaves OliveLeaves=new BlockFruitLeaves(Properties.copy(Blocks.ACACIA_LEAVES),null,0.133F);
 	public static BlockFruitLeaves OrangeLeaves=new BlockFruitLeaves(Properties.copy(Blocks.ACACIA_LEAVES),null,0.166F);
+	public static BlockFruitLeaves EnchantedLeaves=new BlockFruitLeaves(Properties.copy(Blocks.OAK_LEAVES),null,0.166F);
+	public static BlockFlowerLeaves MapleLeaves=new BlockFlowerLeaves(Properties.copy(Blocks.OAK_LEAVES),0.166F,Config.CycleFlowerTrees.get()?0:7);
+	public static BlockFlowerLeaves JacarandaLeaves=new BlockFlowerLeaves(Properties.copy(Blocks.OAK_LEAVES),0.166F,Config.CycleFlowerTrees.get()?3:7);
+	public static BlockFlowerLeaves SakuraLeaves=new BlockFlowerLeaves(Properties.copy(Blocks.OAK_LEAVES),0.166F,Config.CycleFlowerTrees.get()?3:7);
+	public static BlockFlowerLeaves ForsythiaLeaves=new BlockFlowerLeaves(Properties.copy(Blocks.OAK_LEAVES),0.166F,Config.CycleFlowerTrees.get()?3:7);
+	public static LeavesBlock CedarLeaves=new LeavesBlock(Properties.copy(Blocks.SPRUCE_LEAVES));
+	public static LeavesBlock DouglasLeaves=new LeavesBlock(Properties.copy(Blocks.SPRUCE_LEAVES));
+	
+	public static BlockMapleLog MapleLog=new BlockMapleLog(Properties.of(Material.WOOD,MaterialColor.COLOR_ORANGE).sound(SoundType.WOOD).strength(2.0F));
 	
 	public static BlockBananaPod BanananaPod=new BlockBananaPod(Properties.copy(Blocks.COCOA));
 	public static BlockCocoPod CoconutPod=new BlockCocoPod(Properties.copy(Blocks.COCOA));
@@ -117,7 +127,8 @@ public class ModBlockRegistry {
 	public static BlockSteamPress SteamPress=new BlockSteamPress(Properties.copy(Blocks.BLAST_FURNACE));
 	
 	public static BlockWrathLantern WrathLantern=new BlockWrathLantern(Properties.copy(Blocks.LANTERN));
-	
+	public static BlockXPCrystal XPCrystal=new BlockXPCrystal(Properties.copy(Blocks.AMETHYST_CLUSTER));
+	public static BlockDwarvenCandle DwarvenCandle=new BlockDwarvenCandle();
 	
 	/*public static DoorBlock BrickDoor=new DoorBlock(AbstractBlock.Properties.from(Blocks.IRON_DOOR)),
 			SandyDoor=new DoorBlock(Properties.from(Blocks.IRON_DOOR)),
@@ -143,7 +154,13 @@ public class ModBlockRegistry {
 				OliveLeaves.setRegistryName("olive_leaves"),OrangeSapling.setRegistryName("orange_sapling"),OrangeLeaves.setRegistryName("orange_leaves"),
 				GenieLight.setRegistryName("genie_light"),NestBox.setRegistryName("nest_box"),Bloomeryy.setRegistryName("bloomeryy"),CharcoalBlock.setRegistryName("charcoal_block"),
 				Bloom.setRegistryName("bloom"),BlastFurnace.setRegistryName("blast_furnace"),Distillery.setRegistryName("distillery"),SteamPress.setRegistryName("steam_press"),
-				WrathLantern.setRegistryName("wrath_lantern"));
+				WrathLantern.setRegistryName("wrath_lantern"),EnchantedLeaves.setRegistryName("enchanted_leaves"),EnchantedSapling.setRegistryName("enchanted_sapling"),
+				MapleLeaves.setRegistryName("maple_leaves"),MapleSapling.setRegistryName("maple_sapling"),MapleLog.setRegistryName("maple_log"),
+				JacarandaLeaves.setRegistryName("jacaranda_leaves"),JacarandaSapling.setRegistryName("jacaranda_sapling"),SakuraSapling.setRegistryName("sakura_sapling"),
+				SakuraLeaves.setRegistryName("sakura_leaves"),ForsythiaLeaves.setRegistryName("forsythia_leaves"),ForsythiaSapling.setRegistryName("forsythia_sapling"),
+				RandomSapling.setRegistryName("random_sapling"),CedarSapling.setRegistryName("cedar_sapling"),CedarLeaves.setRegistryName("cedar_leaves"),
+				DouglasSapling.setRegistryName("douglas_sapling"),DouglasLeaves.setRegistryName("douglas_leaves"),DecorativeSapling.setRegistryName("decorative_sapling"),
+				XPCrystal.setRegistryName("xp_crystal"),DwarvenCandle.setRegistryName("dwarven_candle"));
 		event.getRegistry().registerAll(CeramicPot.setRegistryName("ceramic_pot"),YellowPot.setRegistryName("yellow_pot"),WhitePot.setRegistryName("white_pot"),
 				RedPot.setRegistryName("red_pot"),PurplePot.setRegistryName("purple_pot"),PinkPot.setRegistryName("pink_pot"),OrangePot.setRegistryName("orange_pot"),
 				MagentaPot.setRegistryName("magenta_pot"),LimePot.setRegistryName("lime_pot"),LightGrayPot.setRegistryName("light_gray_pot"),
@@ -163,11 +180,13 @@ public class ModBlockRegistry {
 				protected void addTags() {
 					this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(CokeBlock, ActiveCoalPile, SandyBrick, SandySlab, SandyStair, SandyWall, BrickCollector, SandyCollector,
 							NetherCollector, EndCollector, MechanicalBellows, CeramicPot, YellowPot, WhitePot, RedPot, PurplePot, PinkPot, OrangePot, MagentaPot,
-							LimePot, LightGrayPot, LightBluePot, GreenPot, GrayPot, CyanPot, BrownPot, BluePot, BlackPot, Bloomeryy, CharcoalBlock, Bloom, BlastFurnace);
+							LimePot, LightGrayPot, LightBluePot, GreenPot, GrayPot, CyanPot, BrownPot, BluePot, BlackPot, Bloomeryy, CharcoalBlock, Bloom, BlastFurnace,
+							Distillery, SteamPress, WrathLantern, XPCrystal);
 					this.tag(BlockTags.MINEABLE_WITH_AXE).add(LogPile, ActiveLogPile, Bellows, Barrel, BanananaPod, CoconutPod, NestBox,
 							FeedingThrough,FeedingThroughAcacia,FeedingThroughBirch,FeedingThroughDark,FeedingThroughCrimson,FeedingThroughJungle,
-							FeedingThroughWarped,FeedingThroughSpruce);
-					this.tag(BlockTags.MINEABLE_WITH_HOE).add(Thatch, AppleLeaves, CherryLeaves, DragonLeaves, ChestnutLeaves,OrangeLeaves,OliveLeaves);
+							FeedingThroughWarped,FeedingThroughSpruce,MapleLog);
+					this.tag(BlockTags.MINEABLE_WITH_HOE).add(Thatch, AppleLeaves, CherryLeaves, DragonLeaves, ChestnutLeaves,OrangeLeaves,OliveLeaves,EnchantedLeaves,
+							MapleLeaves,JacarandaLeaves,ForsythiaLeaves,CedarLeaves,DouglasLeaves);
 					this.tag(BlockTags.MINEABLE_WITH_SHOVEL).add(WoodAsh, CoalAsh, Ash);
 				}
 			});

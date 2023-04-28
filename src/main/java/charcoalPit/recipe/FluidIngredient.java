@@ -17,6 +17,10 @@ import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class FluidIngredient {
 	
 	public static boolean isFluidInTag(Fluid fluid,TagKey<Fluid> tag){
@@ -32,6 +36,28 @@ public class FluidIngredient {
 	public int amount;
 	public CompoundTag nbt;
 	
+	public List<Fluid> getAllFluids(){
+		List<Fluid> list=new ArrayList<>();
+		if(fluid!=null){
+			list.add(fluid);
+			return list;
+		}else{
+			list=ForgeRegistries.FLUIDS.getValues().stream().filter(f->isFluidInTag(f,tag)).collect(Collectors.toList());
+			return list;
+		}
+	}
+	
+	public List<FluidStack> getAllStacks(){
+		List<FluidStack> list=new ArrayList<>();
+		if(fluid!=null){
+			list.add(new FluidStack(fluid,amount,nbt));
+			return list;
+		}else{
+			ForgeRegistries.FLUIDS.getValues().stream().filter(f->isFluidInTag(f,tag)).forEach(f->list.add(new FluidStack(f,amount,nbt)));
+			return list;
+		}
+	}
+	
 	public boolean test(Fluid in) {
 		if(fluid!=null&&fluid==in)
 			return true;
@@ -44,7 +70,7 @@ public class FluidIngredient {
 		if(fluid!=null&&fluid!=Fluids.EMPTY)
 			return fluid;
 		if(tag!=null&&!ForgeRegistries.FLUIDS.tags().getTag(tag).isEmpty())
-			throw(new JsonParseException("Fluid Tag in output ingredient"));
+			return getAllFluids().get(0);
 		return Fluids.EMPTY;
 	}
 	

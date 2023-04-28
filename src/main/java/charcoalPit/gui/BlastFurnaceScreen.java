@@ -52,7 +52,7 @@ public class BlastFurnaceScreen extends AbstractContainerScreen<BlastFurnaceCont
 	
 	@Override
 	public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
-		this.renderBg(pPoseStack,pPartialTick,pMouseX,pMouseY);
+		this.renderBackground(pPoseStack);
 		super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
 		this.renderTooltip(pPoseStack,pMouseX,pMouseY);
 	}

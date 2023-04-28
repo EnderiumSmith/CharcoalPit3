@@ -13,8 +13,11 @@ import java.util.function.Supplier;
 
 public enum ModArmorTiers implements ArmorMaterial {
 	
-	COPPER("charcoal_pit:copper",9,new int[]{2,3,5,2},9,SoundEvents.ARMOR_EQUIP_GOLD,0F,0F,()->{
+	COPPER("charcoal_pit:copper",9,new int[]{2,3,5,2},10,SoundEvents.ARMOR_EQUIP_GOLD,0F,0F,()->{
 		return Ingredient.of(Items.COPPER_INGOT);
+	}),
+	BRONZE("charcoal_pit:bronze", 15, new int[]{2, 5, 6, 2}, 8, SoundEvents.ARMOR_EQUIP_IRON, 0.0F, 0.0F, () -> {
+		return Ingredient.of(MethodHelper.BRONZE);
 	}),
 	STEEL("charcoal_pit:steel",22,new int[]{2,5,7,2},5,SoundEvents.ARMOR_EQUIP_IRON,1F,0F,()->{
 		return Ingredient.of(MethodHelper.STEEL);

@@ -2,6 +2,7 @@ package charcoalPit.gui;
 
 import charcoalPit.core.ModBlockRegistry;
 import charcoalPit.core.ModContainerRegistry;
+import charcoalPit.core.ModItemRegistry;
 import charcoalPit.recipe.BarrelRecipe;
 import charcoalPit.tile.TileBarrel;
 import net.minecraft.world.entity.player.Player;
@@ -45,7 +46,7 @@ public class BarrelContainer extends AbstractContainerMenu{
 			@Override
 			public boolean mayPlace(ItemStack stack) {
 				return stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).isPresent()||
-						BarrelRecipe.isValidItem(stack, tile.getLevel())||stack.getItem()==Items.GLASS_BOTTLE;
+						BarrelRecipe.isValidItem(stack, tile.getLevel())||stack.getItem()==Items.GLASS_BOTTLE||stack.getItem()== ModItemRegistry.MapleSap;
 			}
 			
 			@Override

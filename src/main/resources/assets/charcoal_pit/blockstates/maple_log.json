@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "has_sap=false": {
+      "model": "charcoal_pit:block/maple_log"
+    },
+    "has_sap=true": {
+      "model": "charcoal_pit:block/maple_log_sap"
+    }
+  }
+}

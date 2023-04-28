@@ -4,6 +4,7 @@ import charcoalPit.core.ModBlockRegistry;
 import charcoalPit.core.ModContainerRegistry;
 import charcoalPit.core.ModItemRegistry;
 import charcoalPit.tile.TileBlastFurnace;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -29,7 +30,7 @@ public class BlastFurnaceContainer extends AbstractContainerMenu {
 					return stack.getItem()== ModItemRegistry.Flux;
 				}
 				if(slot== TileBlastFurnace.ORE){
-					return TileBlastFurnace.isOre(stack);
+					return TileBlastFurnace.isOre(stack, Minecraft.getInstance().level);
 				}
 				if(slot== TileBlastFurnace.FUEL){
 					return TileBlastFurnace.isFuel(stack);

@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:gold_nugget",
+    {
+    "id":"#forge:nuggets/lead",
+    "required":false
+    },
+    {
+    "id":"#forge:nuggets/depleted_uranium",
+    "required":false
+    },
+    {
+    "id":"#forge:nuggets/uranium_238",
+    "required":false
+    },
+    {
+    "id":"#forge:nuggets/bismuth",
+    "required":false
+    }
+  ]
+}

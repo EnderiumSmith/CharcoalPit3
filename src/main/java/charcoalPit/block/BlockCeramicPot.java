@@ -79,7 +79,16 @@ public class BlockCeramicPot extends Block implements EntityBlock {
 	public List<ItemStack> getDrops(BlockState state, Builder builder) {
 		TileCeramicPot tile=((TileCeramicPot)builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY));
 		ItemStack stack=new ItemStack(this);
-		stack.addTagElement("inventory", tile.inventory.serializeNBT());
+		boolean empty=true;
+		for(int i=0;i<tile.inventory.getSlots();i++){
+			if(!tile.inventory.getStackInSlot(i).isEmpty()) {
+				empty = false;
+				break;
+			}
+		}
+		if(!empty) {
+			stack.addTagElement("inventory", tile.inventory.serializeNBT());
+		}
 		return Arrays.asList(stack);
 	}
 	

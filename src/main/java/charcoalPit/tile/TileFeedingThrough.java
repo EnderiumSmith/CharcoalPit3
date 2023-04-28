@@ -47,7 +47,9 @@ public class TileFeedingThrough extends BlockEntity {
 				if (!inventory.getStackInSlot(0).isEmpty()) {
 					List<Animal> animals = level.getEntitiesOfClass(Animal.class, new AABB(worldPosition.getX() - 4, worldPosition.getY() - 1, worldPosition.getZ() - 4,
 							worldPosition.getX() + 5, worldPosition.getY() + 2, worldPosition.getZ() + 5));
-					if(animals.size()<41) {
+					List<Animal> animals1=level.getEntitiesOfClass(Animal.class, new AABB(worldPosition.getX() - 2, worldPosition.getY() - 1, worldPosition.getZ() - 2,
+							worldPosition.getX() + 3, worldPosition.getY() + 2, worldPosition.getZ() + 3));
+					if(animals.size()<41&&animals1.size()<13) {
 						for (Animal animal : animals) {
 							if (animal.canFallInLove() && !animal.isBaby() && animal.getAge()==0 && animal.isFood(inventory.getStackInSlot(0))) {
 								if (level.getRandom().nextFloat() < 0.66F)

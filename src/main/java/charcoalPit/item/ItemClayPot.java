@@ -23,13 +23,14 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.network.NetworkHooks;
 
 public class ItemClayPot extends Item{
 	
 	public ItemClayPot() {
-		super(new Item.Properties().stacksTo(1).tab(ModItemRegistry.CHARCOAL_PIT).stacksTo(1));
+		super(new Item.Properties().tab(ModItemRegistry.CHARCOAL_PIT).stacksTo(16));
 	}
 	
 	@OnlyIn(Dist.CLIENT)
@@ -60,7 +61,7 @@ public class ItemClayPot extends Item{
 				ItemStackHandler inv=new ItemStackHandler();
 				inv.deserializeNBT(stack.getTag().getCompound("inventory"));
 				if(result.isEmpty()){
-					tooltip.add(new TextComponent(ChatFormatting.DARK_RED+"Invalid"+" ("+OreKilnRecipe.oreKilnGetOreAmount(inv)+"/8)"));
+					tooltip.add(new TextComponent(ChatFormatting.DARK_RED+"Invalid"+" ("+OreKilnRecipe.oreKilnGetOreAmount(inv)+"/4)"));
 				}else{
 					tooltip.add(new TextComponent(ChatFormatting.GREEN+"").append(result.getHoverName()).append(new TextComponent(" x"+result.getCount())).withStyle(ChatFormatting.GREEN));
 				}
@@ -70,8 +71,8 @@ public class ItemClayPot extends Item{
 	
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-		if(!worldIn.isClientSide)
-			NetworkHooks.openGui((ServerPlayer)playerIn, new MenuProvider() {
+		if(!worldIn.isClientSide&&playerIn.getItemInHand(handIn).getCount()==1) {
+			NetworkHooks.openGui((ServerPlayer) playerIn, new MenuProvider() {
 				
 				@Override
 				public AbstractContainerMenu createMenu(int arg0, Inventory arg1, Player arg2) {
@@ -82,7 +83,8 @@ public class ItemClayPot extends Item{
 				public Component getDisplayName() {
 					return new TranslatableComponent("screen.charcoal_pit.clay_pot");
 				}
-			},buf->buf.writeByte((byte)playerIn.getInventory().selected));
+			}, buf -> buf.writeByte((byte) playerIn.getInventory().selected));
+		}
 		return super.use(worldIn, playerIn, handIn);
 	}
 	

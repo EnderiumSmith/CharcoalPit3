@@ -1,0 +1,26 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "charcoal_pit:block/dynamite_wall"
+    },
+    "facing=north": {
+      "model": "charcoal_pit:block/dynamite_wall",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "charcoal_pit:block/dynamite_wall",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "charcoal_pit:block/dynamite_wall",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "charcoal_pit:block/dynamite"
+    },
+    "facing=down": {
+      "model": "charcoal_pit:block/dynamite",
+      "x": 180
+    }
+  }
+}

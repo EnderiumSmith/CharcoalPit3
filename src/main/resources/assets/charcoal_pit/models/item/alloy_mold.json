@@ -1,0 +1,17 @@
+{
+    "parent": "charcoal_pit:item/alloy_mold_empty",
+    "overrides": [
+        {
+            "predicate": {
+                "charcoal_pit:type": 0.5
+            },
+            "model": "charcoal_pit:item/alloy_mold_invalid"
+        },
+        {
+            "predicate": {
+                "charcoal_pit:type": 1
+            },
+            "model": "charcoal_pit:item/alloy_mold_full"
+        }
+    ]
+}

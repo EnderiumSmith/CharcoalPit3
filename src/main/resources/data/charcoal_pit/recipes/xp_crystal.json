@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#L#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:enchanted_book"
+    },
+    "L": {
+      "item": "minecraft:amethyst_shard"
+    }
+  },
+  "result": {
+    "item": "charcoal_pit:xp_crystal"
+  }
+}

@@ -1,10 +1,12 @@
 package charcoalPit.core;
 
 import charcoalPit.CharcoalPit;
+import charcoalPit.enchant.ModEnchantments;
 import charcoalPit.entity.Airplane;
 import charcoalPit.entity.ModEntities;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.event.RegistryEvent;
@@ -44,6 +46,11 @@ public class RegistryClass {
 	@SubscribeEvent
 	public static void registerEntityAttributes(EntityAttributeCreationEvent event){
 		event.put(ModEntities.AIRPLANE, Airplane.createAttributes().build());
+	}
+	
+	@SubscribeEvent
+	public static void registerEnchants(RegistryEvent.Register<Enchantment> event){
+		ModEnchantments.registerEnchants(event);
 	}
 	
 }

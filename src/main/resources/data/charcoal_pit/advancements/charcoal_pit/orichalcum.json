@@ -1,5 +1,5 @@
 {
-  "parent": "charcoal_pit:charcoal_pit/clay_pot",
+  "parent": "charcoal_pit:charcoal_pit/alloy_mold",
   "display": {
     "icon": {
       "item": "charcoal_pit:alloy_orichalcum"

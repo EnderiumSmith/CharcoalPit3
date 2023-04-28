@@ -1,0 +1,9 @@
+{
+  "type": "charcoal_pit:alloy",
+  "ingredient": {
+    "item": "charcoal_pit:alloy_mold"
+  },
+  "result": "charcoal_pit:finished_alloy_mold",
+  "experience": 0.35,
+  "cookingtime": 400
+}

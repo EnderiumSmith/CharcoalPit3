@@ -81,7 +81,7 @@ public class OreKilnRecipe implements Recipe<Container>{
 	}
 	
 	public static boolean oreKilnIsEmpty(IItemHandler inventory) {
-		for(int i=1;i<inventory.getSlots();i++)
+		for(int i=0;i<inventory.getSlots();i++)
 			if(!inventory.getStackInSlot(i).isEmpty())
 				return false;
 		return true;
@@ -89,7 +89,7 @@ public class OreKilnRecipe implements Recipe<Container>{
 	
 	public static int oreKilnGetOreAmount(IItemHandler inventory) {
 		int a=0;
-		for(int i=1;i<inventory.getSlots();i++) {
+		for(int i=0;i<inventory.getSlots();i++) {
 			if(!inventory.getStackInSlot(i).isEmpty())
 				a+=inventory.getStackInSlot(i).getCount();
 		}
@@ -108,7 +108,7 @@ public class OreKilnRecipe implements Recipe<Container>{
 				boolean b=false;
 				for(int i=0;i<recipe.input.length;i++) {
 					boolean e=false;
-					for(int j=1;j<kiln.getSlots();j++) {
+					for(int j=0;j<kiln.getSlots();j++) {
 						if(recipe.isInputEqual(kiln.getStackInSlot(j), i)) {
 							e=true;
 							kiln.extractItem(j, 1, false);

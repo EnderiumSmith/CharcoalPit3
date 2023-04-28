@@ -15,13 +15,18 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import org.jetbrains.annotations.Nullable;
 
-public class AlloySmeltRecipe extends AbstractCookingRecipe {
+public class AlloySmeltRecipe extends SmeltingRecipe {
 	
 	
 	public static final Serializer SERIALIZER=new Serializer();
 	
 	public AlloySmeltRecipe(ResourceLocation pId, String pGroup, Ingredient pIngredient, ItemStack pResult, float pExperience, int pCookingTime) {
-		super(RecipeType.SMELTING, pId, pGroup, pIngredient, pResult, pExperience, pCookingTime);
+		super(pId, pGroup, pIngredient, pResult, pExperience, pCookingTime);
+	}
+	
+	@Override
+	public ItemStack getResultItem() {
+		return ItemStack.EMPTY;
 	}
 	
 	@Override
@@ -33,10 +38,10 @@ public class AlloySmeltRecipe extends AbstractCookingRecipe {
 	public boolean matches(Container pInv, Level pLevel) {
 		if(super.matches(pInv,pLevel)){
 			ItemStack pot=pInv.getItem(0);
-			if(!pot.hasTag()||!pot.getTag().contains("inventory")) {
-				return true;
+			if(!pot.hasTag()||!pot.getTag().contains("inventory")||pot.getTag().getBoolean("empty")) {
+				return false;
 			}else{
-				if(pot.getTag().getBoolean("empty")||!ItemStack.of(pot.getTag().getCompound("result")).isEmpty()){
+				if(!ItemStack.of(pot.getTag().getCompound("result")).isEmpty()){
 					return true;
 				}
 			}
@@ -50,12 +55,18 @@ public class AlloySmeltRecipe extends AbstractCookingRecipe {
 		if(!pot.hasTag()||!pot.getTag().contains("inventory")||pot.getTag().getBoolean("empty")) {
 			return super.assemble(pInv);
 		}else{
-			ItemStackHandler result=new ItemStackHandler(1);
-			result.setStackInSlot(0,ItemStack.of(pot.getTag().getCompound("result")));
-			ItemStack out=new ItemStack(ModItemRegistry.CrackedPot);
-			out.addTagElement("inventory",result.serializeNBT());
+			//ItemStackHandler result=new ItemStackHandler(1);
+			//result.setStackInSlot(0,ItemStack.of(pot.getTag().getCompound("result")));
+			ItemStack out=new ItemStack(ModItemRegistry.finished_alloy_mold);
+			out.addTagElement("result",pot.getTag().getCompound("result"));
+			//out.addTagElement("inventory",result.serializeNBT());
 			return out;
 		}
+	}
+	
+	@Override
+	public int getCookingTime() {
+		return super.getCookingTime();
 	}
 	
 	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<AlloySmeltRecipe>{

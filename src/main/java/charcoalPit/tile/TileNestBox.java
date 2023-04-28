@@ -61,7 +61,9 @@ public class TileNestBox extends BlockEntity {
 			if(incubating>0){
 				List<Animal> animals=level.getEntitiesOfClass(Animal.class,new AABB(worldPosition.getX()-4,worldPosition.getY()-1,worldPosition.getZ()-4,
 						worldPosition.getX()+5,worldPosition.getY()+2,worldPosition.getZ()+5));
-				if(animals.size()<41&&canIncubate(animals)){
+				List<Animal> animals1=level.getEntitiesOfClass(Animal.class,new AABB(worldPosition.getX()-2,worldPosition.getY()-1,worldPosition.getZ()-2,
+						worldPosition.getX()+3,worldPosition.getY()+2,worldPosition.getZ()+3));
+				if(animals.size()<41&&animals1.size()<13&&canIncubate(animals)){
 					int chicks=inventory.getStackInSlot(0).getCount();
 					for(int i=0;i<inventory.getStackInSlot(0).getCount();i++){
 						if(level.random.nextFloat()<0.004)

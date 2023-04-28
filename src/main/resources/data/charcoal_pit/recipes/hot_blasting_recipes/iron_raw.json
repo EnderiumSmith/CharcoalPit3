@@ -1,0 +1,9 @@
+{
+  "type": "charcoal_pit:hot_blasting",
+  "ingredient": {
+    "tag": "forge:raw_materials/iron"
+  },
+  "result": "charcoal_pit:alloy_pig_iron",
+  "experience": 0.7,
+  "cookingtime": 200
+}

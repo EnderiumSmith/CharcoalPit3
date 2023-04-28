@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "charcoal_pit:tiny_gunpowder"
+    },
+    {
+      "item": "charcoal_pit:tiny_gunpowder"
+    },
+    {
+      "item": "charcoal_pit:tiny_gunpowder"
+    },
+    {
+      "item": "charcoal_pit:tiny_gunpowder"
+    }
+  ],
+  "result": {
+    "item": "minecraft:gunpowder"
+  }
+}

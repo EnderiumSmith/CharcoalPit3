@@ -1,0 +1,37 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "charcoal_pit:item/musket"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [-80, -90, -33],
+			"translation": [-1, 1.25, -2.5],
+			"scale": [0.9, 0.9, 0.9]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [-80, 90, 33],
+			"translation": [-1, 1.25, -2.5],
+			"scale": [0.9, 0.9, 0.9]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -90, 40],
+			"translation": [1.13, 3.2, 0.88],
+			"scale": [0.68, 0.68, 0.68]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 90, -40],
+			"translation": [1.13, 3.2, 0.88],
+			"scale": [0.68, 0.68, 0.68]
+		}
+	},
+	"groups": [
+		{
+			"name": "bow",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": []
+		}
+	]
+}

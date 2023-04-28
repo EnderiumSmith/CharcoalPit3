@@ -144,14 +144,6 @@ public class TileBarrel extends BlockEntity{
 									input.extractItem(0,1,false);
 								}
 							}
-							if(tank.getFluid().getFluid()==ModFluidRegistry.EthanolStill&&tank.getFluidAmount()>=250){
-								ItemStack stack=new ItemStack(ModItemRegistry.EthanolBottle);
-								if(output.insertItem(0,stack,true)==ItemStack.EMPTY){
-									output.insertItem(0,stack,false);
-									tank.drain(250,FluidAction.EXECUTE);
-									input.extractItem(0,1,false);
-								}
-							}
 							if(tank.getFluid().getFluid()==ModFluidRegistry.EthoxideStill&&tank.getFluidAmount()>=250){
 								ItemStack stack=new ItemStack(ModItemRegistry.EthoxideBottle);
 								if(output.insertItem(0,stack,true)==ItemStack.EMPTY){
@@ -159,6 +151,23 @@ public class TileBarrel extends BlockEntity{
 									tank.drain(250,FluidAction.EXECUTE);
 									input.extractItem(0,1,false);
 								}
+							}
+							if(tank.getFluid().getFluid()==ModFluidRegistry.MapleSyrupStill&&tank.getFluidAmount()>=250){
+								ItemStack stack=new ItemStack(ModItemRegistry.MapleSyrup);
+								if(output.insertItem(0,stack,true)==ItemStack.EMPTY){
+									output.insertItem(0,stack,false);
+									tank.drain(250,FluidAction.EXECUTE);
+									input.extractItem(0,1,false);
+								}
+							}
+						}
+						if(input.getStackInSlot(0).getItem()==ModItemRegistry.MapleSap&&
+								tank.fill(new FluidStack(ModFluidRegistry.MapleSapStill,250),FluidAction.SIMULATE)==250){
+							ItemStack stack=new ItemStack(Items.GLASS_BOTTLE);
+							if(output.insertItem(0,stack,true)==ItemStack.EMPTY){
+								output.insertItem(0,stack,false);
+								tank.fill(new FluidStack(ModFluidRegistry.MapleSapStill,250),FluidAction.EXECUTE);
+								input.extractItem(0,1,false);
 							}
 						}
 						transferFluid();
@@ -329,7 +338,7 @@ public class TileBarrel extends BlockEntity{
 		@Override
 		public boolean isItemValid(int slot, ItemStack stack) {
 			return stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).isPresent()||
-					BarrelRecipe.isValidItem(stack, getLevel())||stack.getItem()==Items.GLASS_BOTTLE;
+					BarrelRecipe.isValidItem(stack, getLevel())||stack.getItem()==Items.GLASS_BOTTLE||stack.getItem()==ModItemRegistry.MapleSap;
 		}
 		
 		@Override

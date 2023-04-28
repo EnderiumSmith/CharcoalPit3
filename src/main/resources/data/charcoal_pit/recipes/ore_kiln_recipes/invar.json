@@ -1,0 +1,42 @@
+{
+  "type": "forge:conditional",
+
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:not",
+  		"value": {
+    		"type": "forge:tag_empty",
+  		"tag": "forge:ingots/invar"
+  		}
+        },
+        {
+          "type": "forge:not",
+  		"value": {
+    		"type": "forge:tag_empty",
+  		"tag": "forge:ingots/nickel"
+  		}
+        }
+      ],
+      "recipe": {
+      "type": "charcoal_pit:orekiln",
+  	"ingredients": [
+    	{
+        "item": "minecraft:iron_ingot"
+    	},
+    	{
+        "item": "minecraft:iron_ingot"
+    	},
+    	{
+        "tag": "forge:ingots/nickel"
+    	}
+  	],
+  	"result": {
+    	"tag": "forge:ingots/invar"
+  	},
+  	"amount": 3
+      	}
+    }
+  ]
+}

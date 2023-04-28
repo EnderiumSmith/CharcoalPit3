@@ -2,7 +2,7 @@
   "parent": "charcoal_pit:charcoal_pit/flint",
   "display": {
     "icon": {
-      "item": "charcoal_pit:clay_pot"
+      "item": "charcoal_pit:ceramic_pot"
     },
     "title": {
       "translate": "advancements.charcoal_pit.clay_pot.title"
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "items": ["charcoal_pit:clay_pot"]
+            "items": ["charcoal_pit:ceramic_pot"]
           }
         ]
       }

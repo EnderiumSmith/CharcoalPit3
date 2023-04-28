@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "charcoal_pit:block/maple_leaves"
+    },
+    "age=1": {
+      "model": "charcoal_pit:block/maple_leaves"
+    },
+    "age=2": {
+      "model": "charcoal_pit:block/maple_leaves"
+    },
+    "age=3": {
+      "model": "charcoal_pit:block/maple_leaves"
+    },
+    "age=4": {
+      "model": "charcoal_pit:block/maple_leaves_red"
+    },
+    "age=5": {
+      "model": "charcoal_pit:block/maple_leaves_red"
+    },
+    "age=6": {
+      "model": "charcoal_pit:block/maple_leaves_red"
+    },
+    "age=7": {
+      "model": "charcoal_pit:block/maple_leaves_red"
+    }
+  }
+}

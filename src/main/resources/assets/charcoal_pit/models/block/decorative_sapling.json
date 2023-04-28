@@ -1,0 +1,7 @@
+{
+  "parent": "charcoal_pit:block/hue_cross",
+  "textures": {
+    "cross": "charcoal_pit:block/sapling_base2",
+    "cross2": "charcoal_pit:block/sapling_leaves2"
+  }
+}

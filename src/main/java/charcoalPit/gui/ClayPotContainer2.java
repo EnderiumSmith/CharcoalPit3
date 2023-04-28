@@ -4,6 +4,8 @@ import charcoalPit.CharcoalPit;
 import charcoalPit.core.ModContainerRegistry;
 import charcoalPit.recipe.OreKilnRecipe;
 import net.minecraft.client.Minecraft;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.Container;
@@ -16,6 +18,10 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ClayPotContainer2 extends AbstractContainerMenu{
 	
 	
@@ -26,22 +32,26 @@ public class ClayPotContainer2 extends AbstractContainerMenu{
 		super(ModContainerRegistry.ClayPot, id);
 		this.inv=inv;
 		this.slot=slot;
-		pot=new ClayPotHandler(9, ()->{
+		pot=new ClayPotHandler(4, ()->{
 			this.inv.getItem(this.slot).addTagElement("inventory", pot.serializeNBT());
 		}, inv.player.level);
 		if(this.inv.getItem(this.slot).hasTag()&&
 				this.inv.getItem(this.slot).getTag().contains("inventory"))
 			pot.deserializeNBT(this.inv.getItem(this.slot).getTag().getCompound("inventory"));
 		
-		for(int i = 0; i < 3; ++i) {
-	         for(int j = 0; j < 3; ++j) {
-	        	 this.addSlot(new SlotItemHandler(pot, getIndex(j+i*3), 62 + j * 18, 17 + i * 18){
+		for(int i = 0; i < 2; ++i) {
+	         for(int j = 0; j < 2; ++j) {
+	        	 this.addSlot(new SlotItemHandler(pot, j+i*2, 71 + j * 18, 26 + i * 18){
 					 @Override
 					 public void setChanged() {
 						 super.setChanged();
-						 inv.getItem(slot).addTagElement("inventory", pot.serializeNBT());
-						 inv.getItem(slot).addTagElement("result",OreKilnRecipe.OreKilnGetOutput(pot.serializeNBT(),inv.player.level).serializeNBT());
-						 inv.getItem(slot).getTag().putBoolean("empty",OreKilnRecipe.oreKilnIsEmpty(pot));
+						 if(!OreKilnRecipe.oreKilnIsEmpty(pot)) {
+							 inv.getItem(slot).addTagElement("inventory", pot.serializeNBT());
+							 inv.getItem(slot).addTagElement("result", OreKilnRecipe.OreKilnGetOutput(pot.serializeNBT(), inv.player.level).serializeNBT());
+						 }else{
+							 inv.getItem(slot).removeTagKey("inventory");
+							 inv.getItem(slot).removeTagKey("result");
+						 }
 					 }
 				 });
 	         }
@@ -58,14 +68,6 @@ public class ClayPotContainer2 extends AbstractContainerMenu{
 	      }
 		
 	}
-	
-	private int getIndex(int i) {
-		if(i<4)
-			return i+1;
-		if(i==4)
-			return 0;
-		return i;
-	}
 
 	@Override
 	public boolean stillValid(Player playerIn) {
@@ -79,11 +81,11 @@ public class ClayPotContainer2 extends AbstractContainerMenu{
 	      if (slot != null && slot.hasItem()) {
 	         ItemStack itemstack1 = slot.getItem();
 	         itemstack = itemstack1.copy();
-	         if (index < 9) {
-	            if (!this.moveItemStackTo(itemstack1, 9, 45, true)) {
+	         if (index < 4) {
+	            if (!this.moveItemStackTo(itemstack1, 4, 40, true)) {
 	               return ItemStack.EMPTY;
 	            }
-	         } else if (!this.moveItemStackTo(itemstack1, 0, 9, false)) {
+	         } else if (!this.moveItemStackTo(itemstack1, 0, 4, false)) {
 	            return ItemStack.EMPTY;
 	         }
 
@@ -115,24 +117,37 @@ public class ClayPotContainer2 extends AbstractContainerMenu{
 		
 		@Override
 		public boolean isItemValid(int slot, ItemStack stack) {
-			if(slot==0) {
-				return false;
-				//return stack.is(ItemTags.getAllTags().getTag(new ResourceLocation(CharcoalPit.MODID, "orekiln_fuels")));
-			}else {
-				return OreKilnRecipe.isValidInput(stack, world);
-			}
+			return OreKilnRecipe.isValidInput(stack, world);
 		}
 		
 		@Override
 		public int getSlotLimit(int slot) {
-			if(slot==0)
-				return 4;
 			return 1;
 		}
 		
 		@Override
 		protected void onContentsChanged(int slot) {
 			function.run();
+		}
+		
+		@Override
+		public CompoundTag serializeNBT() {
+			ListTag nbtTagList = new ListTag();
+			List<ItemStack> newList=stacks.stream().sorted(Comparator.comparing(a -> a.getItem().getRegistryName())).toList();
+			for (int i = 0; i < newList.size(); i++)
+			{
+				if (!newList.get(i).isEmpty())
+				{
+					CompoundTag itemTag = new CompoundTag();
+					itemTag.putInt("Slot", i);
+					newList.get(i).save(itemTag);
+					nbtTagList.add(itemTag);
+				}
+			}
+			CompoundTag nbt = new CompoundTag();
+			nbt.put("Items", nbtTagList);
+			nbt.putInt("Size", newList.size());
+			return nbt;
 		}
 	}
 	

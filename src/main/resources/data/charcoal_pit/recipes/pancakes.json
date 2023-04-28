@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/flour"
+    },
+    {
+      "tag": "forge:eggs"
+    },
+    {
+      "item": "minecraft:milk_bucket"
+    },
+    {
+      "item": "charcoal_pit:maple_syrup"
+    }
+  ],
+  "result": {
+    "item": "charcoal_pit:pancakes",
+    "count":2
+  }
+}

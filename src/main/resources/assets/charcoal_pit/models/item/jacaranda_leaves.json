@@ -1,0 +1,11 @@
+{
+    "parent": "charcoal_pit:block/jacaranda_leaves",
+    "overrides": [
+        {
+            "predicate": {
+                "charcoal_pit:stage": 1
+            },
+            "model": "charcoal_pit:block/jacaranda_leaves_flower"
+        }
+    ]
+}

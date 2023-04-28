@@ -30,7 +30,7 @@ public class ModTileRegistry {
 	public static BlockEntityType<TileDistillery> Distillery=BlockEntityType.Builder.of(TileDistillery::new,ModBlockRegistry.Distillery).build(null);
 	public static BlockEntityType<TileSteamPress> SteamPress=BlockEntityType.Builder.of(TileSteamPress::new,ModBlockRegistry.SteamPress).build(null);
 	public static BlockEntityType<TileWrathLantern> WrathLantern=BlockEntityType.Builder.of(TileWrathLantern::new,ModBlockRegistry.WrathLantern).build(null);
-	
+	public static BlockEntityType<TileXPCrystal> XPCrystal=BlockEntityType.Builder.of(TileXPCrystal::new,ModBlockRegistry.XPCrystal).build(null);
 	
 	//@SubscribeEvent
 	public static void registerTileEntity(RegistryEvent.Register<BlockEntityType<?>> event) {
@@ -38,7 +38,7 @@ public class ModTileRegistry {
 				CeramicPot.setRegistryName("ceramic_pot"), Barrel.setRegistryName("barrel"),FeedingThrough.setRegistryName("feeding_through"),
 				NestBox.setRegistryName("nest_box"),Bloomeryy.setRegistryName("bloomeryy"),Bloom.setRegistryName("bloom"),
 				BlastFurnace.setRegistryName("blast_furnace"),Distillery.setRegistryName("distillery"),SteamPress.setRegistryName("steam_press"),
-				WrathLantern.setRegistryName("wrath_lantern"));
+				WrathLantern.setRegistryName("wrath_lantern"),XPCrystal.setRegistryName("xp_crystal"));
 	}
 	
 }

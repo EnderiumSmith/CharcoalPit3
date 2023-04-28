@@ -32,7 +32,7 @@ public class TileBloom extends BlockEntity {
 	@Override
 	public void load(CompoundTag pTag) {
 		super.load(pTag);
-		items.deserializeNBT(pTag.getCompound("items"));
+		items=ItemStack.of(pTag.getCompound("items"));
 		workCount=pTag.getInt("work");
 	}
 }

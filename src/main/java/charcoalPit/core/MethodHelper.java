@@ -45,6 +45,10 @@ public class MethodHelper {
 	public static final TagKey<Item> BLASTING_FUEL=ItemTags.create(new ResourceLocation(CharcoalPit.MODID, "blast_furnace_fuels"));
 	public static final TagKey<Item> STEEL=ItemTags.create(new ResourceLocation("forge", "ingots/steel"));
 	public static final TagKey<Item> ORICHALCUM=ItemTags.create(new ResourceLocation("forge", "ingots/orichalcum"));
+	public static final TagKey<Item> BRONZE=ItemTags.create(new ResourceLocation("forge", "ingots/bronze"));
+	public static final TagKey<Item> BULLETS=ItemTags.create(new ResourceLocation(CharcoalPit.MODID, "bullets"));
+	public static final TagKey<Item> GUN_POWDER=ItemTags.create(new ResourceLocation(CharcoalPit.MODID, "gun_powder"));
+	public static final TagKey<Item> MUSKET=ItemTags.create(new ResourceLocation(CharcoalPit.MODID, "musket"));
 	
 	public static final TagKey<Fluid> SEED_OIL=FluidTags.create(new ResourceLocation("forge", "seed_oil"));
 	public static final TagKey<Fluid> BIODIESEL=FluidTags.create(new ResourceLocation("forge", "biodiesel"));

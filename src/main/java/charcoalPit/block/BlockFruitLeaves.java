@@ -5,6 +5,7 @@ import charcoalPit.core.ModBlockRegistry;
 import charcoalPit.core.ModItemRegistry;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;

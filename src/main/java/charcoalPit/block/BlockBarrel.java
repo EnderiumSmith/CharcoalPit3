@@ -152,19 +152,28 @@ public class BlockBarrel extends Block implements SimpleWaterloggedBlock, Entity
 				ItemHandlerHelper.giveItemToPlayer(player,stack);
 				return InteractionResult.SUCCESS;
 			}
-			if(tile.tank.getFluid().getFluid()==ModFluidRegistry.EthanolStill&&tile.tank.getFluidAmount()>=250){
-				player.getItemInHand(handIn).shrink(1);
-				ItemStack stack=new ItemStack(ModItemRegistry.EthanolBottle);
-				tile.tank.drain(250, IFluidHandler.FluidAction.EXECUTE);
-				ItemHandlerHelper.giveItemToPlayer(player,stack);
-				return InteractionResult.SUCCESS;
-			}
 			if(tile.tank.getFluid().getFluid()==ModFluidRegistry.EthoxideStill&&tile.tank.getFluidAmount()>=250){
 				player.getItemInHand(handIn).shrink(1);
 				ItemStack stack=new ItemStack(ModItemRegistry.EthoxideBottle);
 				tile.tank.drain(250, IFluidHandler.FluidAction.EXECUTE);
 				ItemHandlerHelper.giveItemToPlayer(player,stack);
 				return InteractionResult.SUCCESS;
+			}
+			if(tile.tank.getFluid().getFluid()==ModFluidRegistry.MapleSyrupStill&&tile.tank.getFluidAmount()>=250){
+				player.getItemInHand(handIn).shrink(1);
+				ItemStack stack=new ItemStack(ModItemRegistry.MapleSyrup);
+				tile.tank.drain(250, IFluidHandler.FluidAction.EXECUTE);
+				ItemHandlerHelper.giveItemToPlayer(player,stack);
+				return InteractionResult.SUCCESS;
+			}
+		}else{
+			TileBarrel tile=((TileBarrel)worldIn.getBlockEntity(pos));
+			if(player.getItemInHand(handIn).getItem()==ModItemRegistry.MapleSap&&
+					tile.tank.fill(new FluidStack(ModFluidRegistry.MapleSapStill,250), IFluidHandler.FluidAction.SIMULATE)==250){
+				player.getItemInHand(handIn).shrink(1);
+				ItemStack stack=new ItemStack(Items.GLASS_BOTTLE);
+				tile.tank.fill(new FluidStack(ModFluidRegistry.MapleSapStill,250), IFluidHandler.FluidAction.EXECUTE);
+				ItemHandlerHelper.giveItemToPlayer(player,stack);
 			}
 		}
 		NetworkHooks.openGui((ServerPlayer)player, new MenuProvider() {

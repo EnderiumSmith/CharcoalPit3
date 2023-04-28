@@ -1,5 +1,6 @@
 package charcoalPit.item;
 
+import charcoalPit.core.ModItemRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Parrot;
+import net.minecraft.world.entity.animal.axolotl.Axolotl;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
@@ -35,6 +37,9 @@ public class ItemAnimalCage extends Item {
 		if(pStack.hasTag())
 			return InteractionResult.PASS;
 		if(entity instanceof Animal||entity instanceof AbstractVillager){
+			if(entity instanceof Axolotl){
+				return InteractionResult.PASS;
+			}
 			if ((entity.getBbHeight() <= 0.875F && entity.getBbWidth() <= 0.875F)||
 					entity.getClass()==Parrot.class||
 					(entity.getClass()==Villager.class && entity.isBaby())) {
@@ -49,8 +54,8 @@ public class ItemAnimalCage extends Item {
 					entity.remove(Entity.RemovalReason.UNLOADED_WITH_PLAYER);
 					stack.addTagElement("AnimalData", data);
 					stack.getTag().putString("AnimalName",entity.getDisplayName().getString());
+					ItemHandlerHelper.giveItemToPlayer(pPlayer,stack);
 					pPlayer.getItemInHand(pUsedHand).shrink(1);
-					ItemHandlerHelper.giveItemToPlayer(pPlayer,stack,pPlayer.getInventory().selected);
 					return InteractionResult.SUCCESS;
 				} else {
 					return InteractionResult.FAIL;

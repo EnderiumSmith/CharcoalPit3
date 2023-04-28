@@ -4,6 +4,7 @@ import charcoalPit.block.BlockBloomeryy;
 import charcoalPit.core.MethodHelper;
 import charcoalPit.core.ModItemRegistry;
 import charcoalPit.core.ModTileRegistry;
+import charcoalPit.recipe.BloomingRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -48,7 +49,7 @@ public class TileBloomeryy extends BlockEntity {
 			@Override
 			public boolean isItemValid(int slot, @NotNull ItemStack stack) {
 				if(slot==0){
-					return isOre(stack);
+					return BloomingRecipe.getRecipe(stack,level)!=null;
 				}
 				if(slot==1)
 					return isFuel(stack);
@@ -76,62 +77,40 @@ public class TileBloomeryy extends BlockEntity {
 				}
 			}else{
 				//done smelting
-				if(inventory.getStackInSlot(2).isEmpty()){
-					ItemStack stack=new ItemStack(ModItemRegistry.Bloom,1);
-					stack.addTagElement("items", new ItemStack(Items.IRON_INGOT, 1).serializeNBT());
-					inventory.insertItem(2,stack,false);
-					inventory.extractItem(0,1,false);
-				}else{
-					ItemStack stack=inventory.getStackInSlot(2);
-					ItemStack nested=ItemStack.of(stack.getTag().getCompound("items"));
-					nested.grow(1);
-					stack.getTag().put("items",nested.serializeNBT());
-					inventory.extractItem(0,1,false);
+				BloomingRecipe recipe=BloomingRecipe.getRecipe(inventory.getStackInSlot(0),level);
+				if(recipe!=null) {
+					if (inventory.getStackInSlot(2).isEmpty()) {
+						ItemStack stack = new ItemStack(ModItemRegistry.Bloom, 1);
+						stack.addTagElement("items", new ItemStack(recipe.getResultItem().getItem(), 1).serializeNBT());
+						inventory.insertItem(2, stack, false);
+						inventory.extractItem(0, 1, false);
+					} else {
+						ItemStack stack = inventory.getStackInSlot(2);
+						ItemStack nested = ItemStack.of(stack.getTag().getCompound("items"));
+						nested.grow(1);
+						stack.getTag().put("items", nested.serializeNBT());
+						inventory.extractItem(0, 1, false);
+					}
 				}
-				/*int i=Math.min(8,inventory.getStackInSlot(0).getCount());
-				ItemStack stack=new ItemStack(ModItemRegistry.Bloom,1);
-				stack.addTagElement("items", new ItemStack(Items.IRON_INGOT, i).serializeNBT());
-				inventory.insertItem(2,stack,false);
-				inventory.extractItem(0,i,false);*/
 				processTotal=0;
 				progress=0;
 				setChanged();
-				if(trySmelt()){
+				int time=trySmelt();
+				if(time>0){
 					progress=0;
-					processTotal=199;
+					processTotal=time-1;
 				}
-				/*if(isOre(inventory.getStackInSlot(0))) {
-					ItemStack stack2 = new ItemStack(ModItemRegistry.Bloom, 1);
-					stack2.addTagElement("items", new ItemStack(Items.IRON_INGOT, Math.min(8,inventory.getStackInSlot(0).getCount())).serializeNBT());
-					if (inventory.insertItem(2, stack2, true).isEmpty()) {
-						progress = 0;
-						processTotal = 1599;
-						if (burnTime > 0)
-							setActive(true);
-						setChanged();
-					}
-				}*/
 			}
 		}else{
 			//try smelt
-			if(trySmelt()){
+			int time=trySmelt();
+			if(time>0){
 				progress=0;
-				processTotal=199;
+				processTotal=time-1;
 				if(burnTime>0)
 					setActive(true);
 				setChanged();
 			}
-				/*if(isOre(inventory.getStackInSlot(0))) {
-					ItemStack stack = new ItemStack(ModItemRegistry.Bloom, 1);
-					stack.addTagElement("items", new ItemStack(Items.IRON_INGOT, Math.min(8,inventory.getStackInSlot(0).getCount())).serializeNBT());
-					if (inventory.insertItem(2, stack, true).isEmpty()) {
-						progress = 0;
-						processTotal = 1599;
-						if (burnTime > 0)
-							setActive(true);
-						setChanged();
-					}
-				}*/
 			
 		}
 		if(blastAir>0)
@@ -157,22 +136,19 @@ public class TileBloomeryy extends BlockEntity {
 			}
 		}
 	}
-	public boolean trySmelt(){
-		if(isOre(inventory.getStackInSlot(0))){
+	public int trySmelt(){
+		BloomingRecipe recipe=BloomingRecipe.getRecipe(inventory.getStackInSlot(0),level);
+		if(recipe!=null){
 			if(inventory.getStackInSlot(2).isEmpty())
-				return true;
+				return recipe.getCookingTime();
 			else{
 				ItemStack stack=inventory.getStackInSlot(2);
 				ItemStack nested=ItemStack.of(stack.getTag().getCompound("items"));
-				if(nested.getItem()==Items.IRON_INGOT&&nested.getCount()<nested.getMaxStackSize())
-					return true;
+				if(nested.getItem()==recipe.getResultItem().getItem()&&nested.getCount()<nested.getMaxStackSize())
+					return recipe.getCookingTime();
 			}
 		}
-		return false;
-	}
-	
-	public static boolean isOre(ItemStack stack){
-		return MethodHelper.isItemInTag(stack,MethodHelper.IRON_ORE)||MethodHelper.isItemInTag(stack,MethodHelper.RAW_IRON_ORE);
+		return 0;
 	}
 	
 	public static boolean isFuel(ItemStack stack){

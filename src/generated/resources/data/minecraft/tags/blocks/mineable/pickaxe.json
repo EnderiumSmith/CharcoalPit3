@@ -32,6 +32,10 @@
     "charcoal_pit:bloomeryy",
     "charcoal_pit:charcoal_block",
     "charcoal_pit:bloom",
-    "charcoal_pit:blast_furnace"
+    "charcoal_pit:blast_furnace",
+    "charcoal_pit:distillery",
+    "charcoal_pit:steam_press",
+    "charcoal_pit:wrath_lantern",
+    "charcoal_pit:xp_crystal"
   ]
 }

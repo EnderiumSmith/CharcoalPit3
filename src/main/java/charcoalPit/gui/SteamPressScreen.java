@@ -28,7 +28,7 @@ public class SteamPressScreen extends AbstractContainerScreen<SteamPressContaine
 		int j = (this.height - this.imageHeight) / 2;
 		this.blit(pPoseStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
 		MethodHelper.renderFluid(this,this.minecraft,pPoseStack,FluidStack.loadFluidStackFromNBT(this.menu.fluid_tag.getStackInSlot(0).getOrCreateTag().getCompound("fluid1")),
-				1000,109,32,MethodHelper.TANK_WIDE,i,j);
+				2000,109,32,MethodHelper.TANK_WIDE,i,j);
 		MethodHelper.renderFluid(this,this.minecraft,pPoseStack,FluidStack.loadFluidStackFromNBT(this.menu.fluid_tag.getStackInSlot(0).getOrCreateTag().getCompound("fluid2")),
 				8000,57,68,MethodHelper.TANK_WIDE,i,j);
 		MethodHelper.renderFluid(this,this.minecraft,pPoseStack,FluidStack.loadFluidStackFromNBT(this.menu.fluid_tag.getStackInSlot(0).getOrCreateTag().getCompound("fluid2")),

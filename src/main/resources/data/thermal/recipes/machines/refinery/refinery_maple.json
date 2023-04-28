@@ -1,0 +1,18 @@
+{
+  "type": "thermal:refinery",
+  "ingredient": {
+    "fluid": "charcoal_pit:maple_sap",
+    "amount": 1000
+  },
+  "result": [
+    {
+      "fluid": "charcoal_pit:maple_syrup",
+      "amount": 200
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 800
+    }
+  ],
+  "energy": 4000
+}

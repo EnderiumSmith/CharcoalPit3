@@ -8,6 +8,8 @@ import charcoalPit.entity.AirplaneModel;
 import charcoalPit.entity.AirplaneRenderer;
 import charcoalPit.entity.ModEntities;
 import charcoalPit.gui.*;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.RenderType;
@@ -60,6 +62,24 @@ public class ClientSetup {
 		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.OliveLeaves,RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.OrangeSapling,RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.OrangeLeaves,RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.EnchantedSapling,RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.EnchantedLeaves,RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.MapleLeaves,RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.MapleSapling,RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.JacarandaLeaves,RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.JacarandaSapling,RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.SakuraLeaves,RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.SakuraSapling,RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.ForsythiaLeaves,RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.ForsythiaSapling,RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.RandomSapling,RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.CedarLeaves,RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.CedarSapling,RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.DouglasLeaves,RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.DouglasSapling,RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.DecorativeSapling,RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.XPCrystal,RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlockRegistry.DwarvenCandle,RenderType.cutout());
 		event.enqueueWork(()->{
 			ItemProperties.register(ModItemRegistry.AppleLeaves, new ResourceLocation(CharcoalPit.MODID,"stage"),(stack, arg2, entity, pseed)->{
 				if(stack.hasTag()&&stack.getTag().contains("stage")){
@@ -139,6 +159,57 @@ public class ClientSetup {
 				}
 				return 0F;
 			});
+			ItemProperties.register(ModItemRegistry.EnchantedLeaves, new ResourceLocation(CharcoalPit.MODID,"stage"),(stack,arg2,entity, pseed)->{
+				if(stack.hasTag()&&stack.getTag().contains("stage")){
+					if(stack.getTag().getInt("stage")==3)
+						return 0.25F;
+					if(stack.getTag().getInt("stage")==6){
+						return 0.5F;
+					}
+					if(stack.getTag().getInt("stage")==7){
+						return 1F;
+					}
+				}
+				return 0F;
+			});
+			ItemProperties.register(ModItemRegistry.MapleLeaves, new ResourceLocation(CharcoalPit.MODID,"stage"),(stack,arg2,entity, pseed)->{
+				if(stack.hasTag()&&stack.getTag().contains("stage")){
+					if(stack.getTag().getInt("stage")==7){
+						return 1F;
+					}
+				}
+				return 0F;
+			});
+			ItemProperties.register(ModItemRegistry.JacarandaLeaves, new ResourceLocation(CharcoalPit.MODID,"stage"),(stack,arg2,entity, pseed)->{
+				if(stack.hasTag()&&stack.getTag().contains("stage")){
+					if(stack.getTag().getInt("stage")==7){
+						return 1F;
+					}
+				}
+				return 0F;
+			});
+			ItemProperties.register(ModItemRegistry.SakuraLeaves, new ResourceLocation(CharcoalPit.MODID,"stage"),(stack,arg2,entity, pseed)->{
+				if(stack.hasTag()&&stack.getTag().contains("stage")){
+					if(stack.getTag().getInt("stage")==7){
+						return 1F;
+					}
+				}
+				return 0F;
+			});
+			ItemProperties.register(ModItemRegistry.ForsythiaLeaves, new ResourceLocation(CharcoalPit.MODID,"stage"),(stack,arg2,entity, pseed)->{
+				if(stack.hasTag()&&stack.getTag().contains("stage")){
+					if(stack.getTag().getInt("stage")==7){
+						return 1F;
+					}
+				}
+				return 0F;
+			});
+			ItemProperties.register(ModItemRegistry.alloy_mold, new ResourceLocation(CharcoalPit.MODID,"type"),(stack,arg2,entity, pseed)->{
+				if(stack.hasTag()&&stack.getTag().contains("inventory")){
+					return 1F;
+				}
+				return 0F;
+			});
 		});
 	}
 	@SubscribeEvent
@@ -215,6 +286,103 @@ public class ClientSetup {
 			}
 		},ModItemRegistry.OrangeLeaves);
 		
+		event.getItemColors().register(new ItemColor() {
+			@Override
+			public int getColor(ItemStack p_getColor_1_, int p_getColor_2_) {
+				if(p_getColor_2_==0){
+					return 0x48B518;
+				}
+				return 0xFFFFFF;
+			}
+		},ModItemRegistry.EnchantedLeaves);
+		
+		event.getItemColors().register(new ItemColor() {
+			@Override
+			public int getColor(ItemStack p_getColor_1_, int p_getColor_2_) {
+				if(p_getColor_2_==0){
+					if(p_getColor_1_.hasTag()&&p_getColor_1_.getTag().contains("stage")&&p_getColor_1_.getTag().getInt("stage")>3)
+						return 0xFFFFFF;
+					return 0x48B518;
+				}
+				return 0xFFFFFF;
+			}
+		},ModItemRegistry.MapleLeaves);
+		
+		event.getItemColors().register(new ItemColor() {
+			@Override
+			public int getColor(ItemStack p_getColor_1_, int p_getColor_2_) {
+				if(p_getColor_2_==0){
+					if(p_getColor_1_.hasTag()&&p_getColor_1_.getTag().contains("stage")&&p_getColor_1_.getTag().getInt("stage")>3)
+						return 0xFFFFFF;
+					return 0x48B518;
+				}
+				return 0xFFFFFF;
+			}
+		},ModItemRegistry.JacarandaLeaves);
+		
+		event.getItemColors().register(new ItemColor() {
+			@Override
+			public int getColor(ItemStack p_getColor_1_, int p_getColor_2_) {
+				if(p_getColor_2_==0){
+					if(p_getColor_1_.hasTag()&&p_getColor_1_.getTag().contains("stage")&&p_getColor_1_.getTag().getInt("stage")>3)
+						return 0xFFFFFF;
+					return 0x48B518;
+				}
+				return 0xFFFFFF;
+			}
+		},ModItemRegistry.SakuraLeaves);
+		
+		event.getItemColors().register(new ItemColor() {
+			@Override
+			public int getColor(ItemStack p_getColor_1_, int p_getColor_2_) {
+				if(p_getColor_2_==0){
+					if(p_getColor_1_.hasTag()&&p_getColor_1_.getTag().contains("stage")&&p_getColor_1_.getTag().getInt("stage")>3)
+						return 0xFFFFFF;
+					return 0x48B518;
+				}
+				return 0xFFFFFF;
+			}
+		},ModItemRegistry.ForsythiaLeaves);
+		
+		event.getItemColors().register(new ItemColor() {
+			@Override
+			public int getColor(ItemStack stack, int p_getColor_2_) {
+				if(p_getColor_2_==1){
+					return Mth.hsvToRgb((Minecraft.getInstance().level.getGameTime()%100)/100F,1F,1F);
+				}
+				return 0xFFFFFF;
+			}
+		},ModItemRegistry.RandomSapling);
+		
+		event.getItemColors().register(new ItemColor() {
+			@Override
+			public int getColor(ItemStack p_getColor_1_, int p_getColor_2_) {
+				if(p_getColor_2_==0){
+					return 0x5FC33B;
+				}
+				return 0xFFFFFF;
+			}
+		},ModItemRegistry.CedarLeaves);
+		
+		event.getItemColors().register(new ItemColor() {
+			@Override
+			public int getColor(ItemStack p_getColor_1_, int p_getColor_2_) {
+				if(p_getColor_2_==0){
+					return 0x48B518;
+				}
+				return 0xFFFFFF;
+			}
+		},ModItemRegistry.DouglasLeaves);
+		
+		event.getItemColors().register(new ItemColor() {
+			@Override
+			public int getColor(ItemStack stack, int p_getColor_2_) {
+				if(p_getColor_2_==1){
+					return Mth.hsvToRgb((Minecraft.getInstance().level.getGameTime()%100)/100F,1F,1F);
+				}
+				return 0xFFFFFF;
+			}
+		},ModItemRegistry.DecorativeSapling);
 	}
 	
 	@SubscribeEvent
@@ -281,6 +449,108 @@ public class ClientSetup {
 				return 0xFFFFFF;
 			}
 		},ModBlockRegistry.OrangeLeaves);
+		
+		event.getBlockColors().register(new BlockColor() {
+			@Override
+			public int getColor(BlockState p_getColor_1_, @Nullable BlockAndTintGetter p_getColor_2_, @Nullable BlockPos p_getColor_3_, int p_getColor_4_) {
+				if(p_getColor_4_==0){
+					return BiomeColors.getAverageFoliageColor(p_getColor_2_,p_getColor_3_);
+				}
+				return 0xFFFFFF;
+			}
+		},ModBlockRegistry.EnchantedLeaves);
+		
+		event.getBlockColors().register(new BlockColor() {
+			@Override
+			public int getColor(BlockState p_getColor_1_, @Nullable BlockAndTintGetter p_getColor_2_, @Nullable BlockPos p_getColor_3_, int p_getColor_4_) {
+				if(p_getColor_4_==0){
+					if(p_getColor_1_.getValue(BlockFruitLeaves.AGE)>3)
+						return 0xFFFFFF;
+					else
+						return BiomeColors.getAverageFoliageColor(p_getColor_2_,p_getColor_3_);
+				}
+				return 0xFFFFFF;
+			}
+		},ModBlockRegistry.MapleLeaves);
+		
+		event.getBlockColors().register(new BlockColor() {
+			@Override
+			public int getColor(BlockState p_getColor_1_, @Nullable BlockAndTintGetter p_getColor_2_, @Nullable BlockPos p_getColor_3_, int p_getColor_4_) {
+				if(p_getColor_4_==0){
+					if(p_getColor_1_.getValue(BlockFruitLeaves.AGE)>3)
+						return 0xFFFFFF;
+					else
+						return BiomeColors.getAverageFoliageColor(p_getColor_2_,p_getColor_3_);
+				}
+				return 0xFFFFFF;
+			}
+		},ModBlockRegistry.JacarandaLeaves);
+		
+		event.getBlockColors().register(new BlockColor() {
+			@Override
+			public int getColor(BlockState p_getColor_1_, @Nullable BlockAndTintGetter p_getColor_2_, @Nullable BlockPos p_getColor_3_, int p_getColor_4_) {
+				if(p_getColor_4_==0){
+					if(p_getColor_1_.getValue(BlockFruitLeaves.AGE)>3)
+						return 0xFFFFFF;
+					else
+						return BiomeColors.getAverageFoliageColor(p_getColor_2_,p_getColor_3_);
+				}
+				return 0xFFFFFF;
+			}
+		},ModBlockRegistry.SakuraLeaves);
+		
+		event.getBlockColors().register(new BlockColor() {
+			@Override
+			public int getColor(BlockState p_getColor_1_, @Nullable BlockAndTintGetter p_getColor_2_, @Nullable BlockPos p_getColor_3_, int p_getColor_4_) {
+				if(p_getColor_4_==0){
+					if(p_getColor_1_.getValue(BlockFruitLeaves.AGE)>3)
+						return 0xFFFFFF;
+					else
+						return BiomeColors.getAverageFoliageColor(p_getColor_2_,p_getColor_3_);
+				}
+				return 0xFFFFFF;
+			}
+		},ModBlockRegistry.ForsythiaLeaves);
+		
+		event.getBlockColors().register(new BlockColor() {
+			@Override
+			public int getColor(BlockState p_getColor_1_, @Nullable BlockAndTintGetter p_getColor_2_, @Nullable BlockPos pos, int p_getColor_4_) {
+				if(p_getColor_4_==0&&pos!=null){
+					return Mth.hsvToRgb((Math.abs(pos.getX())%16)/16F+(Math.abs(pos.getZ())%16)/16F,1F,1F);
+				}
+				return 0xFFFFFF;
+			}
+		},ModBlockRegistry.RandomSapling);
+		
+		event.getBlockColors().register(new BlockColor() {
+			@Override
+			public int getColor(BlockState p_getColor_1_, @Nullable BlockAndTintGetter p_getColor_2_, @Nullable BlockPos p_getColor_3_, int p_getColor_4_) {
+				if(p_getColor_4_==0){
+					return 0x5FC33B;
+				}
+				return 0xFFFFFF;
+			}
+		},ModBlockRegistry.CedarLeaves);
+		
+		event.getBlockColors().register(new BlockColor() {
+			@Override
+			public int getColor(BlockState p_getColor_1_, @Nullable BlockAndTintGetter p_getColor_2_, @Nullable BlockPos p_getColor_3_, int p_getColor_4_) {
+				if(p_getColor_4_==0){
+					return BiomeColors.getAverageFoliageColor(p_getColor_2_,p_getColor_3_);
+				}
+				return 0xFFFFFF;
+			}
+		},ModBlockRegistry.DouglasLeaves);
+		
+		event.getBlockColors().register(new BlockColor() {
+			@Override
+			public int getColor(BlockState p_getColor_1_, @Nullable BlockAndTintGetter p_getColor_2_, @Nullable BlockPos pos, int p_getColor_4_) {
+				if(p_getColor_4_==0&&pos!=null){
+					return Mth.hsvToRgb((Math.abs(pos.getX())%16)/16F+(Math.abs(pos.getZ())%16)/16F,1F,1F);
+				}
+				return 0xFFFFFF;
+			}
+		},ModBlockRegistry.DecorativeSapling);
 	}
 	
 	@SubscribeEvent

@@ -1,0 +1,12 @@
+{
+  "type": "charcoal_pit:distill",
+  "input":{
+  	"fluid":"charcoal_pit:maple_sap",
+  	"amount": 1000
+  },
+  "output":{
+  	"fluid":"charcoal_pit:maple_syrup",
+  	"amount": 100
+  },
+  "time": 200
+}

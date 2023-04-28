@@ -2,7 +2,7 @@
   "parent": "charcoal_pit:charcoal_pit/farfetch",
   "display": {
     "icon": {
-      "item": "charcoal_pit:cooked_egg"
+      "item": "charcoal_pit:croissant"
     },
     "title": {
       "translate": "advancements.charcoal_pit.chef.title"
@@ -103,7 +103,7 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "items": ["charcoal_pit:cooked_egg"]
+          "items": ["charcoal_pit:pancakes"]
         }
       }
     },

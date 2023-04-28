@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "charcoal_pit:block/sapling_base",
+    "layer1": "charcoal_pit:block/sapling_leaves"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:enchanted_golden_apple"
+    },
+    {
+      "item": "charcoal_pit:apple_sapling"
+    }
+  ],
+  "result": {
+    "item": "charcoal_pit:enchanted_sapling"
+  }
+}

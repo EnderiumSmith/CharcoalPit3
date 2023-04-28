@@ -34,7 +34,7 @@ public class TileSteamPress extends BlockEntity {
 	
 	public TileSteamPress(BlockPos pWorldPosition, BlockState pBlockState) {
 		super(ModTileRegistry.SteamPress, pWorldPosition, pBlockState);
-		water=new FluidTank(1000,fluid->fluid.getFluid() == Fluids.WATER){
+		water=new FluidTank(2000,fluid->fluid.getFluid() == Fluids.WATER){
 			@Override
 			protected void onContentsChanged() {
 				setChanged();

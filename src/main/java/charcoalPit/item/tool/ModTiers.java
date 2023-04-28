@@ -12,12 +12,15 @@ import java.util.function.Supplier;
 
 public enum ModTiers implements Tier {
 	
-	FLINT(0,130,4F,1F,5,()->{
+	FLINT(0,131,4F,1F,5,()->{
 		return Ingredient.of(Items.FLINT);
 	},Tiers.WOOD),
-	COPPER(1,165,4.5F,1.25F,14,()->{
+	COPPER(1,165,4.5F,1.25F,15,()->{
 		return Ingredient.of(Items.COPPER_INGOT);
 	},Tiers.STONE),
+	BRONZE(2, 250, 6.0F, 2.0F, 13, () -> {
+		return Ingredient.of(MethodHelper.BRONZE);
+	},Tiers.IRON),
 	STEEL(2,375,7F,2.5F,7,()->{
 		return Ingredient.of(MethodHelper.STEEL);
 	},Tiers.IRON),

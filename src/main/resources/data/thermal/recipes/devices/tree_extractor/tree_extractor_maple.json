@@ -1,0 +1,9 @@
+{
+  "type": "thermal:tree_extractor",
+  "trunk": "minecraft:acacia_log",
+  "leaves": "charcoal_pit:maple_leaves",
+  "result": {
+    "fluid": "charcoal_pit:maple_sap",
+    "amount": 25
+  }
+}

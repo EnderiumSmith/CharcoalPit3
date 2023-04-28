@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "charcoal_pit:block/bloomery_on",
-		"particle": "charcoal_pit:block/bloomery_on"
+		"0": "charcoal_pit:block/bloom_hot",
+		"particle": "charcoal_pit:block/bloom_hot"
 	},
 	"elements": [
 		{

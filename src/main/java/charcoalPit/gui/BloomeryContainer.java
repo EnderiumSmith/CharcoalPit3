@@ -2,7 +2,9 @@ package charcoalPit.gui;
 
 import charcoalPit.core.ModBlockRegistry;
 import charcoalPit.core.ModContainerRegistry;
+import charcoalPit.recipe.BloomingRecipe;
 import charcoalPit.tile.TileBloomeryy;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -22,7 +24,7 @@ public class BloomeryContainer extends AbstractContainerMenu {
 			@Override
 			public boolean isItemValid(int slot, @NotNull ItemStack stack) {
 				if(slot==0)
-					return TileBloomeryy.isOre(stack);
+					return BloomingRecipe.getRecipe(stack, Minecraft.getInstance().level)!=null;
 				if(slot==1)
 					return TileBloomeryy.isFuel(stack);
 				return super.isItemValid(slot,stack);

@@ -3,26 +3,35 @@ package charcoalPit.core;
 import charcoalPit.CharcoalPit;
 import charcoalPit.block.BlockCeramicPot;
 import charcoalPit.entity.Airplane;
+import charcoalPit.item.ItemMusket;
 import charcoalPit.item.tool.ModTiers;
 import charcoalPit.recipe.SquisherRecipe;
 import charcoalPit.tile.TileWrathLantern;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.inventory.AnvilMenu;
-import net.minecraft.world.item.DiggerItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -34,6 +43,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -43,12 +54,12 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.EntityLeaveWorldEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.player.AnvilRepairEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.entity.player.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
@@ -213,6 +224,17 @@ public class PileIgnitr {
 		return false;
 	}
 	
+	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent
+	public static void RenderMusket(RenderPlayerEvent.Pre event){
+		if(event.getPlayer().getMainHandItem().getItem()==ModItemRegistry.musket&&!event.getPlayer().swinging&& ItemMusket.isLoaded(event.getPlayer().getMainHandItem())){
+			if(event.getPlayer().getMainArm()== HumanoidArm.RIGHT)
+				event.getRenderer().getModel().rightArmPose= HumanoidModel.ArmPose.BOW_AND_ARROW;
+			else
+				event.getRenderer().getModel().leftArmPose=HumanoidModel.ArmPose.BOW_AND_ARROW;
+		}
+	}
+	
 	@SubscribeEvent
 	public static void WrathLanternKill(LivingDeathEvent event){
 		if(!event.getEntityLiving().level.isClientSide()&&event.getSource().getEntity() instanceof LivingEntity &&!(event.getSource().getEntity() instanceof Player)){
@@ -235,6 +257,27 @@ public class PileIgnitr {
 			}
 		}
 	}
+	
+	/*@SubscribeEvent
+	public static void FixArrowDamageEvent(LivingDamageEvent event){
+		if(!event.isCanceled()&&event.getSource().getDirectEntity() instanceof Arrow arrow){
+			if(arrow.potion==Potions.EMPTY)
+				return;
+			if(event.getEntityLiving().getMobType()==MobType.UNDEAD){
+				for(MobEffectInstance effectInstance:arrow.potion.getEffects()){
+					if(effectInstance.getEffect()==MobEffects.HEAL){
+						event.getEntityLiving().invulnerableTime=0;
+					}
+				}
+			}else{
+				for(MobEffectInstance effectInstance:arrow.potion.getEffects()){
+					if(effectInstance.getEffect()==MobEffects.HARM){
+						event.getEntityLiving().invulnerableTime=0;
+					}
+				}
+			}
+		}
+	}*/
 	
 	@SubscribeEvent
 	public static void CropTrades(VillagerTradesEvent event){

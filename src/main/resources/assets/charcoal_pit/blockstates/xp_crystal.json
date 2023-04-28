@@ -1,0 +1,109 @@
+{
+  "variants": {
+    "facing=down,size=0": {
+      "model": "charcoal_pit:block/xp_crystal_0",
+      "x": 180
+    },
+    "facing=east,size=0": {
+      "model": "charcoal_pit:block/xp_crystal_0",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north,size=0": {
+      "model": "charcoal_pit:block/xp_crystal_0",
+      "x": 90
+    },
+    "facing=south,size=0": {
+      "model": "charcoal_pit:block/xp_crystal_0",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,size=0": {
+      "model": "charcoal_pit:block/xp_crystal_0"
+    },
+    "facing=west,size=0": {
+      "model": "charcoal_pit:block/xp_crystal_0",
+      "x": 90,
+      "y": 270
+    },
+    "facing=down,size=1": {
+      "model": "charcoal_pit:block/xp_crystal_1",
+      "x": 180
+    },
+    "facing=east,size=1": {
+      "model": "charcoal_pit:block/xp_crystal_1",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north,size=1": {
+      "model": "charcoal_pit:block/xp_crystal_1",
+      "x": 90
+    },
+    "facing=south,size=1": {
+      "model": "charcoal_pit:block/xp_crystal_1",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,size=1": {
+      "model": "charcoal_pit:block/xp_crystal_1"
+    },
+    "facing=west,size=1": {
+      "model": "charcoal_pit:block/xp_crystal_1",
+      "x": 90,
+      "y": 270
+    },
+    "facing=down,size=2": {
+      "model": "charcoal_pit:block/xp_crystal_2",
+      "x": 180
+    },
+    "facing=east,size=2": {
+      "model": "charcoal_pit:block/xp_crystal_2",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north,size=2": {
+      "model": "charcoal_pit:block/xp_crystal_2",
+      "x": 90
+    },
+    "facing=south,size=2": {
+      "model": "charcoal_pit:block/xp_crystal_2",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,size=2": {
+      "model": "charcoal_pit:block/xp_crystal_2"
+    },
+    "facing=west,size=2": {
+      "model": "charcoal_pit:block/xp_crystal_2",
+      "x": 90,
+      "y": 270
+    },
+    "facing=down,size=3": {
+      "model": "charcoal_pit:block/xp_crystal_3",
+      "x": 180
+    },
+    "facing=east,size=3": {
+      "model": "charcoal_pit:block/xp_crystal_3",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north,size=3": {
+      "model": "charcoal_pit:block/xp_crystal_3",
+      "x": 90
+    },
+    "facing=south,size=3": {
+      "model": "charcoal_pit:block/xp_crystal_3",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,size=3": {
+      "model": "charcoal_pit:block/xp_crystal_3"
+    },
+    "facing=west,size=3": {
+      "model": "charcoal_pit:block/xp_crystal_3",
+      "x": 90,
+      "y": 270
+    }
+  }
+}
+

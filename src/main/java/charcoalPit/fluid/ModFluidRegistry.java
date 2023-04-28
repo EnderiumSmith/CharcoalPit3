@@ -61,6 +61,11 @@ public class ModFluidRegistry {
 	public static ForgeFlowingFluid SeedOilStill;
 	public static ForgeFlowingFluid.Properties SeedOil;
 	
+	public static final ResourceLocation honey_still=new ResourceLocation("minecraft:block/honey_block_side");
+	
+	public static ForgeFlowingFluid MapleSapStill,MapleSyrupStill;
+	public static ForgeFlowingFluid.Properties MapleSyrup,MapleSap;
+	
 	@SubscribeEvent
 	public static void registerFluids(RegistryEvent.Register<Fluid> event) {
 		Creosote=new Properties(()->CreosoteStill, ()->CreosoteFlowing, FluidAttributes.builder(creosote_still, creosote_flowing).density(800).viscosity(2000))
@@ -72,50 +77,54 @@ public class ModFluidRegistry {
 		
 		Alcohol=new Properties(()->AlcoholStill, ()->AlcoholFlowing, AlcoholProperties.builder(alcohol_still, alcohol_flowing).density(950).color(0xFFFFFF));
 		AlcoholStill=new ForgeFlowingFluid.Source(Alcohol);
-		AlcoholFlowing=new ForgeFlowingFluid.Flowing(Alcohol);
 		AlcoholStill.setRegistryName("alcohol_still");
-		AlcoholFlowing.setRegistryName("alcohol_flowing");
 
 		Vinegar=new Properties(()->VinegarStill,()->VinegarFlowing, FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0xFFCEB301)).bucket(()->ModItemRegistry.VinegarBucket);
 		VinegarStill=new ForgeFlowingFluid.Source(Vinegar);
-		VinegarFlowing=new ForgeFlowingFluid.Flowing(Vinegar);
 		VinegarStill.setRegistryName("vinegar_still");
-		VinegarFlowing.setRegistryName("vinegar_flowing");
 		
 		CausticLye=new Properties(()->CausticLyeStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing));
 		CausticLyeStill=new ForgeFlowingFluid.Source(CausticLye);
 		CausticLyeStill.setRegistryName("caustic_lye");
 		
-		OliveOil=new Properties(()->OliveOilStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0x6e750e).density(900)).bucket(()->ModItemRegistry.OliveOilBucket);
+		OliveOil=new Properties(()->OliveOilStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0xFF6e750e).density(900)).bucket(()->ModItemRegistry.OliveOilBucket);
 		OliveOilStill=new ForgeFlowingFluid.Source(OliveOil);
 		OliveOilStill.setRegistryName("olive_oil");
 		
-		WalnutOil=new Properties(()->WalnutOilStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0xFDAA48).density(900)).bucket(()->ModItemRegistry.WalnutOilBucket);
+		WalnutOil=new Properties(()->WalnutOilStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0xFFFDAA48).density(900)).bucket(()->ModItemRegistry.WalnutOilBucket);
 		WalnutOilStill=new ForgeFlowingFluid.Source(WalnutOil);
 		WalnutOilStill.setRegistryName("walnut_oil");
 		
-		SunflowerOil=new Properties(()->SunflowerOilStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0xDBB40C).density(900)).bucket(()->ModItemRegistry.SunflowerOilBucket);
+		SunflowerOil=new Properties(()->SunflowerOilStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0xFFDBB40C).density(900)).bucket(()->ModItemRegistry.SunflowerOilBucket);
 		SunflowerOilStill=new ForgeFlowingFluid.Source(SunflowerOil);
 		SunflowerOilStill.setRegistryName("sunflower_oil");
 		
-		BioDiesel=new Properties(()->BioDieselStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0xf97306).density(900)).bucket(()->ModItemRegistry.BioDieselBucket);
+		BioDiesel=new Properties(()->BioDieselStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0xFFf97306).density(900)).bucket(()->ModItemRegistry.BioDieselBucket);
 		BioDieselStill=new ForgeFlowingFluid.Source(BioDiesel);
 		BioDieselStill.setRegistryName("bio_diesel");
 		
-		Ethanol=new Properties(()->EthanolStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0xe6daa6).density(790)).bucket(()->ModItemRegistry.EthanolBucket);
+		Ethanol=new Properties(()->EthanolStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0xFFe6daa6).density(790)).bucket(()->ModItemRegistry.EthanolBucket);
 		EthanolStill=new ForgeFlowingFluid.Source(Ethanol);
 		EthanolStill.setRegistryName("ethanol");
 		
-		Ethoxide=new Properties(()->EthoxideStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0x95d0fc).density(800)).bucket(()->ModItemRegistry.EthoxideBucket);
+		Ethoxide=new Properties(()->EthoxideStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0xFF95d0fc).density(800)).bucket(()->ModItemRegistry.EthoxideBucket);
 		EthoxideStill=new ForgeFlowingFluid.Source(Ethoxide);
 		EthoxideStill.setRegistryName("ethoxide");
 		
-		SeedOil=new Properties(()->SeedOilStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0xc7fdb5).density(900)).bucket(()->ModItemRegistry.SeedOilBucket);
+		SeedOil=new Properties(()->SeedOilStill,()->null,FluidAttributes.builder(vinegar_still,vinegar_flowing).color(0xFFc7fdb5).density(900)).bucket(()->ModItemRegistry.SeedOilBucket);
 		SeedOilStill=new ForgeFlowingFluid.Source(SeedOil);
 		SeedOilStill.setRegistryName("seed_oil");
+		
+		MapleSap=new Properties(()->MapleSapStill,()->null,FluidAttributes.builder(honey_still,honey_still).color(0xFFfdaa48));
+		MapleSapStill=new ForgeFlowingFluid.Source(MapleSap);
+		MapleSapStill.setRegistryName("maple_sap");
+		
+		MapleSyrup=new Properties(()->MapleSyrupStill,()->null,FluidAttributes.builder(honey_still,honey_still).color(0xFFc04e01).density(1370));
+		MapleSyrupStill=new ForgeFlowingFluid.Source(MapleSyrup);
+		MapleSyrupStill.setRegistryName("maple_syrup");
 
-		event.getRegistry().registerAll(CreosoteStill,CreosoteFlowing,AlcoholStill,AlcoholFlowing,VinegarStill,VinegarFlowing,CausticLyeStill,OliveOilStill,
-				WalnutOilStill,SunflowerOilStill,BioDieselStill,EthanolStill,EthoxideStill,SeedOilStill);
+		event.getRegistry().registerAll(CreosoteStill,CreosoteFlowing,AlcoholStill,VinegarStill,CausticLyeStill,OliveOilStill,
+				WalnutOilStill,SunflowerOilStill,BioDieselStill,EthanolStill,EthoxideStill,SeedOilStill,MapleSapStill,MapleSyrupStill);
 	}
 
 	public static class AlcoholProperties extends FluidAttributes{

@@ -4,6 +4,8 @@ import charcoalPit.block.BlockBloomeryy;
 import charcoalPit.core.MethodHelper;
 import charcoalPit.core.ModItemRegistry;
 import charcoalPit.core.ModTileRegistry;
+import charcoalPit.recipe.BloomingRecipe;
+import charcoalPit.recipe.TuyereBlastingRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -23,6 +25,7 @@ import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import org.antlr.v4.runtime.atn.SemanticContext;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,6 +37,7 @@ public class TileBlastFurnace extends BlockEntity {
 	public ItemStackHandler inventory;
 	public int progress,processTotal,burnTime,burnTotal,blastAir;
 	public static final int FLUX=0,ORE=1,FUEL=2,OUT=3;
+	public boolean needsTuyere=false,burnsHot=false;
 	
 	public TileBlastFurnace(BlockPos pWorldPosition, BlockState pBlockState) {
 		super(ModTileRegistry.BlastFurnace,pWorldPosition, pBlockState);
@@ -56,7 +60,7 @@ public class TileBlastFurnace extends BlockEntity {
 					return stack.getItem()==ModItemRegistry.Flux;
 				}
 				if(slot==ORE){
-					return isOre(stack);
+					return isOre(stack,level);
 				}
 				if(slot==FUEL)
 					return isFuel(stack);
@@ -74,7 +78,7 @@ public class TileBlastFurnace extends BlockEntity {
 		if(processTotal>0){
 			if(progress<processTotal){
 				if(burnTime>0){
-					if(blastAir>0){
+					if((blastAir>0&&burnsHot)||!needsTuyere){
 						progress++;
 					}
 				}else{
@@ -84,28 +88,102 @@ public class TileBlastFurnace extends BlockEntity {
 				}
 			}else{
 				//done smelting
-				inventory.insertItem(OUT, new ItemStack(ModItemRegistry.AlloyPigIron), false);
-				inventory.extractItem(FLUX, 1, false);
-				inventory.extractItem(ORE, 1, false);
-				processTotal = 0;
-				progress = 0;
-				setChanged();
-				if (isOre(inventory.getStackInSlot(ORE)) && inventory.getStackInSlot(FLUX).getCount() > 0) {
-					if (inventory.insertItem(OUT, new ItemStack(ModItemRegistry.AlloyPigIron), true).isEmpty()) {
-						progress = 0;
-						processTotal = 99;
+				if(needsTuyere){
+					TuyereBlastingRecipe recipe=TuyereBlastingRecipe.getRecipe(inventory.getStackInSlot(ORE),level);
+					if(recipe!=null){
+						inventory.insertItem(OUT,recipe.getResultItem().copy(),false);
+						inventory.extractItem(FLUX,1,false);
+						inventory.extractItem(ORE,1,false);
+						processTotal=0;
+						progress=0;
+						setChanged();
+					}
+				}else{
+					List<BlastingRecipe> recipes=level.getRecipeManager().getAllRecipesFor(RecipeType.BLASTING);
+					for(BlastingRecipe recipe:recipes){
+						if(recipe.getIngredients().get(0).test(inventory.getStackInSlot(ORE))){
+							inventory.insertItem(OUT,recipe.getResultItem().copy(),false);
+							inventory.extractItem(ORE,1,false);
+							progress=0;
+							processTotal=0;
+							setChanged();
+							break;
+						}
 					}
 				}
+				//try smelt
+				if(!inventory.getStackInSlot(ORE).isEmpty()) {
+					boolean foundTuyereRecipe = false;
+					if (inventory.getStackInSlot(FLUX).getCount() > 0) {
+						TuyereBlastingRecipe recipe = TuyereBlastingRecipe.getRecipe(inventory.getStackInSlot(ORE),level);
+						if(recipe!=null){
+							if(inventory.getStackInSlot(OUT).isEmpty()||
+									inventory.insertItem(OUT,recipe.getResultItem(),true).isEmpty()){
+								foundTuyereRecipe=true;
+								progress=0;
+								processTotal=recipe.getCookingTime()-1;
+								needsTuyere=true;
+								if(burnTime>0)
+									setActive(true);
+								setChanged();
+							}
+						}
+					}
+					if(!foundTuyereRecipe){
+						List<BlastingRecipe> recipes=level.getRecipeManager().getAllRecipesFor(RecipeType.BLASTING);
+						for(BlastingRecipe recipe:recipes){
+							if(!recipe.getResultItem().isEmpty()&&recipe.getIngredients().get(0).test(inventory.getStackInSlot(ORE))){
+								if(inventory.getStackInSlot(OUT).isEmpty()||
+										inventory.insertItem(OUT,recipe.getResultItem(),true).isEmpty()){
+									progress=0;
+									processTotal=recipe.getCookingTime()-1;
+									needsTuyere=false;
+									if(burnTime>0)
+										setActive(true);
+									setChanged();
+								}
+								break;
+							}
+						}
+					}
+				}
+				//
 			}
 		}else{
 			//try smelt
-			if (isOre(inventory.getStackInSlot(ORE)) && inventory.getStackInSlot(FLUX).getCount() > 0) {
-				if (inventory.insertItem(OUT, new ItemStack(ModItemRegistry.AlloyPigIron), true).isEmpty()) {
-					progress = 0;
-					processTotal = 99;
-					if (burnTime > 0)
-						setActive(true);
-					setChanged();
+			if(!inventory.getStackInSlot(ORE).isEmpty()) {
+				boolean foundTuyereRecipe = false;
+				if (inventory.getStackInSlot(FLUX).getCount() > 0) {
+					TuyereBlastingRecipe recipe = TuyereBlastingRecipe.getRecipe(inventory.getStackInSlot(ORE),level);
+					if(recipe!=null){
+						if(inventory.getStackInSlot(OUT).isEmpty()||
+							inventory.insertItem(OUT,recipe.getResultItem(),true).isEmpty()){
+							foundTuyereRecipe=true;
+							progress=0;
+							processTotal=recipe.getCookingTime()-1;
+							needsTuyere=true;
+							if(burnTime>0)
+								setActive(true);
+							setChanged();
+						}
+					}
+				}
+				if(!foundTuyereRecipe){
+					List<BlastingRecipe> recipes=level.getRecipeManager().getAllRecipesFor(RecipeType.BLASTING);
+					for(BlastingRecipe recipe:recipes){
+						if(!recipe.getResultItem().isEmpty()&&recipe.getIngredients().get(0).test(inventory.getStackInSlot(ORE))){
+							if(inventory.getStackInSlot(OUT).isEmpty()||
+								inventory.insertItem(OUT,recipe.getResultItem(),true).isEmpty()){
+								progress=0;
+								processTotal=recipe.getCookingTime()-1;
+								needsTuyere=false;
+								if(burnTime>0)
+									setActive(true);
+								setChanged();
+							}
+							break;
+						}
+					}
 				}
 			}
 			
@@ -115,9 +193,6 @@ public class TileBlastFurnace extends BlockEntity {
 		}
 		if(burnTime>0){
 			burnTime--;
-			if(blastAir>0){
-				burnTime--;
-			}
 			if(burnTime%20==0)
 				setChanged();
 			if(burnTime<=0){
@@ -135,20 +210,33 @@ public class TileBlastFurnace extends BlockEntity {
 		}
 	}
 	
-	public static boolean isOre(ItemStack stack){
-		return MethodHelper.isItemInTag(stack,MethodHelper.IRON_ORE)||MethodHelper.isItemInTag(stack,MethodHelper.RAW_IRON_ORE);
+	public static boolean isOre(ItemStack stack, Level level){
+		TuyereBlastingRecipe recipe=TuyereBlastingRecipe.getRecipe(stack,level);
+		if(recipe!=null)
+			return true;
+		List<BlastingRecipe> recipes=level.getRecipeManager().getAllRecipesFor(RecipeType.BLASTING);
+		for(BlastingRecipe recipe1:recipes){
+			if(recipe1.getIngredients().get(0).test(stack))
+				return true;
+		}
+		return false;
 	}
 	
 	public static boolean isFuel(ItemStack stack){
+		return ForgeHooks.getBurnTime(stack,RecipeType.BLASTING)>0;
+	}
+	
+	public static boolean isHotFuel(ItemStack stack){
 		return MethodHelper.isItemInTag(stack,MethodHelper.BLASTING_FUEL);
 	}
 	
 	public void tryBurn(){
-		if(blastAir>0&&isFuel(inventory.getStackInSlot(FUEL))){
+		if(!needsTuyere||(blastAir>0&&isHotFuel(inventory.getStackInSlot(FUEL)))){
 			int i= ForgeHooks.getBurnTime(inventory.getStackInSlot(FUEL), RecipeType.BLASTING)/2;
 			if(i>0){
 				burnTime=i;
 				burnTotal=i;
+				burnsHot=isHotFuel(inventory.getStackInSlot(FUEL));
 				ItemStack container=ItemStack.EMPTY;
 				if(inventory.getStackInSlot(FUEL).hasContainerItem()){
 					container=inventory.getStackInSlot(FUEL).getContainerItem().copy();
@@ -243,6 +331,8 @@ public class TileBlastFurnace extends BlockEntity {
 		pTag.putInt("burnTime",burnTime);
 		pTag.putInt("burnTotal",burnTotal);
 		pTag.putInt("blastAir",blastAir);
+		pTag.putBoolean("needsTuyere",needsTuyere);
+		pTag.putBoolean("burnsHot",burnsHot);
 	}
 	
 	@Override
@@ -254,6 +344,8 @@ public class TileBlastFurnace extends BlockEntity {
 		burnTime=pTag.getInt("burnTime");
 		burnTotal=pTag.getInt("burnTotal");
 		blastAir=pTag.getInt("blastAir");
+		needsTuyere=pTag.getBoolean("needsTuyere");
+		burnsHot=pTag.getBoolean("burnsHot");
 	}
 	
 }

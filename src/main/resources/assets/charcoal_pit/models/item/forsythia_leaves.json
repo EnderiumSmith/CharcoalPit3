@@ -1,0 +1,11 @@
+{
+    "parent": "charcoal_pit:block/apple_leaves",
+    "overrides": [
+        {
+            "predicate": {
+                "charcoal_pit:stage": 1
+            },
+            "model": "charcoal_pit:block/forsythia_leaves"
+        }
+    ]
+}

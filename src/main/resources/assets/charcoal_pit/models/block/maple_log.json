@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "minecraft:block/acacia_log",
+    "down": "minecraft:block/acacia_log_top",
+    "up": "minecraft:block/acacia_log_top",
+    "east": "charcoal_pit:block/maple_log",
+    "west": "charcoal_pit:block/maple_log",
+    "north": "charcoal_pit:block/maple_log",
+    "south": "charcoal_pit:block/maple_log"
+  }
+}
